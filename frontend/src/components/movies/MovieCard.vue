@@ -3,6 +3,7 @@
       <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">{{ movie.title }}</h5>
+        <p class="card-text">{{ movie.vote_avg }}</p>
         <p class="card-text">{{ shorten }}</p>
       </div>
   </div>
@@ -26,15 +27,12 @@ export default {
     }
   },
   components: {
-
   },
   data() {
     return {
-
     }
   },
   methods: {
-
   },
 
 }

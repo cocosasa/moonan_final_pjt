@@ -3,6 +3,7 @@
     <h1>it's header</h1>
     <login>
       <router-link :to="{ name: 'main' }">Main</router-link> | 
+      <router-link :to="{ name: 'MovieView' }">Movie</router-link> | 
       <router-link :to="{ name: 'LogOutView' }">LogOut</router-link>
     </login>
     <login> | 

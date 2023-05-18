@@ -1,12 +1,9 @@
 <template>
   <div>
     <h1>Sign Up Page</h1>
-    <AccountErrorList v-if="isAuthError" />
     <form @submit.prevent="signUp">
       <label for="username">username : </label>
       <input type="text" id="username" v-model="username"><br>
-      <label for="nickname">nickname : </label>
-      <input type="text" id="nickname" v-model="nickname"><br>
 
       <label for="password1"> password : </label>
       <input type="password" id="password1" v-model="password1"><br>
@@ -30,7 +27,6 @@ export default {
   data() {
     return{
       username : null,
-      nickname : null,
       password1: null,
       password2: null,
     }
@@ -41,13 +37,12 @@ export default {
   methods: {
     signUp(){
       const username = this.username
-      const nickname = this.nickname
       const password1 = this.password1
       const password2 = this.password2
 
       const payload = {
         username,
-        nickname,
+        // nickname,
         password1,
         password2,
       }
