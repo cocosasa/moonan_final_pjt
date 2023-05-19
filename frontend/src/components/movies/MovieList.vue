@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="row-cols-3">
     <MovieCard v-for="movie in movieList" :key="movie.id" :movie="movie"/>
   </div>
 </template>
@@ -33,4 +33,6 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+
+</style>

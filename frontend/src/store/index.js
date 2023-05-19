@@ -17,6 +17,7 @@ export default new Vuex.Store({
     movieList : [
     ],
     token : null,
+    recommendLists : []
   },
   getters: {
     isLogin(state){

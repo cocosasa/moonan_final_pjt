@@ -1,13 +1,13 @@
 <template>
   <div>
     Movie
-    <MovieList />
+    <MovieList/>
     <!-- {{ movieList }} -->
   </div>
 </template>
 
 <script>
-import MovieList from './MovieList'
+import MovieList from '@/components/movies/MovieList'
 export default {
   name: 'MovieView',
   components: {

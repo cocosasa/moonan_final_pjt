@@ -1,10 +1,8 @@
 <template>
-  <div class="card h-100" style="min-width: 10rem;">
-      <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" class="card-img-top" alt="...">
+  <div class="card">
+      <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">{{ movie.title }}</h5>
-        <p class="card-text">{{ movie.vote_avg }}</p>
-        <p class="card-text">{{ shorten }}</p>
       </div>
   </div>
 </template>
@@ -39,7 +37,5 @@ export default {
 </script>
 
 <style>
-.h-70{
-  height: 70%;
-}
+
 </style>

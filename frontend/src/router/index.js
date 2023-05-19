@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import MainView from '@/components/movies/MainView'
-import SearchView from '@/components/movies/SearchView'
-import MovieView from '@/components/movies/MovieView'
-import MovieDetailView from '@/components/movies/MovieDetailView'
-import ProfileView from '@/components/account/ProfileView'
-import SignUpView from '@/components/account/SignUpView'
-import LogInView from '@/components/account/LogInView'
-import LogOutView from '@/components/account/LogOutView'
+import MainView from '@/views/movies/MainView'
+import SearchResultView from '@/views/movies/SearchResultView'
+import ChallengeView from '@/views/community/ChallengeView'
+import MovieView from '@/views/movies/MovieView'
+import MovieDetailView from '@/views/movies/MovieDetailView'
+import ProfileView from '@/views/account/ProfileView'
+import SignUpView from '@/views/account/SignUpView'
+import LogInView from '@/views/account/LogInView'
+import LogOutView from '@/views/account/LogOutView'
 Vue.use(VueRouter)
 
 const routes = [
@@ -19,7 +20,7 @@ const routes = [
 
   {
     path: '/movies',
-    name: 'MovieView',
+    name: 'movies',
     component: MovieView
   },
 
@@ -44,7 +45,13 @@ const routes = [
   {
     path: '/search/:keyword',
     name: 'search',
-    component: SearchView
+    component: SearchResultView
+  },
+
+  {
+    path: '/challenge',
+    name: 'challenge',
+    component: ChallengeView
   },
 
   {
