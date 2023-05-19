@@ -1,65 +1,43 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login as auth_login
-from django.contrib.auth import logout as auth_logout
-from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm
+from .models import Profile
+from rest_framework import status
+from .serializers import ProfileSerializer
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST, require_http_methods
-from .models import User
-from .forms import CustomUserCreationForm
+from rest_framework.decorators import api_view, permission_classes
+from django.views.decorators.http import require_POST
+from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 
-
-@require_http_methods(['GET', 'POST'])
-def signup(request):
-    if request.user.is_authenticated:
-        return redirect('community:index')
-
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            auth_login(request, user)
-            return redirect('community:index')
-    else:
-        form = CustomUserCreationForm()
-    context = {
-        'form': form,
-    }
-    return render(request, 'accounts/signup.html', context)
+# Create your views here.
 
 
-@require_http_methods(['GET', 'POST'])
-def login(request):
-    if request.user.is_authenticated:
-        return redirect('community:index')
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def create_profile(request): 
+    serializer = ProfileSerializer(data = request.data)
 
-    if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
-        if form.is_valid():
-            auth_login(request, form.get_user())
-            return redirect(request.GET.get('next') or 'community:index')
-    else:
-        form = AuthenticationForm()
-    context = {
-        'form': form,
-    }
-    return render(request, 'accounts/login.html', context)
+    if serializer.is_valid(raise_exception = True):
+        serializer.save(user = request.user)
+        return Response(serializer.data, status = status.HTTP_201_CREATED)
 
 
-@require_POST
-def logout(request):
-    auth_logout(request)
-    return redirect('community:index')
+@api_view(['GET', 'PUT'])
+def profile(request, profile_pk) :
+    profile = get_object_or_404(Profile, pk = profile_pk)
+    
+    if request.method == 'GET' :
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
 
-
-@login_required
-def profile(request, username):
-    person = get_object_or_404(get_user_model(), username=username)
-    context = {
-        'person': person,
-    }
-    return render(request, 'accounts/profile.html', context)
+    elif request.method == 'PUT':
+        if request.user == profile.user:
+            serializer = ProfileSerializer(profile, data = request.data)
+            if serializer.is_valid(raise_exception = True):
+                serializer.save()
+                return Response(serializer.data)
+        return Response(status = status.HTTP_401_UNAUTHORIZED)
 
 
 @require_POST
@@ -67,19 +45,19 @@ def follow(request, user_pk):
     if request.user.is_authenticated:
         User = get_user_model()
         me = request.user
-        you = User.objects.get(pk=user_pk)
+        you = User.objects.get(pk = user_pk)
         if me != you:
-            if you.followers.filter(pk=me.pk).exists():
+            if you.followers.filter(pk = me.pk).exists():
                 you.followers.remove(me)
                 is_followed = False
             else:
                 you.followers.add(me)
                 is_followed = True
+
             context = {
                 'is_followed': is_followed,
                 'followers_count': you.followers.count(),
                 'followings_count': you.followings.count(),
             }
+
             return JsonResponse(context)
-        return redirect('accounts:profile', you.username)
-    return redirect('accounts:login')

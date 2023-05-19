@@ -1,9 +1,6 @@
 <template>
-  <div class="card">
-      <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">{{ movie.title }}</h5>
-      </div>
+  <div class="card col-3 large-card border-0">
+      <img :src="`https://image.tmdb.org/t/p/w500${movie?.poster_path}`" class="large-card-img h-100">
   </div>
 </template>
 
@@ -37,5 +34,10 @@ export default {
 </script>
 
 <style>
-
+.large-card-img{
+  padding: 0;
+}
+.large-card{
+  padding: 0;
+}
 </style>

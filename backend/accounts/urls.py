@@ -1,12 +1,11 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 app_name = 'accounts'
 
 urlpatterns = [
-    path('signup/', views.signup, name='signup'),
-    path('login/', views.login, name='login'),
-    path('logout/', views.logout, name='logout'),
-    path('profile/<username>/', views.profile, name='profile'),
-    path('<int:user_pk>/follow/', views.follow, name='follow'),
+    path('', include('dj_rest_auth.urls')),
+    path('signup/', include('dj_rest_auth.registration.urls')),
+    path('profile/', views.create_profile),
+    path('profile/<int:profile_pk>/', views.profile),
 ]

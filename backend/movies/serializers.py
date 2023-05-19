@@ -1,24 +1,24 @@
 from rest_framework import serializers
-from .models import Movie, Comment, Actor
+from .models import Movie, Genre
 
 
 class MovieListSerializer(serializers.ModelSerializer):
+    genres = serializers.PrimaryKeyRelatedField(many = True, read_only = True)
 
     class Meta:
         model = Movie
-        fields = ('id', 'title', 'overview', 'vote_avg')
-
-
-class CommentSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Comment
         fields = '__all__'
 
 
-class MovieSerializer(serializers.ModelSerializer):
-    comment_set = CommentSerializer(many = True, read_only = True)
+class MovieSerializer(MovieListSerializer):
+    
+    class Meta(MovieListSerializer.Meta):
+        fields = '__all__'
+
+
+class GenreSerializer(serializers.ModelSerializer):
+    genre_movies = serializers.PrimaryKeyRelatedField(many = True, read_only = True)
 
     class Meta:
-        model = Movie
+        model = Genre
         fields = '__all__'

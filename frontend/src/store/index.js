@@ -16,8 +16,9 @@ export default new Vuex.Store({
   state: {
     movieList : [
     ],
+    questionList :[
+    ],
     token : null,
-    recommendLists : []
   },
   getters: {
     isLogin(state){
@@ -28,9 +29,12 @@ export default new Vuex.Store({
     GET_MOVIES(state, movieList){
       state.movieList = movieList
     },
+    GET_QUESTION_LIST(state, list){
+      state.questionList = list
+    },
     SAVE_TOKEN(state, token){
       state.token = token
-      router.push({ name:'MovieView' })
+      router.push({ name:'movies' })
     },
     DELETE_TOKEN(state){
       state.token = null
@@ -41,7 +45,7 @@ export default new Vuex.Store({
     getMovies(context){
       axios({
         method: 'get',
-        url: `${API_URL}/api/v1/movies/`,
+        url: `${API_URL}/api/v1/`,
         headers : {
           Authorization : `Token ${context.state.token}`
         }
@@ -49,6 +53,19 @@ export default new Vuex.Store({
         .then((res) => {
           console.log(res.data)
           context.commit('GET_MOVIES', res.data)
+        })
+        .catch((err) => {
+        console.log(err)
+      })
+    },
+    getQuestionList(context){
+      axios({
+        method: 'get',
+        url: `${API_URL}/community/questions/`,
+      })
+        .then((res) => {
+          console.log(res.data)
+          context.commit('GET_QUESTION_LIST', res.data)
         })
         .catch((err) => {
         console.log(err)

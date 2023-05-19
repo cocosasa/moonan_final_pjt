@@ -16,7 +16,9 @@ export default {
     MovieRecommendList,
   },
   created() {
-    this.getMovies()
+    if (!this.$store.state.movieList) {
+      this.getMovies()
+    }
   },
   data () {
     return {

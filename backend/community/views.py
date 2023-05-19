@@ -1,84 +1,173 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views.decorators.http import require_safe, require_POST, require_http_methods
-from .models import Review, Comment
-from .forms import ReviewForm, CommentForm
-from django.http import JsonResponse
+from movies.models import Movie
+from rest_framework import status
+from rest_framework.response import Response
+from .models import Review, ReviewComment, Question, QuestionComment
+from django.shortcuts import get_object_or_404, get_list_or_404
+from rest_framework.decorators import api_view, permission_classes
+from .serializers import ReviewSerializer, ReviewCommentSerializer, QuestionSerializer, QuestionCommentSerializer
+from rest_framework.permissions import IsAuthenticated
+
+# Create your views here.
+
+@api_view(['GET'])
+def entire_review(request):
+    reviews = get_list_or_404(Movie)
+    serializers = ReviewSerializer(reviews, many=True)
+    return Response(serializers.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_review(request, movie_pk):
+    movie = get_object_or_404(Movie, pk = movie_pk)
+    serializer = ReviewSerializer(data = request.data)
+    
+    if serializer.is_valid(raise_exception = True):
+        serializer.save(user = request.user, movie_id = movie)
+        return Response(serializer.data, status = status.HTTP_201_CREATED)
 
 
-@require_safe
-def index(request):
-    reviews = Review.objects.order_by('-pk')
-    context = {
-        'reviews': reviews,
-    }
-    return render(request, 'community/index.html', context)
+@api_view(['GET', 'PUT', 'DELETE'])
+def review_detail(request, review_pk):
+    review = get_object_or_404(Review, pk = review_pk)
+
+    if request.method == 'GET':
+        serializer = ReviewSerializer(review)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        if review.user == request.user:
+            serializer = ReviewSerializer(review, data = request.data)
+            if serializer.is_valid(raise_exception = True):
+                serializer.save()
+                return Response(serializer.data)
+        return Response(status = status.HTTP_401_UNAUTHORIZED)
+
+    elif request.method == 'DELETE':
+        if review.user == request.user:
+            review.delete()
+            return Response(status = status.HTTP_204_NO_CONTENT)
+        return Response(status = status.HTTP_401_UNAUTHORIZED)
+
+    
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_review_comment(request, review_pk):
+    review = get_object_or_404(Review, pk = review_pk)
+    serializer = ReviewCommentSerializer(data = request.data)
+
+    if serializer.is_valid(raise_exception = True):
+        serializer.save(user = request.user, review = review)
+        return Response(serializer.data, status = status.HTTP_201_CREATED)
 
 
-@require_http_methods(['GET', 'POST'])
-def create(request):
-    if request.method == 'POST':
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.user = request.user
-            review.save()
-            return redirect('community:detail', review.pk)
-    else:
-        form = ReviewForm()
-    context = {
-        'form': form,
-    }
-    return render(request, 'community/create.html', context)
+@api_view(['GET', 'DELETE', 'PUT'])
+def review_comment_detail(request, comment_pk):
+    comment = get_object_or_404(ReviewComment, pk = comment_pk)
+
+    if request.method == 'GET':
+        serializer = ReviewCommentSerializer(comment)
+        return Response(serializer.data)
+
+    elif request.method == 'DELETE':
+        if comment.user == request.user:
+            comment.delete()
+            return Response(status = status.HTTP_204_NO_CONTENT)
+        return Response(status = status.HTTP_401_UNAUTHORIZED)
+
+    elif request.method == 'PUT':
+        if comment.user == request.user:
+            serializer = ReviewCommentSerializer(comment, data = request.data)
+            if serializer.is_valid(raise_exception = True):
+                serializer.save()
+                return Response(serializer.data)
+        return Response(status = status.HTTP_401_UNAUTHORIZED)
 
 
-@require_safe
-def detail(request, review_pk):
-    review = get_object_or_404(Review, pk=review_pk)
-    comments = review.comment_set.all()
-    comment_form = CommentForm()
-    context = {
-        'review': review,
-        'comment_form': comment_form,
-        'comments': comments,
-    }
-    return render(request, 'community/detail.html', context)
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def review_ccomment_create(request, comment_pk):
+    comment = get_object_or_404(ReviewComment, pk = comment_pk)
+    serializer = ReviewCommentSerializer(data = request.data)
+
+    if serializer.is_valid(raise_exception = True):
+        serializer.save(user = request.user, parent_comment = comment)
+        return Response(serializer.data, status = status.HTTP_201_CREATED)
 
 
-@require_POST
-def create_comment(request, review_pk):
-    review = get_object_or_404(Review, pk=review_pk)
-    comment_form = CommentForm(request.POST)
-    if comment_form.is_valid():
-        comment = comment_form.save(commit=False)
-        comment.review = review
-        comment.user = request.user
-        comment.save()
-        return redirect('community:detail', review.pk)
-    context = {
-        'comment_form': comment_form,
-        'review': review,
-        'comments': review.comment_set.all(),
-    }
-    return render(request, 'community/detail.html', context)
+# 아래부터 Question으로 수정
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def create_question(request):
+    serializer = QuestionSerializer(data = request.data)
+    
+    if serializer.is_valid(raise_exception = True):
+        serializer.save(user = request.user)
+        return Response(serializer.data, status = status.HTTP_201_CREATED)
 
 
-@require_POST
-def like(request, review_pk):
-    if request.user.is_authenticated:
-        review = get_object_or_404(Review, pk=review_pk)
-        user = request.user
+@api_view(['GET', 'PUT', 'DELETE'])
+def question_detail(request, question_pk):
+    question = get_object_or_404(Question, pk = question_pk)
 
-        if review.like_users.filter(pk=user.pk).exists():
-            review.like_users.remove(user)
-            is_liked = False
-        else:
-            review.like_users.add(user)
-            is_liked = True
+    if request.method == 'GET':
+        serializer = ReviewSerializer(question)
+        return Response(serializer.data)
 
-        context = {
-            'is_liked': is_liked,
-            'likes_count': review.like_users.count(),
-        }
-        return JsonResponse(context)
-        return redirect('community:index')
-    return redirect('accounts:login')
+    elif request.method == 'PUT':
+        if question.user == request.user:
+            serializer = QuestionSerializer(question, data = request.data)
+            if serializer.is_valid(raise_exception = True):
+                serializer.save()
+                return Response(serializer.data)
+        return Response(status = status.HTTP_401_UNAUTHORIZED)
+
+    elif request.method == 'DELETE':
+        if question.user == request.user:
+            question.delete()
+            return Response(status = status.HTTP_204_NO_CONTENT)
+        return Response(status = status.HTTP_401_UNAUTHORIZED)
+
+    
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_question_comment(request, question_pk):
+    question = get_object_or_404(Question, pk = question_pk)
+    serializer = QuestionCommentSerializer(data = request.data)
+
+    if serializer.is_valid(raise_exception = True):
+        serializer.save(user = request.user, question = question)
+        return Response(serializer.data, status = status.HTTP_201_CREATED)
+
+
+@api_view(['GET', 'DELETE', 'PUT'])
+def question_comment_detail(request, comment_pk):
+    comment = get_object_or_404(QuestionComment, pk = comment_pk)
+
+    if request.method == 'GET':
+        serializer = QuestionCommentSerializer(comment)
+        return Response(serializer.data)
+
+    elif request.method == 'DELETE':
+        if comment.user == request.user:
+            comment.delete()
+            return Response(status = status.HTTP_204_NO_CONTENT)
+        return Response(status = status.HTTP_401_UNAUTHORIZED)
+
+    elif request.method == 'PUT':
+        if comment.user == request.user:
+            serializer = QuestionCommentSerializer(comment, data = request.data)
+            if serializer.is_valid(raise_exception = True):
+                serializer.save()
+                return Response(serializer.data)
+        return Response(status = status.HTTP_401_UNAUTHORIZED)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def question_ccomment_create(request, comment_pk):
+    comment = get_object_or_404(QuestionComment, pk = comment_pk)
+    serializer = QuestionCommentSerializer(data = request.data)
+
+    if serializer.is_valid(raise_exception = True):
+        serializer.save(user = request.user, parent_comment = comment)
+        return Response(serializer.data, status = status.HTTP_201_CREATED)

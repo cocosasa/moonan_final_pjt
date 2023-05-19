@@ -1,6 +1,6 @@
 <template>
-  <div class="row-cols-3">
-    <MovieCard v-for="movie in movieList" :key="movie.id" :movie="movie"/>
+  <div class="row">
+    <MovieCard v-for="movie in movieList" :key="movie.id" :movie="movie" @click.native="goToDetail(movie)"/>
   </div>
 </template>
 
@@ -11,23 +11,23 @@ export default {
   components: {
     MovieCard
   },
+
   data() {
     return {
-
+      
     }
+  },
+  props:{
+    movieList: Array,
   },
   created() {
-    this.getMovies()
   },
   computed: {
-    movieList() {
-      return this.$store.state.movieList
-    }
   },
   methods: {
-    getMovies() {
-      this.$store.dispatch('getMovies')
-    }
+    goToDetail(movie){
+      this.$router.push({name:'detail', params:{id:movie.id}})
+    },
   },
 
 }

@@ -1,13 +1,12 @@
-# from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from django.urls import path
 from . import views
 
+app_name = 'movies'
 
 urlpatterns = [
-    path('movies/', views.movie_list),
-    path('movies/<int:movie_pk>/', views.movie_detail),
-    path('comments/', views.comment_list),
-    path('comments/<int:comment_pk>/', views.comment_detail),
-    path('movies/<int:movie_pk>/comments/', views.comment_create),
-    # path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('', views.entire_movies),
+    path('<int:movie_pk>/', views.movie_detail),
+    path('genres/', views.entire_genres),
+    path('search/movies/<str:search>/', views.movie_search),
+    path('vote_avg/', views.entire_movies_sorted_by_vote_avg),
 ]

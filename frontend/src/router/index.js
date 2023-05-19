@@ -9,6 +9,7 @@ import ProfileView from '@/views/account/ProfileView'
 import SignUpView from '@/views/account/SignUpView'
 import LogInView from '@/views/account/LogInView'
 import LogOutView from '@/views/account/LogOutView'
+import CommunityView from '@/views/community/CommunityView'
 Vue.use(VueRouter)
 
 const routes = [
@@ -52,6 +53,12 @@ const routes = [
     path: '/challenge',
     name: 'challenge',
     component: ChallengeView
+  },
+  
+  {
+    path: '/community',
+    name: 'community',
+    component: CommunityView
   },
 
   {
