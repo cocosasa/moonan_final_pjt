@@ -11,12 +11,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   plugins:[
-    createPersistedState,
+    createPersistedState(),
   ],
   state: {
     movieList : [
     ],
     token : null,
+    recommendLists : []
   },
   getters: {
     isLogin(state){
@@ -29,7 +30,7 @@ export default new Vuex.Store({
     },
     SAVE_TOKEN(state, token){
       state.token = token
-      router.push({ name:'ArticleView' })
+      router.push({ name:'MovieView' })
     },
     DELETE_TOKEN(state){
       state.token = null
@@ -54,22 +55,22 @@ export default new Vuex.Store({
       })
     },
     signUp(context, payload){
-      const { username, nickname, password1, password2 } = payload
+      const { username, password1, password2 } = payload
 
       axios({
         method : 'post', 
         url:`${API_URL}/accounts/signup/`,
         data:{
-          username, nickname, password1, password2
+          username, password1, password2
         }
       })
       .then(res=>{
-        // console.log(res.data)
+        console.log(res.data)
         context.commit('SAVE_TOKEN', res.data.key)
       })
       .catch(err=>{
         console.log(err)
-        context.commit('SET_AUTH_ERROR', err.response.data)
+        // context.commit('SET_AUTH_ERROR', err.response)
       })
     },
     logIn(context, payload){

@@ -1,33 +1,33 @@
 <template>
   <div>
-    Main
-    <MovieRecommendList/>
+    Movie
+    <MovieList/>
     <!-- {{ movieList }} -->
   </div>
 </template>
 
 <script>
-import MovieRecommendList from './MovieRecommendList'
+import MovieList from '@/components/movies/MovieList'
 export default {
-  name : 'MainView',
-  components : {
-    MovieRecommendList,
+  name: 'MovieView',
+  components: {
+    MovieList,
   },
   created() {
     this.getMovies()
   },
-  data () {
+  data() {
     return {
       // movieList : null,
     }
   },
-  computed :{
-    movieList (){
+  computed: {
+    movieList() {
       return this.$store.state.movieList
     }
   },
-  methods:{
-    getMovies(){
+  methods: {
+    getMovies() {
       this.$store.dispatch('getMovies')
     }
   },
@@ -35,6 +35,4 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
