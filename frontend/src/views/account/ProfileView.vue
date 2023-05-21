@@ -4,9 +4,9 @@
       <div class="profile-img-circle">
         <img class="profile-img" src="@/assets/moonanface.png">
       </div>
-      <div>
+      <div class="mt-5">
         <p>아이디</p>
-        <p>아이디</p>
+        <p>포인트</p>
       </div>
       <div class="d-flex">
         <div class="profile-info">

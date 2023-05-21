@@ -1,6 +1,10 @@
 <template>
-  <div class="card col-3 large-card border-0">
+  <div class="card col-3 large-card border-0 p-1" @mouseover="showTitle">
       <img :src="`https://image.tmdb.org/t/p/w500${movie?.poster_path}`" class="large-card-img h-100">
+      <div class="large-card-title">
+        <div>{{ movie.title }}</div>
+        <div>{{ movie.released_date }}</div>
+      </div>
   </div>
 </template>
 
@@ -28,6 +32,9 @@ export default {
     }
   },
   methods: {
+    showTitle(){
+
+    }
   },
 
 }
@@ -40,4 +47,14 @@ export default {
 .large-card{
   padding: 0;
 }
+.large-card-title{
+  position: relative;
+  bottom: 90px;
+  height: 90px;
+  background-color: rgba(0, 0, 0, 0.562);
+  color: whitesmoke;
+  text-align: center;
+  margin-bottom: -80px;
+}
+
 </style>

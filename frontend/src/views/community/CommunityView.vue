@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div>
-      <h2>영화 몽타주</h2>
-      <button>질문하기</button>
+    <div class="my-4">
+      <span class="fs-1">무비 몽타주</span>
+      <div class="btn ms-5 btn-warning" @click="goToPostQuestion">질문하기</div>
     </div>
     <div>
-      <QuestionItem v-for="q in questionList" :key="q.id" :question="q"/>
+      <QuestionItem v-for="q in questionList" :key="q.id" :question="q" />
     </div>
   </div>
 </template>
@@ -18,7 +18,7 @@ export default {
     QuestionItem,
   },
   created(){
-    this.getQuestionList()
+    this.getQuestions()
   },
   computed:{
     questionList(){
@@ -26,8 +26,11 @@ export default {
     }
   },
   methods:{
-    getQuestionList(){
-      this.$store.dispatch('getQuestionList')
+    getQuestions(){
+      this.$store.dispatch('getQuestions')
+    },
+    goToPostQuestion(){
+      this.$router.push({name: 'postquestion' })
     }
   }
 }

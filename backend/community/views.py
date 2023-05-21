@@ -11,7 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET'])
 def entire_review(request):
-    reviews = get_list_or_404(Movie)
+    reviews = get_list_or_404(Review)
     serializers = ReviewSerializer(reviews, many=True)
     return Response(serializers.data)
 
@@ -94,7 +94,13 @@ def review_ccomment_create(request, comment_pk):
         return Response(serializer.data, status = status.HTTP_201_CREATED)
 
 
-# 아래부터 Question으로 수정
+@api_view(['GET'])
+def entire_questions(request):
+    questions = list(get_list_or_404(Question))
+    serializers = QuestionSerializer(questions, many = True)
+    return Response(serializers.data)
+
+
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def create_question(request):
@@ -110,7 +116,7 @@ def question_detail(request, question_pk):
     question = get_object_or_404(Question, pk = question_pk)
 
     if request.method == 'GET':
-        serializer = ReviewSerializer(question)
+        serializer = QuestionSerializer(question)
         return Response(serializer.data)
 
     elif request.method == 'PUT':

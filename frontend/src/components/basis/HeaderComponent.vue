@@ -9,7 +9,7 @@
     <div>
       <router-link :to="{ name: 'movies' }">영화</router-link> | 
       <router-link :to="{ name: 'challenge' }">추리</router-link> | 
-      <router-link :to="{ name: 'movies' }">추천</router-link> | 
+      <router-link :to="{ name: 'recommend' }">추천</router-link> | 
       <router-link :to="{ name: 'community' }">커뮤니티</router-link> | 
     </div>
 

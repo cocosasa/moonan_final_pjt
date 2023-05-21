@@ -4,10 +4,12 @@ from .models import Review, ReviewComment, Question, QuestionComment
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    
+
+    comments = serializers.PrimaryKeyRelatedField(many = True, read_only = True, allow_null = True)
+
     class Meta:
         model = Review
-        fields = ('id', 'content', 'score', 'created_at', 'updated_at', 'user', 'like_users', 'movie_id')
+        fields = ('id', 'content', 'score', 'created_at', 'updated_at', 'user', 'movie_id', 'comments',)
         read_only_fields = ('user', 'movie_id')
 
 
@@ -21,10 +23,12 @@ class ReviewCommentSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
+
+    question_comments = serializers.PrimaryKeyRelatedField(many = True, read_only = True, allow_null = True)
     
     class Meta:
         model = Question
-        fields = ('id', 'title', 'content', 'created_at', 'updated_at', 'points', 'user')
+        fields = ('id', 'title', 'content', 'created_at', 'updated_at', 'points', 'user', 'question_comments')
         read_only_fields = ('user',)
 
 

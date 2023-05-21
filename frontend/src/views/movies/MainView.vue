@@ -1,24 +1,21 @@
 <template>
   <div>
-    Main
     <div class="img-1"></div>
     <MovieRecommendList v-for="(recommendList, idx) in recommendLists" :key="idx" :recommendList="recommendList"/>
-    
-    <!-- {{ movieList }} -->
+
   </div>
 </template>
 
 <script>
 import MovieRecommendList from '@/components/movies/MovieRecommendList'
+
 export default {
   name : 'MainView',
   components : {
     MovieRecommendList,
   },
   created() {
-    if (!this.$store.state.movieList) {
-      this.getMovies()
-    }
+    this.getMovies()
   },
   data () {
     return {
@@ -51,5 +48,4 @@ export default {
   background: url('@/assets/img.bmp') no-repeat center;
   background-size: cover;
 }
-
 </style>

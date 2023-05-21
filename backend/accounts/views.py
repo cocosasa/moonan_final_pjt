@@ -12,7 +12,6 @@ from django.http import JsonResponse
 
 # Create your views here.
 
-
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def create_profile(request): 

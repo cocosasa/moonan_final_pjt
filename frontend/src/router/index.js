@@ -5,11 +5,14 @@ import SearchResultView from '@/views/movies/SearchResultView'
 import ChallengeView from '@/views/community/ChallengeView'
 import MovieView from '@/views/movies/MovieView'
 import MovieDetailView from '@/views/movies/MovieDetailView'
+import MovieRecommendView from '@/views/movies/MovieRecommendView'
 import ProfileView from '@/views/account/ProfileView'
 import SignUpView from '@/views/account/SignUpView'
 import LogInView from '@/views/account/LogInView'
 import LogOutView from '@/views/account/LogOutView'
 import CommunityView from '@/views/community/CommunityView'
+import QuestionFormView from '@/views/community/QuestionFormView'
+import QuestionDetailView from '@/views/community/QuestionDetailView'
 Vue.use(VueRouter)
 
 const routes = [
@@ -23,6 +26,12 @@ const routes = [
     path: '/movies',
     name: 'movies',
     component: MovieView
+  },
+
+  {
+    path: '/recommend',
+    name: 'recommend',
+    component: MovieRecommendView
   },
 
   {
@@ -59,6 +68,18 @@ const routes = [
     path: '/community',
     name: 'community',
     component: CommunityView
+  },
+
+  {
+    path: '/community/post',
+    name: 'postquestion',
+    component: QuestionFormView
+  },
+
+  {
+    path: '/community/:id',
+    name: 'questiondetail',
+    component: QuestionDetailView
   },
 
   {
