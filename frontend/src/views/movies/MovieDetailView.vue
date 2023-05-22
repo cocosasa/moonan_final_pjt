@@ -80,7 +80,7 @@ export default {
     return {
       movie : null,
       reviewContent : null,
-      reviewScore : 0.5,
+      reviewScore : '5.0',
       isWatched : false,
       isWanted : false,
     }
@@ -149,19 +149,19 @@ export default {
     //     console.log(err)
     //   })
     // },
-    // getMovieReviews(){
-    //   axios({
-    //     method: 'get',
-    //     url: `${API_URL}/community/reviews/`,
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data)
-    //     this.reviews = res.data
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })
-    // },
+    getMovieReviews(){
+      axios({
+        method: 'get',
+        url: `${API_URL}/community/reviews/`,
+      })
+      .then((res) => {
+        console.log(res.data)
+        this.movie.movie_reviews = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
     addReview(){
       const content = this.reviewContent
       const score = this.reviewScore
@@ -180,6 +180,8 @@ export default {
       })
         .then((res) => {
           console.log(res.data)
+          this.reviewContent = null
+          this.reviewScore = null
           this.getMovieReviews()
         })
         .catch((err) => {

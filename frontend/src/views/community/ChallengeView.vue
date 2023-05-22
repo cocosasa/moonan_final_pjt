@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Challenge</h1>
-    <QuizItem/>
+    <QuizItem :movie="randomMovie"/>
   </div>
 </template>
 
@@ -11,6 +11,11 @@ export default {
   name :'ChallengeView',
   components : {
     QuizItem,
+  },
+  computed:{
+    randomMovie () {
+      return this.$store.state.popularMovieList.slice(40,41)[0]
+    }
   }
 
 }

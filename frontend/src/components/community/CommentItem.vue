@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="comment" :class="{'writer-comment': questionUser===comment.user, 'detective-comment': questionUser != comment.user }">
     <span>{{ comment.user }}</span>
     <p>{{ comment.content }}</p>
   </div>
@@ -19,9 +19,12 @@ export default {
   },
   props:{
     commentId : Number,
+    questionUser : String,
   },
   created(){
     this.getComment()
+  },
+  computed : {
   },
   methods:{
     getComment(){
@@ -55,5 +58,15 @@ export default {
 </script>
 
 <style>
-
+.writer-comment{
+  background-color: linen;
+}
+.detective-comment{
+  background-color:aliceblue;
+}
+.comment{
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 </style>

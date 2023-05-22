@@ -35,7 +35,7 @@
 
       <div class="btnWrap">
         <a  @click="goToList" class="btnAdd btn">목록</a>
-        <a  @click="addQuestion" class="btnAdd btn">등록</a>
+        <a  @click.prevent="addQuestion" class="btnAdd btn">등록</a>
       </div>	
   </div>
 </template>
@@ -68,6 +68,8 @@ export default {
       formdata.append('title', title)
       formdata.append('content', content)
       formdata.append('points', points)
+      const file = document.getElementById('#file').files[0]
+      formdata.append('image', file)
       // const data = {
       //   title, content, points
       // }

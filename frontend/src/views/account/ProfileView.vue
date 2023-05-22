@@ -1,15 +1,18 @@
 <template>
   <div>
     <div class="d-flex justify-content-between">
-      <div class="profile-img-circle border-1 border shadow mt-3">
-        <img class="profile-img" src="@/assets/Profile.png">
+      <div class="d-flex flex-column">
+        <div class="profile-img-circle border-1 border shadow mt-3">
+          <img class="profile-img" src="@/assets/Profile.png">
+        </div>
+        <button class="btn btn-outline-dark mt-3" >이미지 변경</button>
       </div>
-      <div class="mt-5">
+      <div class="my-5">
         <p>아이디 {{ userData?.user }}</p>
         <p>닉네임 {{ userData?.nickname }}</p>
         <p>포인트 {{ userData?.points }}</p>
       </div>
-      <div v-if="myusername === userData.user" class="my-auto">
+      <div v-if="!myUsername === userData.user" class="my-auto">
         <button @click="toggleFollow">팔로우</button>
       </div>
       <div class="d-flex">
@@ -63,8 +66,8 @@ export default {
     }
   },
   computed: {
-    myusername(){
-      return this.$store.state.user
+    myUsername(){
+      return this.$store.state.username
     },
     watchedMovieList(){
       return this.userData.watched_movies
@@ -119,12 +122,15 @@ export default {
   height: 100%;
 }
 .profile-info{
-  margin-top: 60px;
-  margin-bottom: 40px;
+  margin-top: 80px;
+  margin-bottom: 60px;
   padding-left: 60px;
   padding-right: 60px;
   border-right: 1px solid;
   align-items: center;
+}
+.profile-info:last-of-type{
+  border-right: 0px solid;
 }
 .profile-info > p {
   text-align: center;

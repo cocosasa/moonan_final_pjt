@@ -11,7 +11,7 @@
       <label for="starpoint_8" class="label_star" title="4"><span class="blind">4점</span></label>
       <label for="starpoint_9" class="label_star" title="4.5"><span class="blind" >4.5점</span></label>
       <label for="starpoint_10" class="label_star" title="5"><span class="blind">5점</span></label>
-      <input type="radio" name="starpoint" id="starpoint_1" class="star_radio" checked="true" @click="setScore(0.5)">
+      <input type="radio" name="starpoint" id="starpoint_1" class="star_radio" @click="setScore(0.5)">
       <input type="radio" name="starpoint" id="starpoint_2" class="star_radio" @click="setScore('1.0')">
       <input type="radio" name="starpoint" id="starpoint_3" class="star_radio" @click="setScore('1.5')">
       <input type="radio" name="starpoint" id="starpoint_4" class="star_radio" @click="setScore('2.0')">
@@ -20,7 +20,7 @@
       <input type="radio" name="starpoint" id="starpoint_7" class="star_radio" @click="setScore('3.5')">
       <input type="radio" name="starpoint" id="starpoint_8" class="star_radio" @click="setScore('4.0')" >
       <input type="radio" name="starpoint" id="starpoint_9" class="star_radio" @click="setScore('4.5')">
-      <input type="radio" name="starpoint" id="starpoint_10" class="star_radio" @click="setScore('5.0')">
+      <input type="radio" name="starpoint" id="starpoint_10" class="star_radio" checked="true" @click="setScore('5.0')">
       <span class="starpoint_bg"></span>
     </div>
   </div>

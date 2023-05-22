@@ -4,14 +4,15 @@
     <div>
       <h1>QuestionDetailView</h1>
       <h1>{{ question?.title }}</h1>
-      <h1 @click="goToProfile">{{ question?.user }}</h1>
+      <h1 @click="goToProfile">{{ username }}</h1>
       <p>{{ question?.content }}</p>
       <p>{{ question?.created_at }}</p>
       <p>{{ question?.updated_at }}</p>
       <p>{{ question?.points }}</p>
     </div>
     <div>
-      <h3>조사하기</h3>
+      <h3 v-if="myUsername != username">조사하기</h3>
+      <h3 v-if="myUsername === username">답변하기</h3>
       <form>
         <input type="text" v-model="commentContent">
         <button @click.prevent="addComment">등록</button>
@@ -19,7 +20,7 @@
     </div>
     <div>
       <h3>알려진 정보</h3>
-      <CommentItem v-for="comment in question.question_comments" :key="comment" :comment-id="comment"/>
+      <CommentItem v-for="comment in question.question_comments" :key="comment" :comment-id="comment" :question-user="username"/>
     </div>
   </div>
 </template>
@@ -45,7 +46,10 @@ export default {
   },
   computed:{
     username(){
-      return this.question.user
+      return this.question?.user
+    },
+    myUsername(){
+      return this.$store.state.username
     }
   },
   methods :{

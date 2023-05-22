@@ -1,5 +1,6 @@
 <template>
   <div class="review-container">
+    <p>{{ review.user }}</p>
     <p>{{ review.content }}</p>
     <p>{{ review.score }}</p>
   </div>
@@ -16,6 +17,6 @@ export default {
 
 <style>
 .review-container{
-  background-color: lightsalmon;
+  background-color: whitesmoke;
 }
 </style>
