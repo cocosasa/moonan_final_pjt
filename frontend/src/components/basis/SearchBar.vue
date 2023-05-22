@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- <input type="text" v-model.trim="keyword">
-    <button @click="searchMovie">search</button> -->
+    <input @keyup.enter="searchMovie" type="text" v-model.trim="keyword">
+    <button @click="searchMovie">search</button>
   </div>
 </template>
 
@@ -15,11 +15,11 @@ export default {
   },
   methods:{
     searchMovie(){
-      if(this.keyword === ''){
+      if(!this.keyword){
         return
       }
       if(this.$router.currentRoute === 'search') {
-        this.$router.go({ name: 'search', params:{ keyword: this.keyword } })
+        this.$router.replace({ name: 'search', params:{ keyword: this.keyword } })
       }
       else{
         this.$router.push({name:'search', params:{ keyword:this.keyword}})

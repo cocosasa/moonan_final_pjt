@@ -19,7 +19,7 @@
 
     <router-link v-if="isLogin" :to="{ name: 'LogOutView' }">LogOut</router-link>
     <div v-if="isLogin">
-      <router-link :to="{ name: 'profile', params:{id:4} }">
+      <router-link :to="{ name: 'profile', params:{ username,} }">
         <div class="profile-circle">
           <img class="profile-icon" src="@/assets/Profile.png" alt="">
         </div>
@@ -49,6 +49,9 @@ export default {
   computed: {
     isLogin(){
       return this.$store.state.token ? true : false
+    },
+    username (){ 
+      return this.$store.state.username
     }
   },
   methods: {

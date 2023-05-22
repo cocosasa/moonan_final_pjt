@@ -4,6 +4,7 @@
     <div>
       <h1>QuestionDetailView</h1>
       <h1>{{ question?.title }}</h1>
+      <h1 @click="goToProfile">{{ question?.user }}</h1>
       <p>{{ question?.content }}</p>
       <p>{{ question?.created_at }}</p>
       <p>{{ question?.updated_at }}</p>
@@ -43,6 +44,9 @@ export default {
     }
   },
   computed:{
+    username(){
+      return this.question.user
+    }
   },
   methods :{
     getQuestionDetail(){
@@ -60,6 +64,9 @@ export default {
       .catch((err) => {
         console.log(err)
       })
+    },
+    goToProfile(){
+      this.$router.push({name:'profile', params:{username: this.username}})
     },
     addComment(){
       const data = {

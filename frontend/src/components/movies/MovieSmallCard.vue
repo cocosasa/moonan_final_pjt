@@ -1,5 +1,5 @@
 <template>
-  <div class="small-card">
+  <div class="small-card" @click="goToDetail(movie.id)">
       <img class="small-card-img" :src="'https://image.tmdb.org/t/p/w500'+movie?.poster_path" alt="...">
   </div>
 </template>
@@ -19,6 +19,9 @@ export default {
     }
   },
   methods: {
+    goToDetail(movieId) {
+      this.$router.push({ name: 'detail', params: { id: movieId } })
+    },
   },
 
 }
@@ -30,7 +33,6 @@ export default {
   overflow: hidden;
 }
 .small-card-img{
-  width: 290px;
   height: 300px;
 }
 </style>

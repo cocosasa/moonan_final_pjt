@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span>작성자</span>
+    <span>{{ comment.user }}</span>
     <p>{{ comment.content }}</p>
   </div>
 </template>

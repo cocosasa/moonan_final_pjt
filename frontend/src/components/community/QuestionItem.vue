@@ -2,6 +2,7 @@
   <div class="question-item d-flex justify-content-between">
     <div>
       <h3 class="mb-4" @click="goToQuestionDetail(question)">{{ question.title }}</h3>
+      <p>{{ question.user }}</p>
       <p>{{ shortenContent }}</p>
     </div>
     <div class="my-auto">

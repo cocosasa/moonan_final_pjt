@@ -19,87 +19,14 @@ export default new Vuex.Store({
     voteAvgMovieList : [
     ],
     recommendLists : [
-      [
-        {
-          id:502356,
-          overview:"따단-딴-따단-딴 ♫ 전 세계를 열광시킬 올 타임 슈퍼 어드벤처의 등장! 뉴욕의 평범한 배관공 형제 '마리오'와 ‘루이지’는 배수관 고장으로 위기에 빠진 도시를 구하려다 미스터리한 초록색 파이프 안으로 빨려 들어가게 된다. 파이프를 통해 새로운 세상으로 차원 이동하게 된 형제. 형 '마리오'는 뛰어난 리더십을 지닌 '피치'가 통치하는 버섯왕국에 도착하지만 동생 '루이지'는 빌런 '쿠파'가 있는 다크랜드로 떨어지며 납치를 당하고 ‘마리오’는 동생을 구하기 위해 ‘피치’와 ‘키노피오’의 도움을 받아 '쿠파'에 맞서기로 결심한다. 그러나 슈퍼스타로 세상을 지배하려는 그의 강력한 힘 앞에 이들은 예기치 못한 위험에 빠지게 되는데...!",
-          popularity:8501.774,
-          poster_path:"/dlGyzCxbBQK1U2O5o31Z1hB6erc.jpg",
-          released_date:"2023-04-05",
-          title:"슈퍼 마리오 브라더스",
-          vote_avg:7.6,
-        },
-        {
-          id:502356,
-          overview:"따단-딴-따단-딴 ♫ 전 세계를 열광시킬 올 타임 슈퍼 어드벤처의 등장! 뉴욕의 평범한 배관공 형제 '마리오'와 ‘루이지’는 배수관 고장으로 위기에 빠진 도시를 구하려다 미스터리한 초록색 파이프 안으로 빨려 들어가게 된다. 파이프를 통해 새로운 세상으로 차원 이동하게 된 형제. 형 '마리오'는 뛰어난 리더십을 지닌 '피치'가 통치하는 버섯왕국에 도착하지만 동생 '루이지'는 빌런 '쿠파'가 있는 다크랜드로 떨어지며 납치를 당하고 ‘마리오’는 동생을 구하기 위해 ‘피치’와 ‘키노피오’의 도움을 받아 '쿠파'에 맞서기로 결심한다. 그러나 슈퍼스타로 세상을 지배하려는 그의 강력한 힘 앞에 이들은 예기치 못한 위험에 빠지게 되는데...!",
-          popularity:8501.774,
-          poster_path:"/xSDdRAjxKAGi8fUBLOqSrBhJmF0.jpg",
-          released_date:"2023-04-05",
-          title:"슈퍼 마리오 브라더스",
-          vote_avg:7.6,
-        },
-        {
-          id:502356,
-          overview:"따단-딴-따단-딴 ♫ 전 세계를 열광시킬 올 타임 슈퍼 어드벤처의 등장! 뉴욕의 평범한 배관공 형제 '마리오'와 ‘루이지’는 배수관 고장으로 위기에 빠진 도시를 구하려다 미스터리한 초록색 파이프 안으로 빨려 들어가게 된다. 파이프를 통해 새로운 세상으로 차원 이동하게 된 형제. 형 '마리오'는 뛰어난 리더십을 지닌 '피치'가 통치하는 버섯왕국에 도착하지만 동생 '루이지'는 빌런 '쿠파'가 있는 다크랜드로 떨어지며 납치를 당하고 ‘마리오’는 동생을 구하기 위해 ‘피치’와 ‘키노피오’의 도움을 받아 '쿠파'에 맞서기로 결심한다. 그러나 슈퍼스타로 세상을 지배하려는 그의 강력한 힘 앞에 이들은 예기치 못한 위험에 빠지게 되는데...!",
-          popularity:8501.774,
-          poster_path:"/gH4UTm1wY6HWiv1UBkT7IkiIxjD.jpg",
-          released_date:"2023-04-05",
-          title:"슈퍼 마리오 브라더스",
-          vote_avg:7.6,
-        },
-        {
-          id:502356,
-          overview:"따단-딴-따단-딴 ♫ 전 세계를 열광시킬 올 타임 슈퍼 어드벤처의 등장! 뉴욕의 평범한 배관공 형제 '마리오'와 ‘루이지’는 배수관 고장으로 위기에 빠진 도시를 구하려다 미스터리한 초록색 파이프 안으로 빨려 들어가게 된다. 파이프를 통해 새로운 세상으로 차원 이동하게 된 형제. 형 '마리오'는 뛰어난 리더십을 지닌 '피치'가 통치하는 버섯왕국에 도착하지만 동생 '루이지'는 빌런 '쿠파'가 있는 다크랜드로 떨어지며 납치를 당하고 ‘마리오’는 동생을 구하기 위해 ‘피치’와 ‘키노피오’의 도움을 받아 '쿠파'에 맞서기로 결심한다. 그러나 슈퍼스타로 세상을 지배하려는 그의 강력한 힘 앞에 이들은 예기치 못한 위험에 빠지게 되는데...!",
-          popularity:8501.774,
-          poster_path:"/dlGyzCxbBQK1U2O5o31Z1hB6erc.jpg",
-          released_date:"2023-04-05",
-          title:"슈퍼 마리오 브라더스",
-          vote_avg:7.6,
-        }
-      ],
-      [
-        {
-          id:502356,
-          overview:"따단-딴-따단-딴 ♫ 전 세계를 열광시킬 올 타임 슈퍼 어드벤처의 등장! 뉴욕의 평범한 배관공 형제 '마리오'와 ‘루이지’는 배수관 고장으로 위기에 빠진 도시를 구하려다 미스터리한 초록색 파이프 안으로 빨려 들어가게 된다. 파이프를 통해 새로운 세상으로 차원 이동하게 된 형제. 형 '마리오'는 뛰어난 리더십을 지닌 '피치'가 통치하는 버섯왕국에 도착하지만 동생 '루이지'는 빌런 '쿠파'가 있는 다크랜드로 떨어지며 납치를 당하고 ‘마리오’는 동생을 구하기 위해 ‘피치’와 ‘키노피오’의 도움을 받아 '쿠파'에 맞서기로 결심한다. 그러나 슈퍼스타로 세상을 지배하려는 그의 강력한 힘 앞에 이들은 예기치 못한 위험에 빠지게 되는데...!",
-          popularity:8501.774,
-          poster_path:"/dlGyzCxbBQK1U2O5o31Z1hB6erc.jpg",
-          released_date:"2023-04-05",
-          title:"슈퍼 마리오 브라더스",
-          vote_avg:7.6,
-        },
-        {
-          id:502356,
-          overview:"따단-딴-따단-딴 ♫ 전 세계를 열광시킬 올 타임 슈퍼 어드벤처의 등장! 뉴욕의 평범한 배관공 형제 '마리오'와 ‘루이지’는 배수관 고장으로 위기에 빠진 도시를 구하려다 미스터리한 초록색 파이프 안으로 빨려 들어가게 된다. 파이프를 통해 새로운 세상으로 차원 이동하게 된 형제. 형 '마리오'는 뛰어난 리더십을 지닌 '피치'가 통치하는 버섯왕국에 도착하지만 동생 '루이지'는 빌런 '쿠파'가 있는 다크랜드로 떨어지며 납치를 당하고 ‘마리오’는 동생을 구하기 위해 ‘피치’와 ‘키노피오’의 도움을 받아 '쿠파'에 맞서기로 결심한다. 그러나 슈퍼스타로 세상을 지배하려는 그의 강력한 힘 앞에 이들은 예기치 못한 위험에 빠지게 되는데...!",
-          popularity:8501.774,
-          poster_path:"/dlGyzCxbBQK1U2O5o31Z1hB6erc.jpg",
-          released_date:"2023-04-05",
-          title:"슈퍼 마리오 브라더스",
-          vote_avg:7.6,
-        },
-        {
-          id:502356,
-          overview:"따단-딴-따단-딴 ♫ 전 세계를 열광시킬 올 타임 슈퍼 어드벤처의 등장! 뉴욕의 평범한 배관공 형제 '마리오'와 ‘루이지’는 배수관 고장으로 위기에 빠진 도시를 구하려다 미스터리한 초록색 파이프 안으로 빨려 들어가게 된다. 파이프를 통해 새로운 세상으로 차원 이동하게 된 형제. 형 '마리오'는 뛰어난 리더십을 지닌 '피치'가 통치하는 버섯왕국에 도착하지만 동생 '루이지'는 빌런 '쿠파'가 있는 다크랜드로 떨어지며 납치를 당하고 ‘마리오’는 동생을 구하기 위해 ‘피치’와 ‘키노피오’의 도움을 받아 '쿠파'에 맞서기로 결심한다. 그러나 슈퍼스타로 세상을 지배하려는 그의 강력한 힘 앞에 이들은 예기치 못한 위험에 빠지게 되는데...!",
-          popularity:8501.774,
-          poster_path:"/dlGyzCxbBQK1U2O5o31Z1hB6erc.jpg",
-          released_date:"2023-04-05",
-          title:"슈퍼 마리오 브라더스",
-          vote_avg:7.6,
-        },
-        {
-          id:502356,
-          overview:"따단-딴-따단-딴 ♫ 전 세계를 열광시킬 올 타임 슈퍼 어드벤처의 등장! 뉴욕의 평범한 배관공 형제 '마리오'와 ‘루이지’는 배수관 고장으로 위기에 빠진 도시를 구하려다 미스터리한 초록색 파이프 안으로 빨려 들어가게 된다. 파이프를 통해 새로운 세상으로 차원 이동하게 된 형제. 형 '마리오'는 뛰어난 리더십을 지닌 '피치'가 통치하는 버섯왕국에 도착하지만 동생 '루이지'는 빌런 '쿠파'가 있는 다크랜드로 떨어지며 납치를 당하고 ‘마리오’는 동생을 구하기 위해 ‘피치’와 ‘키노피오’의 도움을 받아 '쿠파'에 맞서기로 결심한다. 그러나 슈퍼스타로 세상을 지배하려는 그의 강력한 힘 앞에 이들은 예기치 못한 위험에 빠지게 되는데...!",
-          popularity:8501.774,
-          poster_path:"/dlGyzCxbBQK1U2O5o31Z1hB6erc.jpg",
-          released_date:"2023-04-05",
-          title:"슈퍼 마리오 브라더스",
-          vote_avg:7.6,
-        }
-      ],
-
     ],
     questionList :[
     ],
+    genreList : [
+    ],
     token : null,
+    username : null,
+    nickname : null,
   },
   getters: {
     isLogin(state){
@@ -113,15 +40,23 @@ export default new Vuex.Store({
     GET_VOTEAVGMOVIES(state, movieList){
       state.voteAvgMovieList = movieList
     },
+    GET_GENRES(state, genres){
+      state.genreList = genres
+    },
     GET_QUESTIONS(state, list){
       state.questionList = list
     },
-    SAVE_TOKEN(state, token){
+    SAVE_TOKEN(state, data){
+      const {token, username, nickname} = data
       state.token = token
+      state.username = username
+      state.nickname = nickname
       router.push({ name:'movies' })
     },
     DELETE_TOKEN(state){
       state.token = null
+      state.username = null
+      state.nickname = null
       router.push({name : 'LogInView'})
     },
   },
@@ -150,6 +85,18 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
+    getGenres(context){
+      axios({
+        method: 'get',
+        url: `${API_URL}/api/v1/genres/`,
+      })
+      .then(res=>{
+        context.commit('GET_GENRES', res.data)
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    },
     getQuestions(context){
       axios({
         method: 'get',
@@ -167,8 +114,8 @@ export default new Vuex.Store({
       })
     },
     signUp(context, payload){
-      const { username, password1, password2 } = payload
-
+      const { username, nickname, password1, password2 } = payload
+      var token = ''
       axios({
         method : 'post', 
         url:`${API_URL}/accounts/signup/`,
@@ -178,7 +125,28 @@ export default new Vuex.Store({
       })
       .then(res=>{
         console.log(res.data)
-        context.commit('SAVE_TOKEN', res.data.key)
+        token = res.data.key
+
+      })
+      .then(()=>{
+        axios({
+          method : 'post', 
+          url:`${API_URL}/accounts/profile/`,
+          headers : {
+            Authorization : `Token ${token}`
+          },
+          data:{
+            nickname,
+          }
+        })
+        .then(res=>{
+          console.log(res.data)
+
+          context.commit('SAVE_TOKEN', {
+            token, username, nickname
+          })
+        })
+        .catch(err=>{console.log(err)})
       })
       .catch(err=>{
         console.log(err)
@@ -187,7 +155,6 @@ export default new Vuex.Store({
     },
     logIn(context, payload){
       const {username, password} = payload
-
       axios({
         method : 'post',
         url : `${API_URL}/accounts/login/`,
@@ -196,7 +163,22 @@ export default new Vuex.Store({
         }
       })
       .then(res=>{
-        context.commit('SAVE_TOKEN', res.data.key)
+        console.log(res.data)
+        axios({
+          method : 'get',
+          url : `${API_URL}/accounts/profile/${username}/`,
+        })
+        .then(response=>{
+          console.dir(response.data)
+          context.commit('SAVE_TOKEN', {
+            token:res.data.key,
+            nickname : response.data.nickname,
+            username,
+          })
+        })
+        .catch(err=>{
+          console.log(err)
+        })
       })
       .catch(err=>{
         console.log(err)

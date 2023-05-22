@@ -1,7 +1,7 @@
 <template>
   <div class="infinite">
-    Movie
     <div>카테고리</div>
+    <CategoryComponent/>
     <div class="container">
       <span class="ms-auto" @click="sortByPopular">인기 순</span>
       <span @click="sortByVoteAvg">평점 순</span>
@@ -17,15 +17,19 @@
 
 <script>
 import InfiniteLoading from 'vue-infinite-loading';
+import CategoryComponent from '@/components/movies/CategoryComponent.vue';
 import MovieList from '@/components/movies/MovieList'
 export default {
   name: 'MovieView',
   components: {
+    InfiniteLoading,
+    CategoryComponent,
     MovieList,
-    InfiniteLoading
   },
   created() {
-    this.getMovies()
+    if(!this.$store.popularMovieList){
+      this.getMovies()
+    }
   },
   data() {
     return {
@@ -38,9 +42,10 @@ export default {
   computed: {
   },
   methods: {
-    // getMovies() {
-    //   this.$store.dispatch('getMovies')
-    // },
+    getMovies() {
+      this.$store.dispatch('getMovies')
+      this.$store.dispatch('getGenres')
+    },
     infiniteHandler($state) {
       setTimeout(() => {
         if (this.currentPage < 10) {

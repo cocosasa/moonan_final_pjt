@@ -17,6 +17,9 @@ export default {
       return this.$store.state.recommendLists
     }
   },
+  methods:{
+    
+  }
 }
 </script>
 

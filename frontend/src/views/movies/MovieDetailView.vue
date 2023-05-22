@@ -12,11 +12,18 @@
           <p>{{ movie?.genres }}</p>
         </div>
         <div>
-          <div>보고싶어요 토글</div>
-          <div>Watched 토글</div>
+          <div @click="toggleWant">
+            <button v-if="isWanted"> 보고 싶어요 </button>
+            <button v-else> 보고 싶어요 </button>
+          </div>
+          <div @click="toggleWatch">
+            <button v-if="isWatched">봤어요</button>
+            <button v-else>안 봤어요</button>
+          </div>
         </div>
       </div>
     </div>
+    <!-- <MovieVideo :movie="movie.title"/> -->
     <div>
       <p>줄거리</p>
       <p>{{ movie?.overview }}</p>
@@ -30,14 +37,29 @@
       </div>
     </div>
     <div>
-      <h3>한줄평</h3>
-      
+      <h3>한 줄평 쓰기</h3>
+      <div>
+        <form name="reviewform" id="reviewform">
+          <input type="text" v-model="reviewContent">
+          <StarScore @set-score="setScore"/>
+          {{ reviewScore }} 점
+
+          <button @click.prevent="addReview"> 등록하기 </button>
+        </form>
+      </div>
+      <h3>한 줄평</h3>
+      <div>
+        <ReviewItem v-for="(review,idx) in reviews" :key="idx" :review="review"/>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import ActorItem from '@/components/movies/ActorItem.vue';
+// import MovieVideo from '@/components/movies/MovieVideo.vue';
+import ReviewItem from '@/components/community/ReviewItem.vue';
+import StarScore from '@/components/community/StarScore.vue';
 import axios from 'axios';
 
 const API_URL = 'http://127.0.0.1:8000'
@@ -46,14 +68,24 @@ export default {
   name: 'MovieDetailView',
   components: {
     ActorItem,
+    // MovieVideo,
+    StarScore,
+    ReviewItem,
   },
   created(){
     this.getMovieDetail()
     this.getMovieActors()
+    this.getMovieReviews()
+    this.getProfile()
   },
   data() {
     return {
       movie : null,
+      reviews : null,
+      reviewContent : null,
+      reviewScore : 0.5,
+      isWatched : false,
+      isWanted : false,
     }
   },
   computed: {
@@ -84,6 +116,22 @@ export default {
           console.log(err)
         })
     },
+    getProfile(){
+      axios({
+        method: 'get',
+        url: `${API_URL}/accounts/profile/${this.$store.state.nickname}/`,
+      })
+      .then(res => {
+        console.log(res.data)
+        if (res.data.want_to_see_movies.includes(this.$route.params.id))
+          this.isWanted = true
+        if (res.data.watched_movies.includes(this.$route.params.id))
+          this.isWatched = true
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
     getMovieActors(){
       axios({
         method: 'get',
@@ -99,6 +147,80 @@ export default {
       .catch((err) => {
         console.log(err)
       })
+    },
+    getMovieReviews(){
+      axios({
+        method: 'get',
+        url: `${API_URL}/community/reviews/`,
+      })
+      .then((res) => {
+        console.log(res.data)
+        this.reviews = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    addReview(){
+      const content = this.reviewContent
+      const score = this.reviewScore
+      var formdata = new FormData()
+      formdata.append('content', content)
+      formdata.append('score', score)
+
+      console.log(formdata)
+      axios({
+        method: 'post',
+        url: `${API_URL}/community/movie/${this.$route.params.id}/review/`,
+        headers: {
+          'Authorization': `Token ${this.$store.state.token}`,
+        },
+        data: formdata,
+      })
+        .then((res) => {
+          console.log(res.data)
+          this.getMovieReviews()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    setScore(score){
+      this.reviewScore = score
+    },
+    toggleWant(){
+      console.log('toggle')
+      axios({
+        method: 'post',
+        url: `${API_URL}/accounts/wanted/${this.$route.params.id}/`,
+        headers: {
+          'Authorization': `Token ${this.$store.state.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data)
+        this.isWanted = !this.isWanted
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    toggleWatch(){
+      console.log('toggle')
+      axios({
+        method: 'post',
+        url: `${API_URL}/accounts/watched/${this.$route.params.id}/`,
+        headers: {
+          'Authorization': `Token ${this.$store.state.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data)
+        this.isWatched = !this.isWatched
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     }
   },
 
@@ -109,4 +231,5 @@ export default {
 .movie-detail-img {
   width: 400px;
 }
+
 </style>

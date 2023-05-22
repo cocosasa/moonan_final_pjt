@@ -17,13 +17,11 @@ class Review(models.Model):
 
 class ReviewComment(models.Model):
     content = models.CharField(max_length = 100)
-    review = models.ForeignKey(Review, on_delete = models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     parent_comment = models.ForeignKey('self', on_delete = models.CASCADE, null = True, related_name = 'child_comments')
     review = models.ForeignKey(Review, on_delete = models.CASCADE, null = True, related_name = 'comments')
-
 
 
 class Question(models.Model):
@@ -37,7 +35,6 @@ class Question(models.Model):
 
 class QuestionComment(models.Model):
     content = models.TextField()
-    question = models.ForeignKey(Question, on_delete = models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)

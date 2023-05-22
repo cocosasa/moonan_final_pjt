@@ -2,9 +2,8 @@ from rest_framework import serializers
 from .models import Review, ReviewComment, Question, QuestionComment
 
 
-
 class ReviewSerializer(serializers.ModelSerializer):
-
+    user = serializers.CharField(source='user.username', read_only=True)
     comments = serializers.PrimaryKeyRelatedField(many = True, read_only = True, allow_null = True)
 
     class Meta:
@@ -23,7 +22,7 @@ class ReviewCommentSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-
+    user = serializers.CharField(source='user.username', read_only=True)
     question_comments = serializers.PrimaryKeyRelatedField(many = True, read_only = True, allow_null = True)
     
     class Meta:
@@ -34,7 +33,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 class QuestionCommentSerializer(serializers.ModelSerializer):
     child_comments = serializers.PrimaryKeyRelatedField(many = True, read_only = True, allow_null = True)
-
+    user = serializers.CharField(source='user.username', read_only=True)
     class Meta:
         model = QuestionComment
         fields = ('id', 'question', 'content', 'user', 'created_at', 'updated_at', 'parent_comment', 'child_comments')

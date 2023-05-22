@@ -5,8 +5,12 @@
         <img class="profile-img" src="@/assets/moonanface.png">
       </div>
       <div class="mt-5">
-        <p>아이디</p>
-        <p>포인트</p>
+        <p>{{ userData?.nickname }}</p>
+        <p>{{ userData?.points }}</p>
+      </div>
+      <div v-if="mynickname != userData?.nickname">
+        <button @click="toggleFollow">팔로우</button>
+        <button>팔로우</button>
       </div>
       <div class="d-flex">
         <div class="profile-info">
@@ -19,11 +23,11 @@
         </div>
         <div class="profile-info">
           <p>24</p>
-          <p>SOLVE</p>
+          <p>Followings</p>
         </div>
         <div class="profile-info">
           <p>24</p>
-          <p>SOLVE</p>
+          <p>Follower</p>
         </div>
       </div>
     </div>
@@ -40,21 +44,54 @@
 </template>
 
 <script>
+import axios from 'axios'
+const API_URL = 'http://127.0.0.1:8000'
+
 export default {
   name: 'ProfileView',
-  components: {
-
+  created(){
+    this.getUserInfomation()
   },
   data() {
     return {
-
+      userData:null,
+      user:null,
     }
   },
   computed: {
-
+    mynickname(){
+      return this.$store.state.username
+    }
   },
   methods: {
-
+    getUserInfomation(){
+      axios({
+        method : 'get',
+        url : `${API_URL}/accounts/profile/${this.$route.params.username}/`,
+      })
+      .then(res=>{
+        console.dir(res.data)
+        this.userData = res.data
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    },
+    toggleFollow(){
+      axios({
+        method: 'post',
+        url: `${API_URL}/accounts/follow/${this.$route.params.username}/`,
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
+      })
+        .then(res => {
+          console.dir(res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
   },
 
 }

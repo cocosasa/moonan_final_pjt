@@ -1,6 +1,6 @@
 from .models import Profile
 from rest_framework import status
-from .serializers import ProfileSerializer
+from .serializers import ProfileSerializer, UserSerializer
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view, permission_classes
 from django.views.decorators.http import require_POST
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
+from movies.models import Movie
 
 # Create your views here.
 
@@ -23,8 +24,9 @@ def create_profile(request):
 
 
 @api_view(['GET', 'PUT'])
-def profile(request, profile_pk) :
-    profile = get_object_or_404(Profile, pk = profile_pk)
+def profile(request, username):
+    user = get_object_or_404(get_user_model(), username=username)
+    profile = get_object_or_404(Profile, pk=user.id)
     
     if request.method == 'GET' :
         serializer = ProfileSerializer(profile)
@@ -39,24 +41,52 @@ def profile(request, profile_pk) :
         return Response(status = status.HTTP_401_UNAUTHORIZED)
 
 
-@require_POST
-def follow(request, user_pk):
-    if request.user.is_authenticated:
-        User = get_user_model()
-        me = request.user
-        you = User.objects.get(pk = user_pk)
-        if me != you:
-            if you.followers.filter(pk = me.pk).exists():
-                you.followers.remove(me)
-                is_followed = False
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def follow(request, username):
+    you = get_object_or_404(get_user_model(), username=username)
+    me = request.user
+    if me != you:
+        if me.followers.filter(pk = you.pk).exists():
+            me.followers.remove(you)
+        else:
+            me.followers.add(you)
+        serializer = UserSerializer(me)
+        return Response(serializer.data)
+    return Response(status = status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def wanted(request, movie_pk):
+        movie = get_object_or_404(Movie, pk = movie_pk)
+        me = get_object_or_404(Profile, pk = request.user.pk)
+        if me.pk == request.user.pk:
+            if me.want_to_see_movies.filter(pk = movie_pk).exists:
+                me.want_to_see_movies.remove(movie)
             else:
-                you.followers.add(me)
-                is_followed = True
+                me.want_to_see_movies.add(movie)
 
-            context = {
-                'is_followed': is_followed,
-                'followers_count': you.followers.count(),
-                'followings_count': you.followings.count(),
-            }
+            serializer = ProfileSerializer(me)
+            return Response(serializer.data)
+        return Response(status = status.HTTP_400_BAD_REQUEST)
 
-            return JsonResponse(context)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def watched(request, movie_pk):
+        movie = get_object_or_404(Movie, pk = movie_pk)
+        me = get_object_or_404(Profile, pk = request.user.pk)
+        
+        if me.pk == request.user.pk:
+            print(me.watched_movies)
+            if me.watched_movies.filter(pk = movie_pk).exists:
+                me.watched_movies.remove(movie)
+
+            else:
+                me.watched_movies.add(movie)
+                
+
+            serializer = ProfileSerializer(me)
+            return Response(serializer.data)
+        return Response(status = status.HTTP_400_BAD_REQUEST)
