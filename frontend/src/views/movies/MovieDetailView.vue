@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <!-- <MovieVideo :movie="movie.title"/> -->
+    <MovieVideo v-if="movie" :movie="movie"/>
     <div>
       <p>줄거리</p>
       <p>{{ movie?.overview }}</p>
@@ -55,7 +55,7 @@
 
 <script>
 import ActorItem from '@/components/movies/ActorItem.vue';
-// import MovieVideo from '@/components/movies/MovieVideo.vue';
+import MovieVideo from '@/components/movies/MovieVideo.vue';
 import ReviewItem from '@/components/community/ReviewItem.vue';
 import StarScore from '@/components/community/StarScore.vue';
 import axios from 'axios';
@@ -66,20 +66,19 @@ export default {
   name: 'MovieDetailView',
   components: {
     ActorItem,
-    // MovieVideo,
+    MovieVideo,
     StarScore,
     ReviewItem,
   },
   created(){
     this.getMovieDetail()
-    this.getMovieActors()
-    this.getMovieReviews()
+    // this.getMovieActors()
+    // this.getMovieReviews()
     this.getProfile()
   },
   data() {
     return {
       movie : null,
-      reviews : null,
       reviewContent : null,
       reviewScore : 0.5,
       isWatched : false,
@@ -95,6 +94,9 @@ export default {
       } else {
         return overview
       }
+    },
+    reviews(){
+      return this.movie?.movie_reviews
     }
   },
   methods: {
@@ -121,7 +123,6 @@ export default {
       })
       .then(res => {
         console.log(res.data)
-        console.log(this.$route.params.id)
         if (res.data.want_to_see_movies.includes(this.$route.params.id)){
           this.isWanted = true
         }
@@ -132,35 +133,35 @@ export default {
         console.log(err)
       })
     },
-    getMovieActors(){
-      axios({
-        method: 'get',
-        url: `${API_URL}/api/v1/${this.$route.params.id}/`,
-        // headers: {
-        //   Authorization: `Token ${this.$store.state.token}`
-        // }
-      })
-      .then((res) => {
-        console.log(res.data)
-        this.movie = res.data
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    },
-    getMovieReviews(){
-      axios({
-        method: 'get',
-        url: `${API_URL}/community/reviews/`,
-      })
-      .then((res) => {
-        console.log(res.data)
-        this.reviews = res.data
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    },
+    // getMovieActors(){
+    //   axios({
+    //     method: 'get',
+    //     url: `${API_URL}/api/v1/${this.$route.params.id}/`,
+    //     // headers: {
+    //     //   Authorization: `Token ${this.$store.state.token}`
+    //     // }
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data)
+    //     this.movie = res.data
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+    // },
+    // getMovieReviews(){
+    //   axios({
+    //     method: 'get',
+    //     url: `${API_URL}/community/reviews/`,
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data)
+    //     this.reviews = res.data
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+    // },
     addReview(){
       const content = this.reviewContent
       const score = this.reviewScore

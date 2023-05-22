@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>" {{keyword}} " 검색결과</h1>
-    <div v-if="!results">검색결과가 없습니다..</div>
+    <div v-if="!results?.length">검색결과가 없습니다..</div>
     <MovieList :movie-list="results"/>
   </div>
 </template>
@@ -13,7 +13,7 @@ import MovieList from '@/components/movies/MovieList.vue'
 const API_URL = 'http://127.0.0.1:8000'
 
 export default {
-  name: 'SearchView',
+  name: 'SearchResultView',
   components: {
     MovieList
   },
@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      results : null,
+      results : [],
     }
   },
   computed: {

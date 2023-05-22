@@ -4,8 +4,11 @@
       <span class="fs-1">무비 몽타주</span>
       <div class="btn ms-5 btn-warning" @click="goToPostQuestion">질문하기</div>
     </div>
-    <div>
+    <div class="question-list">
       <QuestionItem v-for="q in questionList" :key="q.id" :question="q" />
+      <div v-if="!questionList.length" class="text-center">
+        더 이상 등록된 몽타주가 없습니다..
+      </div>
     </div>
   </div>
 </template>
@@ -37,5 +40,12 @@ export default {
 </script>
 
 <style>
-
+.question-list{
+  min-width: 100%;
+  min-height: 800px;
+  padding: 10px;
+  background-color: lightgray;
+  border-radius: 5px;
+  margin-bottom: 100px;
+}
 </style>

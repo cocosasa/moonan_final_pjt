@@ -3,7 +3,7 @@ from .models import Movie, Genre, Actor
 from community.serializers import ReviewSerializer
 
 class GenreSerializer(serializers.ModelSerializer):
-    movie_genres = serializers.PrimaryKeyRelatedField(many = True, read_only = True)
+    # movie_genres = serializers.PrimaryKeyRelatedField(many = True, read_only = True)
     movie_genres_name = serializers.CharField(
         source='movie_genres.name', read_only=True)
 

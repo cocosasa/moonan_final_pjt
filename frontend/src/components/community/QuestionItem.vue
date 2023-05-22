@@ -43,7 +43,7 @@ export default {
   background-color: whitesmoke;
   overflow: hidden;
   margin-bottom: 20px;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 10px;
 }
 .point-box{

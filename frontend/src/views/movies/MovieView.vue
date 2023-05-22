@@ -1,10 +1,12 @@
 <template>
-  <div class="infinite">
+  <div>
     <div>카테고리</div>
     <CategoryComponent/>
-    <div class="container">
-      <span class="ms-auto" @click="sortByPopular">인기 순</span>
-      <span @click="sortByVoteAvg">평점 순</span>
+    <div class="">
+      <div class="d-flex">
+        <div class="ms-auto me-2" :class="{'text-danger': sortBy === 1 }" @click="sortByPopular">인기 순</div> | 
+        <div class="ms-2" :class="{ 'text-danger': sortBy === 2 }" @click="sortByVoteAvg">평점 순</div>
+      </div>
       <MovieList v-if="sortBy===1" :movie-list="loadedPopularMovieList"/>
       <MovieList v-if="sortBy===2" :movie-list="loadedVoteAvgMovieList"/>
       <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
