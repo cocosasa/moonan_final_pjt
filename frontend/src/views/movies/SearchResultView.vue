@@ -2,22 +2,20 @@
   <div>
     <h1>" {{keyword}} " 검색결과</h1>
     <div v-if="!results">검색결과가 없습니다..</div>
-    <div v-else class="row">
-      <MovieCard v-for="movie in results" :key="movie.id" :movie="movie" @click.native="goToDetail(movie.id)"/>
-    </div>
+    <MovieList :movie-list="results"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import MovieCard from '@/components/movies/MovieCard.vue'
+import MovieList from '@/components/movies/MovieList.vue'
 
 const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   name: 'SearchView',
   components: {
-    MovieCard
+    MovieList
   },
   created(){
     this.getSearchResults(this.keyword)

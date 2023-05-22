@@ -14,7 +14,11 @@ export default {
   },
   computed: {
     recommendLists() {
-      return this.$store.state.recommendLists
+      return [
+        this.$store.state.popularMovieList.slice(10, 16),
+        this.$store.state.popularMovieList.slice(20, 26),
+        this.$store.state.popularMovieList.slice(120, 126),
+      ]
     }
   },
   methods:{
