@@ -11,14 +11,12 @@
           <p>별{{ movie?.vote_avg }} 점</p>
           <p>{{ movie?.genres }}</p>
         </div>
-        <div>
+        <div class="d-flex">
           <div @click="toggleWant">
-            <button v-if="isWanted"> 보고 싶어요 </button>
-            <button v-else> 보고 싶어요 </button>
+            <button :class="{'btn-secondary':!isWanted, 'btn-primary':isWanted}" class="btn"> 보고 싶어요 </button>
           </div>
           <div @click="toggleWatch">
-            <button v-if="isWatched">봤어요</button>
-            <button v-else>안 봤어요</button>
+            <button :class="{'btn-secondary': !isWatched, 'btn-primary':isWatched }" class="btn">봤어요</button>
           </div>
         </div>
       </div>
@@ -119,12 +117,14 @@ export default {
     getProfile(){
       axios({
         method: 'get',
-        url: `${API_URL}/accounts/profile/${this.$store.state.nickname}/`,
+        url: `${API_URL}/accounts/profile/${this.$store.state.username}/`,
       })
       .then(res => {
         console.log(res.data)
-        if (res.data.want_to_see_movies.includes(this.$route.params.id))
+        console.log(this.$route.params.id)
+        if (res.data.want_to_see_movies.includes(this.$route.params.id)){
           this.isWanted = true
+        }
         if (res.data.watched_movies.includes(this.$route.params.id))
           this.isWatched = true
       })

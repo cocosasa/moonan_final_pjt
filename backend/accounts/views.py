@@ -59,34 +59,30 @@ def follow(request, username):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def wanted(request, movie_pk):
-        movie = get_object_or_404(Movie, pk = movie_pk)
-        me = get_object_or_404(Profile, pk = request.user.pk)
-        if me.pk == request.user.pk:
-            if me.want_to_see_movies.filter(pk = movie_pk).exists:
-                me.want_to_see_movies.remove(movie)
-            else:
-                me.want_to_see_movies.add(movie)
+    movie = get_object_or_404(Movie, pk = movie_pk)
+    me = get_object_or_404(Profile, pk = request.user.pk)
+    
+    if me.want_to_see_movies.filter(pk = movie_pk).exists():
+        me.want_to_see_movies.remove(movie)
+    else:
+        me.want_to_see_movies.add(movie)
 
-            serializer = ProfileSerializer(me)
-            return Response(serializer.data)
-        return Response(status = status.HTTP_400_BAD_REQUEST)
+    serializer = ProfileSerializer(me)
+    return Response(serializer.data)
 
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def watched(request, movie_pk):
-        movie = get_object_or_404(Movie, pk = movie_pk)
-        me = get_object_or_404(Profile, pk = request.user.pk)
-        
-        if me.pk == request.user.pk:
-            print(me.watched_movies)
-            if me.watched_movies.filter(pk = movie_pk).exists:
-                me.watched_movies.remove(movie)
+    movie = get_object_or_404(Movie, pk = movie_pk)
+    me = get_object_or_404(Profile, pk = request.user.pk)
+    
+    print(me.watched_movies)
+    if me.watched_movies.filter(pk = movie_pk).exists():
+        me.watched_movies.remove(movie)
 
-            else:
-                me.watched_movies.add(movie)
-                
+    else:
+        me.watched_movies.add(movie)
+    serializer = ProfileSerializer(me)
+    return Response(serializer.data)
 
-            serializer = ProfileSerializer(me)
-            return Response(serializer.data)
-        return Response(status = status.HTTP_400_BAD_REQUEST)

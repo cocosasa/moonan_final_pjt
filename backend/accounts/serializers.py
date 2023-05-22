@@ -3,6 +3,8 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from movies.models import Movie
 
+from movies.serializers import MovieSerializer
+
 
 class UserSerializer(serializers.ModelSerializer):
     followers = serializers.PrimaryKeyRelatedField(many = True, read_only = True)
@@ -19,11 +21,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
 
-    want_to_see_movies = serializers.PrimaryKeyRelatedField(queryset = Movie.objects.all(), many = True, required = False)
-    watched_movies = serializers.PrimaryKeyRelatedField(queryset = Movie.objects.all(), many = True, required = False)
-
+    want_to_see_movies = MovieSerializer(many=True, required=False, read_only=True)
+    watched_movies = MovieSerializer(many=True, required=False, read_only=True)
+    user = serializers.CharField(source='user.username', read_only=True)
 
     class Meta:
         model = Profile
         fields = '__all__'
-        read_only_fields = ('user',)

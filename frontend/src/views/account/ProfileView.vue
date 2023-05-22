@@ -1,16 +1,16 @@
 <template>
   <div>
     <div class="d-flex justify-content-between">
-      <div class="profile-img-circle">
-        <img class="profile-img" src="@/assets/moonanface.png">
+      <div class="profile-img-circle border-1 border shadow mt-3">
+        <img class="profile-img" src="@/assets/Profile.png">
       </div>
       <div class="mt-5">
-        <p>{{ userData?.nickname }}</p>
-        <p>{{ userData?.points }}</p>
+        <p>아이디 {{ userData?.user }}</p>
+        <p>닉네임 {{ userData?.nickname }}</p>
+        <p>포인트 {{ userData?.points }}</p>
       </div>
-      <div v-if="mynickname != userData?.nickname">
+      <div v-if="myusername === userData.user" class="my-auto">
         <button @click="toggleFollow">팔로우</button>
-        <button>팔로우</button>
       </div>
       <div class="d-flex">
         <div class="profile-info">
@@ -18,8 +18,8 @@
           <p>SOLVE</p>
         </div>
         <div class="profile-info">
-          <p>24</p>
-          <p>SOLVE</p>
+          <p>2</p>
+          <p>Reviews</p>
         </div>
         <div class="profile-info">
           <p>24</p>
@@ -34,21 +34,25 @@
     <hr>
     <div>
       <h3>WANT TO WATCH</h3>
-      <div>영화</div>
+      <MovieList :movie-list="wantMovieList"/>
     </div>
     <div>
-      <h3>WANT TO WATCH</h3>
-      <div>영화</div>
+      <h3>HAVE WATCHED</h3>
+      <MovieList :movie-list="watchedMovieList"/>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import MovieList from '@/components/movies/MovieList.vue'
 const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   name: 'ProfileView',
+  components:{
+    MovieList,
+  },
   created(){
     this.getUserInfomation()
   },
@@ -59,9 +63,15 @@ export default {
     }
   },
   computed: {
-    mynickname(){
-      return this.$store.state.username
-    }
+    myusername(){
+      return this.$store.state.user
+    },
+    watchedMovieList(){
+      return this.userData.watched_movies
+    },
+    wantMovieList(){
+      return this.userData.want_to_see_movies
+    },
   },
   methods: {
     getUserInfomation(){
