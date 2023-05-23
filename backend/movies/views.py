@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import Movie, Genre, Actor
-from .serializers import MovieSerializer, MovieListSerializer, GenreSerializer, ActorSerializer
+from .models import Movie, Genre, Actor, Recommended
+from .serializers import MovieSerializer, MovieListSerializer, GenreSerializer, ActorSerializer, RecommendedSerializer
 from django.shortcuts import get_list_or_404, get_object_or_404
 # filter 메서드에 or, and, not 등 다양한 조건을 줄 수 있게 하는 모듈
 from django.db.models import Q
@@ -14,19 +14,26 @@ def entire_movies(request):
     serializers = MovieListSerializer(movies, many = True)
     return Response(serializers.data)
 
+
+
 @api_view(['GET'])
 def movies_with_genre(request, selected_genres, sortby):
+
     selected_movies = []
+
     for genre in selected_genres.split():
         movies = Movie.objects.filter(Q(genres__name__icontains = genre))
 
         for movie in list(movies):
             if movie not in selected_movies:
                 selected_movies.append(movie)
-    if sortby == 1 :
+
+    if sortby == 1:
         selected_movies.sort(key = lambda x : x.popularity, reverse = True)
-    else :
-        selected_movies.sort(key=lambda x: x.vote_avg, reverse=True)
+
+    else:
+        selected_movies.sort(key = lambda x : x.vote_avg, reverse = True)
+
     serializer = MovieListSerializer(selected_movies, many = True)
     return Response(serializer.data)
 
@@ -78,3 +85,12 @@ def actor_detail(request, actor_pk):
     actor = get_object_or_404(Actor, pk = actor_pk)
     serializer = ActorSerializer(actor)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def recommend_movie(request):
+    movielists = get_list_or_404(Recommended)
+    serializer = RecommendedSerializer(movielists, many=True)
+    return Response(serializer.data)
+
+    

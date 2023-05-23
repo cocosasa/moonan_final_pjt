@@ -67,6 +67,7 @@ export default {
   }
   .header{
     height: 100px;
+    background-color: #ffffff;
     padding: 50px 30px;
   }
   .profile-circle{
@@ -76,6 +77,6 @@ export default {
     overflow: hidden;
   }
   .profile-icon{
-    width: 100%;
+    width: 100%;                                             
   }
 </style>

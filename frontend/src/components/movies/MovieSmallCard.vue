@@ -29,10 +29,10 @@ export default {
 
 <style>
 .small-card{
-  border-radius: 10px;
+  border-radius: 5px;
   overflow: hidden;
 }
 .small-card-img{
-  height: 300px;
+  width: 220px;
 }
 </style>

@@ -21,3 +21,9 @@ class Movie(models.Model) :
     poster_path = models.CharField(max_length = 300)
     genres = models.ManyToManyField(Genre, related_name = 'movie_genres')
     actors = models.ManyToManyField(Actor, related_name = 'starred_movies')
+
+
+class Recommended(models.Model):
+    creteria = models.CharField(max_length = 50)
+    movielist = models.ManyToManyField(
+        Movie, related_name='movie_recommendedlists')

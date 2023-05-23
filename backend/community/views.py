@@ -1,10 +1,12 @@
 from movies.models import Movie
+from accounts.models import Profile
 from rest_framework import status
 from rest_framework.response import Response
 from .models import Review, ReviewComment, Question, QuestionComment
 from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework.decorators import api_view, permission_classes
 from .serializers import ReviewSerializer, ReviewCommentSerializer, QuestionSerializer, QuestionCommentSerializer
+from accounts.serializers import ProfileSerializer
 from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
@@ -187,9 +189,11 @@ def question_ccomment_create(request, comment_pk):
         return Response(serializer.data, status = status.HTTP_201_CREATED)
 
 
-# @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
-# def choose_answer(request, answer_pk):
-#     answer = get_object_or_404(QuestionComment, pk = answer_pk)
-    
-
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def choose_answer(request, points_get):
+    me = get_object_or_404(Profile, user = request.user)
+    serializer = ProfileSerializer(me ,data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(points = me.points + points_get)
+        return Response(status = status.HTTP_200_OK)

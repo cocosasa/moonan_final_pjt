@@ -27,6 +27,7 @@ export default {
 
   color: #2c3e50;
   min-width: 1200px;
+  /* background-color: #070707; */
 }
 
 nav a {

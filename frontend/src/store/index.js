@@ -52,6 +52,9 @@ export default new Vuex.Store({
     GET_GENRES(state, genres){
       state.genreList = genres
     },
+    GET_RECOMMENDS(state, recommends){
+      state.recommendLists = recommends
+    },
     GET_QUESTIONS(state, list){
       state.questionList = list
     },
@@ -101,6 +104,19 @@ export default new Vuex.Store({
       })
       .then(res=>{
         context.commit('GET_GENRES', res.data)
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    },
+    getRecommends(context){
+      axios({
+        method: 'get',
+        url: `${API_URL}/api/v1/recommend/`,
+      })
+      .then(res=>{
+        console.log(res.data)
+        context.commit('GET_RECOMMENDS', res.data)
       })
       .catch(err=>{
         console.log(err)

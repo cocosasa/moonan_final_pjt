@@ -18,4 +18,5 @@ urlpatterns = [
     path('questions/<int:question_pk>/comments/', views.create_question_comment),
     path('questioncomments/<int:comment_pk>/', views.question_comment_detail),
     path('questioncomments/<int:comment_pk>/comments/', views.question_ccomment_create),
+    path('questions/correct/<int:points_get>/', views.choose_answer),
 ]

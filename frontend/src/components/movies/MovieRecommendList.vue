@@ -1,28 +1,44 @@
 <template>
-  <div >
-    <div class="recommend-list-title">
-      <h3 >자면서 보기 좋은 영화</h3>
+  <div class="mt-5">
+    <div class="mb-3">
+      <span class="recommend-list-title">{{ recommendList.creteria }}</span>
     </div>
-    <div class="d-flex justify-content-between recommend-list">
-      <MovieSmallCard v-for="movie in recommendList" :key="movie.id" :movie="movie" @click="goToDetail(movie)"/>
-    </div>
+    <VueSlickCarousel v-bind="settings" class="d-flex justify-content-between recommend-list">
+        <MovieSmallCard v-for="movie in recommendList.movielist" :key="movie.id" :movie="movie" @click="goToDetail(movie)"/>
+    </VueSlickCarousel>
+    
   </div>
 </template>
 
 <script>
 import MovieSmallCard from './MovieSmallCard.vue';
+import VueSlickCarousel from 'vue-slick-carousel'
+import 'vue-slick-carousel/dist/vue-slick-carousel.css'
+// optional style for arrows & dots
+import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 
 export default {
   name: 'MovieRecommendList',
   components: {
     MovieSmallCard,
+    VueSlickCarousel,
   },
   props : {
-    recommendList : Array,
+    recommendList : Object,
   },
   data() {
     return {
-
+      settings: {
+        "arrows": false,
+        "dots": true,
+        "infinite": true,
+        "slidesToShow": 5,
+        "slidesToScroll": 1,
+        "autoplay": true,
+        "speed": 8000,
+        "autoplaySpeed": 2000,
+        "cssEase": "linear"
+      }
     }
   },
   computed: {
@@ -40,22 +56,42 @@ export default {
 <style>
 .recommend-list {
   width: 100%;
-  height: 300px;
+  height: 3500px;
   margin-top : 0px;
   margin-bottom : 50px;
-  border-radius: 10px;
-
+  border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.01);
   overflow: hidden;
 }
-.recommend-list-title{
-  margin-top: 30px;
+.recommend-list-title {
+  --padding: 1.5rem;
+  font-size: 2em;
+  position: relative;
+  cursor: pointer;
 }
-.recommend-list:first-child{
-  box-shadow: inset 50px 0 27px -38px #000;
+
+.recommend-list-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1rem;
+  height: 4px;
+  width: calc(100%);
+  background: red;
 }
-.recommend-list:last-child{
-  box-shadow:  inset -50px 0 27px -38px #000;
+
+@media (hover) {
+  .recommend-list-title:hover::after {
+    transform: scaleX(1);
+    margin-left: 0;
+  }
+
+  .recommend-list-title::after {
+    transform: scaleX(0);
+    margin-left: 50%;
+    transform-origin: left;
+    transition: transform 500ms ease, margin-left .5s ease;
+  }
 }
 .z-index--1{
   z-index: -1;

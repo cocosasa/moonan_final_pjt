@@ -4424,7 +4424,7 @@
         "pk": 1013860,
         "model": "movies.movie",
         "fields": {
-            "title": "R.I.P.D.:알.아이.피.디.  2",
+            "title": "R.I.P.D.:알.아이.피.디.2",
             "released_date": "2022-11-15",
             "popularity": 173.459,
             "vote_avg": 6.5,

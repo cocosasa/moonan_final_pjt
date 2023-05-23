@@ -8,7 +8,18 @@
           <h1 class="">{{ movie?.title }}</h1>
         </div>
         <div>
-          <span><i class="fa-regular fa-star" style="color: #ff0000;"></i> {{ movie?.vote_avg }}</span>
+          <span>
+            <i v-if="movie?.vote_avg >= 2" class="fa-solid fa-star" style="color: #ff0000;"></i>
+            <i v-if="movie?.vote_avg >= 4" class="fa-solid fa-star" style="color: #ff0000;"></i>
+            <i v-if="movie?.vote_avg >= 6" class="fa-solid fa-star" style="color: #ff0000;"></i>
+            <i v-if="movie?.vote_avg >= 8" class="fa-solid fa-star" style="color: #ff0000;"></i>
+            <i v-if="movie?.vote_avg >= 10" class="fa-solid fa-star" style="color: #ff0000;"></i>
+            <i v-if="movie?.vote_avg < 2" class="fa-regular fa-star" style="color: #ff0000;"></i> 
+            <i v-if="movie?.vote_avg < 4" class="fa-regular fa-star" style="color: #ff0000;"></i> 
+            <i v-if="movie?.vote_avg < 6" class="fa-regular fa-star" style="color: #ff0000;"></i> 
+            <i v-if="movie?.vote_avg < 8" class="fa-regular fa-star" style="color: #ff0000;"></i> 
+            <i v-if="movie?.vote_avg < 10" class="fa-regular fa-star" style="color: #ff0000;"></i> 
+            {{ movie?.vote_avg }}</span>
           <div class="d-flex">
             <div v-for="genre in movie?.genres" :key="genre.id" class="rounded-5 py-1 px-2 border me-1">
               <span>{{ genre.name }}</span>

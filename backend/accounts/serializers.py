@@ -20,9 +20,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
 
-    want_to_see_movies = MovieListSerializer(many=True,required=False)
-    watched_movies = MovieListSerializer(many=True, required=False)
-    user = serializers.CharField(source='user.username', read_only=True)
+    want_to_see_movies = MovieListSerializer(many = True, required = False)
+    watched_movies = MovieListSerializer(many = True, required = False)
+    user = serializers.CharField(source = 'user.username', read_only = True)
+
 
     class Meta:
         model = Profile

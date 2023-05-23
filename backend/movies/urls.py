@@ -12,4 +12,6 @@ urlpatterns = [
     path('vote_avg/', views.entire_movies_sorted_by_vote_avg),
     path('actors/', views.entire_actors),
     path('actors/<int:actor_pk>/', views.actor_detail),
+    path('recommend/', views.recommend_movie),
+
 ]

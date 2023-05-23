@@ -42,17 +42,14 @@ export default {
       return this.$store.state.movieList
     },
     recommendLists() {
-      return [
-        this.$store.state.popularMovieList.slice(10,16),
-        this.$store.state.popularMovieList.slice(20,26),
-        this.$store.state.popularMovieList.slice(120,126),
-    ]
+      return this.$store.state.recommendLists
     }
   },
   methods:{
     getMovies(){
       this.$store.dispatch('getMovies')
       this.$store.dispatch('getGenres')
+      this.$store.dispatch('getRecommends')
     }
   },
 
@@ -60,11 +57,16 @@ export default {
 </script>
 
 <style>
+.carousel{
+  width: 160%;
+  left: -30%;
+  top: 0px;
+} 
 .main-img {
   width: 120px;
   height: 533px;
   /* padding: 93px 45px 94px 65px; */
-  box-shadow: inset 96px 50px 250px 29px #000, inset -54px -50px 250px 20px #000;
+  box-shadow: inset -0px -100px 500px 100px #000000;
   background: url('@/assets/img.bmp') no-repeat center;
   background-size: cover;
 }

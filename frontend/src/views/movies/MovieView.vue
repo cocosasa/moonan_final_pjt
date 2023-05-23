@@ -32,7 +32,7 @@ export default {
     MovieList,
   },
   created() {
-    if(!this.$store.popularMovieList){
+    if(!this.$store.popularMovieList.length){
       this.getMovies()
     }
   },
@@ -53,6 +53,7 @@ export default {
     getMovies() {
       this.$store.dispatch('getMovies')
       this.$store.dispatch('getGenres')
+      this.$store.dispatch('getRecommends')
     },
     infiniteHandler($state) {
       setTimeout(() => {

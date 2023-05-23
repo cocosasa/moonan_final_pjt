@@ -7,6 +7,7 @@
 <script>
 import MovieRecommendList from '@/components/movies/MovieRecommendList.vue';
 
+
 export default {
   name:'MovieRecommendView',
   components : {
@@ -14,11 +15,7 @@ export default {
   },
   computed: {
     recommendLists() {
-      return [
-        this.$store.state.popularMovieList.slice(10, 16),
-        this.$store.state.popularMovieList.slice(20, 26),
-        this.$store.state.popularMovieList.slice(120, 126),
-      ]
+      return this.$store.state.recommendLists
     }
   },
   methods:{
