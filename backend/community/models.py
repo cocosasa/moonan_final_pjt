@@ -31,6 +31,7 @@ class Question(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
     points = models.IntegerField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
+    question_image = models.ImageField(blank = True)
     
 
 class QuestionComment(models.Model):

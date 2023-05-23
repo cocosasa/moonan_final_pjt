@@ -8,8 +8,9 @@ class Genre(models.Model):
 
 
 class Actor(models.Model):
-    name = models.CharField(max_length=100)
-    image_path = models.CharField(max_length=100, null=True)
+    name = models.CharField(max_length = 100)
+    image_path = models.CharField(max_length = 100, null = True)
+
 
 class Movie(models.Model) :
     title = models.CharField(max_length = 50)
@@ -19,4 +20,4 @@ class Movie(models.Model) :
     overview = models.TextField()
     poster_path = models.CharField(max_length = 300)
     genres = models.ManyToManyField(Genre, related_name = 'movie_genres')
-    actors = models.ManyToManyField(Actor, related_name='starred_movies')
+    actors = models.ManyToManyField(Actor, related_name = 'starred_movies')

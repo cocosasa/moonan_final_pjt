@@ -4,50 +4,78 @@
       <img :src="`https://image.tmdb.org/t/p/w500${movie?.poster_path}`" class="movie-detail-img">
       <div class="ms-5">
         <div>
-          <span class="">{{ movie?.title }}</span>
+          <span>{{ releasedDate }} </span>
+          <h1 class="">{{ movie?.title }}</h1>
         </div>
         <div>
-          <span>개봉일 : {{ movie?.released_date }}</span>
-          <p>별{{ movie?.vote_avg }} 점</p>
-          <p>{{ movie?.genres }}</p>
+          <span><i class="fa-regular fa-star" style="color: #ff0000;"></i> {{ movie?.vote_avg }}</span>
+          <div class="d-flex">
+            <div v-for="genre in movie?.genres" :key="genre.id" class="rounded-5 py-1 px-2 border me-1">
+              <span>{{ genre.name }}</span>
+            </div>
+          </div>
         </div>
         <div class="d-flex">
           <div @click="toggleWant">
-            <button :class="{'btn-secondary':!isWanted, 'btn-primary':isWanted}" class="btn"> 보고 싶어요 </button>
+            <button v-if="!isWanted" class="btn btn-secondary"> 보고 싶어요 </button>
+            <button v-if="isWanted" class="btn btn-primary"> 보고 싶어요 </button>
           </div>
           <div @click="toggleWatch">
-            <button :class="{'btn-secondary': !isWatched, 'btn-primary':isWatched }" class="btn">봤어요</button>
+            <button v-if="!isWatched" class="btn btn-secondary"> 봤어요 </button>
+              <button v-if="isWatched" class="btn btn-primary"> 봤어요 </button>
           </div>
         </div>
+        <div class="mt-5">
+          <p>줄거리</p>
+          <p>{{ movie?.overview }}</p>
+      </div>
       </div>
     </div>
     <MovieVideo v-if="movie" :movie="movie"/>
-    <div>
-      <p>줄거리</p>
-      <p>{{ movie?.overview }}</p>
-    </div>
+    
     <div>
       <h3>출연 배우</h3>
       <div class="d-flex row">
-        <ActorItem/>
-        <ActorItem/>
-        <ActorItem/>
+        <ActorItem v-for="actor in actorFor20" :key="actor.id" :actor="actor"/>
+
       </div>
     </div>
     <div>
-      <h3>한 줄평 쓰기</h3>
-      <div>
-        <form name="reviewform" id="reviewform">
-          <input type="text" v-model="reviewContent">
-          <StarScore @set-score="setScore"/>
-          {{ reviewScore }} 점
-
-          <button @click.prevent="addReview"> 등록하기 </button>
-        </form>
+      <div v-if="!isWritten">
+        <h3>한 줄평 쓰기</h3>
+        <div>
+          <form name="reviewform" id="reviewform">
+            <input type="text" v-model="reviewContent">
+            <StarScore @set-score="setScore"/>
+            {{ reviewScore }} 점
+            
+            <button @click.prevent="addReview"> 등록하기 </button>
+          </form>
+        </div>
       </div>
-      <h3>한 줄평</h3>
-      <div>
-        <ReviewItem v-for="(review,idx) in reviews" :key="idx" :review="review"/>
+      <div v-else>
+        <h3>내 한줄평</h3>
+        <div v-if="!isUpdating">
+          {{ myReview.content }}
+          {{ myReview.score }}점
+          <button @click="e=>this.isUpdating = !this.isUpdating" class="btn btn-warning">수정하기</button>
+        </div>
+        <div v-else>
+          <form action="">
+            <input type="text" v-model="reviewContent" >
+            <StarScore @set-score="setScore"/>
+          </form>
+          <button class="btn btn-warning">수정하기</button>
+        </div>
+      </div>
+      <div class="my-5">
+        <h3>한 줄평</h3>
+        <div v-if="reviews.length">
+          <ReviewItem v-for="(review,idx) in reviews" :key="idx" :review="review"/>
+        </div>
+        <div v-else>
+          작성된 한 줄평이 없습니다..
+        </div>
       </div>
     </div>
   </div>
@@ -59,6 +87,7 @@ import MovieVideo from '@/components/movies/MovieVideo.vue';
 import ReviewItem from '@/components/community/ReviewItem.vue';
 import StarScore from '@/components/community/StarScore.vue';
 import axios from 'axios';
+import { mapGetters } from 'vuex';
 
 const API_URL = 'http://127.0.0.1:8000'
 
@@ -72,20 +101,21 @@ export default {
   },
   created(){
     this.getMovieDetail()
-    // this.getMovieActors()
     // this.getMovieReviews()
     this.getProfile()
   },
   data() {
     return {
       movie : null,
+      myReview : null,
+      isUpdating : false,
       reviewContent : null,
       reviewScore : '5.0',
-      isWatched : false,
-      isWanted : false,
+
     }
   },
   computed: {
+    ...mapGetters(['myUserName']),
     shorten() {
       let overview = this.movie.overview
 
@@ -97,6 +127,29 @@ export default {
     },
     reviews(){
       return this.movie?.movie_reviews
+    },
+    isWritten(){
+      let flag = false
+      this.movie.movie_reviews.forEach( (el,index)=>{
+        if (el.user == this.myUserName){
+          console.log(el.user, this.myUserName)
+
+          this.myReview = el
+          this.reviewContent = el.content
+          this.reviewScore = el.score
+          this.movie.movie_reviews.splice( index,1 )
+          flag = true
+        }
+      }) 
+      return flag
+    },
+    releasedDate(){
+      let datedata = new Date(this.movie?.released_date)
+      console.log(datedata)
+      return datedata.toLocaleDateString()
+    },
+    actorFor20(){
+      return this.movie?.actors.slice(0,12)
     }
   },
   methods: {
@@ -123,11 +176,13 @@ export default {
       })
       .then(res => {
         console.log(res.data)
+        this.profile = res.data
         if (res.data.want_to_see_movies.includes(this.$route.params.id)){
           this.isWanted = true
         }
-        if (res.data.watched_movies.includes(this.$route.params.id))
+        if (res.data.watched_movies.includes(this.$route.params.id)){
           this.isWatched = true
+        }
       })
       .catch(err => {
         console.log(err)
@@ -182,7 +237,33 @@ export default {
           console.log(res.data)
           this.reviewContent = null
           this.reviewScore = null
-          this.getMovieReviews()
+          // this.getMovieReviews()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    updateReview(){
+      const content = this.reviewContent
+      const score = this.reviewScore
+      var formdata = new FormData()
+      formdata.append('content', content)
+      formdata.append('score', score)
+
+      console.log(formdata)
+      axios({
+        method: 'post',
+        url: `${API_URL}/community/movie/${this.$route.params.id}/review/`,
+        headers: {
+          'Authorization': `Token ${this.$store.state.token}`,
+        },
+        data: formdata,
+      })
+        .then((res) => {
+          console.log(res.data)
+          this.reviewContent = null
+          this.reviewScore = null
+          // this.getMovieReviews()
         })
         .catch((err) => {
           console.log(err)
@@ -226,6 +307,14 @@ export default {
       })
     }
   },
+  watch:{
+    isWanted(){
+      console.log('toggle wanted')
+    },
+    isWatched(){
+      console.log('toggle watched')
+    },
+  }
 
 }
 </script>

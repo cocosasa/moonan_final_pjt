@@ -68,8 +68,8 @@ export default {
       formdata.append('title', title)
       formdata.append('content', content)
       formdata.append('points', points)
-      const file = document.getElementById('#file').files[0]
-      formdata.append('image', file)
+      // const file = document.getElementById('#file').files[0]
+      // formdata.append('image', file)
       // const data = {
       //   title, content, points
       // }

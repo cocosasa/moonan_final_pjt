@@ -13,7 +13,23 @@ def entire_movies(request):
     movies.sort(key = lambda x : x.popularity, reverse = True)
     serializers = MovieListSerializer(movies, many = True)
     return Response(serializers.data)
-        
+
+@api_view(['GET'])
+def movies_with_genre(request, selected_genres, sortby):
+    selected_movies = []
+    for genre in selected_genres.split():
+        movies = Movie.objects.filter(Q(genres__name__icontains = genre))
+
+        for movie in list(movies):
+            if movie not in selected_movies:
+                selected_movies.append(movie)
+    if sortby == 1 :
+        selected_movies.sort(key = lambda x : x.popularity, reverse = True)
+    else :
+        selected_movies.sort(key=lambda x: x.vote_avg, reverse=True)
+    serializer = MovieListSerializer(selected_movies, many = True)
+    return Response(serializer.data)
+
 
 @api_view(['GET'])
 def movie_detail(request, movie_pk):
@@ -49,15 +65,16 @@ def entire_movies_sorted_by_vote_avg(request):
     serializers = MovieListSerializer(movies, many = True)
     return Response(serializers.data)
 
+
 @api_view(['GET'])
 def entire_actors(request):
     actors = get_list_or_404(Actor)
-    serializer = ActorSerializer(actors, many=True)
+    serializer = ActorSerializer(actors, many = True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
 def actor_detail(request, actor_pk):
-    actor = get_object_or_404(Actor, pk=actor_pk)
+    actor = get_object_or_404(Actor, pk = actor_pk)
     serializer = ActorSerializer(actor)
     return Response(serializer.data)

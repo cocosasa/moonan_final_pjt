@@ -6,11 +6,11 @@
       </router-link>
     </div>
 
-    <div>
-      <router-link :to="{ name: 'movies' }">영화</router-link> | 
-      <router-link :to="{ name: 'challenge' }">추리</router-link> | 
-      <router-link :to="{ name: 'recommend' }">추천</router-link> | 
-      <router-link :to="{ name: 'community' }">커뮤니티</router-link> | 
+    <div class="d-flex gap-5">
+      <router-link :to="{ name: 'movies' }"><h5><strong>영화</strong></h5></router-link>
+      <router-link :to="{ name: 'challenge' }"><h5><strong>추리</strong></h5></router-link>
+      <router-link :to="{ name: 'recommend' }"><h5><strong>추천</strong></h5></router-link>
+      <router-link :to="{ name: 'community' }"><h5><strong>커뮤</strong></h5></router-link>
     </div>
 
     <div>

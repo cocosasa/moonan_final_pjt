@@ -45,6 +45,7 @@ export default {
   padding: 0;
 }
 .large-card{
+  background-color: rgba(255, 255, 255, 0);
   padding: 0;
 }
 .large-card-title{
@@ -55,6 +56,15 @@ export default {
   color: whitesmoke;
   text-align: center;
   margin-bottom: -80px;
+}
+.large-card :hover{
+  z-index: 2;
+  transform: scale(1.04) ;
+  transition: 0.3s;
+}
+.large-card :not(:hover){
+  transition: 0.4s;
+    z-index: 1;
 }
 
 </style>

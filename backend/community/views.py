@@ -15,6 +15,7 @@ def entire_review(request):
     serializers = ReviewSerializer(reviews, many=True)
     return Response(serializers.data)
 
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_review(request, movie_pk):
@@ -81,6 +82,13 @@ def review_comment_detail(request, comment_pk):
                 serializer.save()
                 return Response(serializer.data)
         return Response(status = status.HTTP_401_UNAUTHORIZED)
+
+
+@api_view(['GET'])
+def review_comment_of_the_movie(request, movie_pk):
+    reviews = get_list_or_404(Review, movie_id = movie_pk)
+    serializers = ReviewSerializer(reviews, many=True)
+    return Response(serializers.data)
 
 
 @api_view(['POST'])
@@ -177,3 +185,11 @@ def question_ccomment_create(request, comment_pk):
     if serializer.is_valid(raise_exception = True):
         serializer.save(user = request.user, parent_comment = comment)
         return Response(serializer.data, status = status.HTTP_201_CREATED)
+
+
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+# def choose_answer(request, answer_pk):
+#     answer = get_object_or_404(QuestionComment, pk = answer_pk)
+    
+

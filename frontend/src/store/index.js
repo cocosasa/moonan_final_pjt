@@ -32,6 +32,15 @@ export default new Vuex.Store({
     isLogin(state){
       return state.token ? true : false
     },
+    myUserName(state){
+      return state.username
+    },
+    myNickName(state){
+      return state.nickname
+    },
+    myToken(state){
+      return state.myToken
+    }
   },
   mutations: {
     GET_POPULARMOVIES(state, movieList){
@@ -67,7 +76,7 @@ export default new Vuex.Store({
         url: `${API_URL}/api/v1/`,
       })
         .then((res) => {
-          console.log(res.data)
+          // console.log(res.data)
           context.commit('GET_POPULARMOVIES', res.data)
         })
         .catch((err) => {
@@ -78,7 +87,7 @@ export default new Vuex.Store({
         url: `${API_URL}/api/v1/vote_avg/`,
       })
         .then((res) => {
-          console.log(res.data)
+          // console.log(res.data)
           context.commit('GET_VOTEAVGMOVIES', res.data)
         })
         .catch((err) => {

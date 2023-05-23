@@ -3,7 +3,7 @@ from .models import Review, ReviewComment, Question, QuestionComment
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.username', read_only=True)
+    user = serializers.CharField(source = 'user.nickname', read_only = True)
     comments = serializers.PrimaryKeyRelatedField(many = True, read_only = True, allow_null = True)
 
     class Meta:
@@ -22,18 +22,19 @@ class ReviewCommentSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.username', read_only=True)
+    user = serializers.CharField(source = 'user.nickname', read_only = True)
     question_comments = serializers.PrimaryKeyRelatedField(many = True, read_only = True, allow_null = True)
     
     class Meta:
         model = Question
-        fields = ('id', 'title', 'content', 'created_at', 'updated_at', 'points', 'user', 'question_comments')
+        fields = ('id', 'title', 'content', 'created_at', 'updated_at', 'points', 'user', 'question_comments', 'question_image')
         read_only_fields = ('user',)
 
 
 class QuestionCommentSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source = 'user.nickname', read_only = True)
     child_comments = serializers.PrimaryKeyRelatedField(many = True, read_only = True, allow_null = True)
-    user = serializers.CharField(source='user.username', read_only=True)
+
     class Meta:
         model = QuestionComment
         fields = ('id', 'question', 'content', 'user', 'created_at', 'updated_at', 'parent_comment', 'child_comments')

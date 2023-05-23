@@ -1,7 +1,6 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from movies.models import Movie
 
 
 # Create your models here.
@@ -11,8 +10,8 @@ class User(AbstractUser):
 
 class Profile(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
-    nickname = models.CharField(max_length = 30, unique=True)
+    nickname = models.CharField(max_length = 30, unique = True)
     points = models.IntegerField(default = 500)
-    want_to_see_movies = models.ManyToManyField(Movie, related_name='wants_users')
-    watched_movies = models.ManyToManyField(Movie, related_name = 'watches_users')
+    want_to_see_movies = models.ManyToManyField('movies.Movie', related_name = 'wants_users')
+    watched_movies = models.ManyToManyField('movies.Movie', related_name = 'watches_users')
     profile_image = models.ImageField(blank = True)
