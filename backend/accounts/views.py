@@ -27,8 +27,8 @@ def create_profile(request):
 def profile(request, username) :
     user = get_object_or_404(get_user_model(), username = username)
     profile = get_object_or_404(Profile, pk = user.id)
-    
     if request.method == 'GET' :
+        # serializer1 = UserSerializer(me)
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
 
@@ -44,8 +44,9 @@ def profile(request, username) :
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def follow(request, username):
-        me = get_object_or_404(get_user_model(), username = username)
-        you = request.user
+    me = get_object_or_404(get_user_model(), username = username)
+    you = request.user
+    if request.method == 'POST' :
         if me != you:
             if me.followers.filter(pk = you.pk).exists():
                 me.followers.remove(you)

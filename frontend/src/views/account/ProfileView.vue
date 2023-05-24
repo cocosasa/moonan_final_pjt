@@ -6,18 +6,19 @@
           <img v-if="!userData?.profile_image" class="profile-img" src="@/assets/Profile.png">
           <img v-if="userData?.profile_image" class="profile-img" :src="`${BASE_URL}${userData?.profile_image}`">
         </div>
-        
-        <input type="file" id="profile-image" @change="inputImage" ref="profile_image">
-        <button class="btn btn-outline-dark mt-3"  @click="profileUpdate">프로필 변경</button>
-
+        <div v-if="isMyProfile">
+          <input type="file" id="profile-image" @change="inputImage" ref="profile_image">
+          <button class="btn btn-outline-dark mt-3"  @click="profileUpdate">프로필 변경</button>
+        </div>
       </div>
       <div class="my-5">
-        <p>아이디 {{ userData?.user }}</p>
+        <p>아이디 {{ userData?.user.username }}</p>
         <!-- <p>닉네임 {{ userData?.nickname }}</p> -->
         <p>포인트 {{ userData?.points }}</p>
       </div>
-      <div v-if="!myUserName === userData?.user" class="my-auto">
-        <button @click="toggleFollow">팔로우</button>
+      <div v-if="!isMyProfile" class="my-auto">
+        <button @click="toggleFollow" v-if="!isFollowing">팔로우</button>
+        <button @click="toggleFollow" v-if="isFollowing">언팔로우</button>
       </div>
       <div class="d-flex">
         <div class="profile-info">
@@ -29,11 +30,11 @@
           <p>Reviews</p>
         </div>
         <div class="profile-info">
-          <p>24</p>
+          <p>{{userData?.user.followings_count}}</p>
           <p>Followings</p>
         </div>
         <div class="profile-info">
-          <p>24</p>
+          <p>{{userData?.user.followers_count}}</p>
           <p>Follower</p>
         </div>
       </div>
@@ -42,12 +43,14 @@
     <div class="d-flex justify-content-between gap-3">
       <div class="w-50 p-4 profile-movielist-box">
         <h3>WANT TO WATCH</h3>
+        <span>{{ wantMovieList.length }}</span>
         <div class="mt-4">
           <MovieList :movie-list="wantMovieList"/>
         </div>
       </div>  
       <div class="w-50 p-4 profile-movielist-box">
         <h3>HAVE WATCHED</h3>
+        <span>{{ watchedMovieList.length }}</span>
         <div class="mt-4">
           <MovieList :movie-list="watchedMovieList"/>
         </div>
@@ -80,13 +83,19 @@ export default {
   computed: {
     ...mapGetters(['myUserName', 'myToken']),
     watchedMovieList(){
-      return this.userData?.watched_movies
+      return this.userData?.watched_movies ? this.userData?.watched_movies : []
     },
     wantMovieList(){
-      return this.userData?.want_to_see_movies
+      return this.userData?.want_to_see_movies ? this.userData?.want_to_see_movies : []
     },
     BASE_URL(){
       return 'http://127.0.0.1:8000'
+    },
+    isMyProfile(){
+      return this.myUserName == this.$route.params.username
+    },
+    isFollowing(){
+      return this.userData?.user.followers.includes(this.$store.state.userData.id) ? true : false
     }
   },
   methods: {
@@ -116,6 +125,7 @@ export default {
       })
         .then(res => {
           console.dir(res.data)
+          this.getUserInfomation()
         })
         .catch(err => {
           console.log(err)

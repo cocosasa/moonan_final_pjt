@@ -24,6 +24,7 @@ export default new Vuex.Store({
     ],
     genreList : [
     ],
+    questionData: null,
     userData : null,
     token : null,
     username : null,
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     myUserData(state){
       return state.userData
+    },
+    question(state){
+      return state.questionData
     }
   },
   mutations: {
@@ -72,6 +76,9 @@ export default new Vuex.Store({
     },
     CHANGE_USERDATA(state, userdata){
       state.userData = userdata
+    },
+    CHANGE_QUESTION(state, question){
+      state.questionData = question
     }
   },
   actions: {
@@ -230,7 +237,10 @@ export default new Vuex.Store({
     },
     changeUserData(context, userdata){
       context.commit('CHANGE_USERDATA', userdata)
-    }
+    },
+    changeQuestionData(context, question){
+      context.commit('CHANGE_QUESTION', question)
+    },
   },
   modules: {
   }

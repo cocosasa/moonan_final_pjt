@@ -5,12 +5,12 @@
       <p>{{ comment.content }}</p>
       <div v-if="myUserName=== commentUser && !isUpdating">
         <button @click="initUpdate">수정</button>
-        <button>삭제</button>
+        <button @click="deleteComment">삭제</button>
       </div>
       <button @click="initCcomment" v-if="!isCcommenting">대댓글 작성</button>
-      <button v-if="questionUser != commentUser && myUserName!= commentUser && questionUser === myUserName">채택하기</button>
+      <button v-if="questionUser != commentUser && myUserName!= commentUser && questionUser === myUserName && !question?.is_completed " @click="selectComment">채택하기</button>
       <!-- 수정폼 -->
-      <form v-if="isUpdating">
+      <form v-if="isUpdating" @submit.prevent="updateComment">
         <input type="text" v-model="formContent">
         <button>수정 완료</button>
       </form>
@@ -52,6 +52,9 @@ export default {
     },
     commentUser(){
       return this.comment?.user
+    },
+    question(){
+      return this.$store.getters.question
     }
   },
   methods:{
@@ -77,11 +80,85 @@ export default {
       })
         .then((res) => {
           console.log(res.data)
+          this.formContent = ''
+          this.isCcommenting = false
+          this.getQuestionDetail()
         })
         .catch((err) => {
           console.log(err)
         })
-    }
+    },
+    updateComment(){
+      const data = {
+        content: this.formContent
+      }
+      axios({
+        method: 'put',
+        url: `${API_URL}/community/questioncomments/${this.comment.id}/`,
+        headers: {
+          'Authorization': `Token ${this.$store.state.token}`,
+        },
+        data: data,
+      })
+        .then((res) => {
+          console.log(res.data)
+          this.formContent = ''
+          this.isUpdating = false
+          this.getQuestionDetail()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    deleteComment(){
+      axios({
+        method: 'delete',
+        url: `${API_URL}/community/questioncomments/${this.comment.id}/`,
+        headers: {
+          'Authorization': `Token ${this.$store.state.token}`,
+        },
+      })
+        .then((res) => {
+          console.log(res.data)
+          this.getQuestionDetail()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    selectComment(){
+      // 'questions/correct/<int:question_pk>/<int:comment_pk>/
+      axios({
+        method: 'put',
+        url: `${API_URL}/community/questions/correct/${ this.comment.question}/${ this.comment.id }/`,
+        headers: {
+          'Authorization': `Token ${this.$store.state.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data)
+        this.getQuestionDetail()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    getQuestionDetail(){
+        axios({
+        method: 'get',
+        url: `${API_URL}/community/questions/${this.$route.params.id}/`,
+        headers: {
+          Authorization: `Token ${this.$store.state.token}`
+        }
+      })
+        .then((res) => {
+          console.log(res.data)
+          this.$store.dispatch('changeQuestionData', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
   }
 }
 </script>

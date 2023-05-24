@@ -167,6 +167,7 @@ def create_question_comment(request, question_pk):
 
 
 @api_view(['GET', 'DELETE', 'PUT'])
+@permission_classes([IsAuthenticated])
 def question_comment_detail(request, comment_pk):
     comment = get_object_or_404(QuestionComment, pk = comment_pk)
 

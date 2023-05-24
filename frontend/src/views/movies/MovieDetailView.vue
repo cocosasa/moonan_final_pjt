@@ -120,9 +120,10 @@ export default {
       movie : null,
       myReview : null,
       isUpdating : false,
+      isWanted : false,
+      isWatched : false,
       reviewContent : null,
       reviewScore : '5.0',
-
     }
   },
   computed: {
@@ -188,12 +189,14 @@ export default {
       .then(res => {
         console.log(res.data)
         this.profile = res.data
-        if (res.data.want_to_see_movies.includes(this.$route.params.id)){
-          this.isWanted = true
-        }
-        if (res.data.watched_movies.includes(this.$route.params.id)){
-          this.isWatched = true
-        }
+        res.data.want_to_see_movies.forEach(el=>{
+          if(el.id == this.$route.params.id)
+            this.isWanted = true
+        })
+        res.data.watched_movies.forEach(el=>{
+          if(el.id == this.$route.params.id)
+            this.isWatched = true
+        })
       })
       .catch(err => {
         console.log(err)

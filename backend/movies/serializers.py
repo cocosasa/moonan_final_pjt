@@ -13,7 +13,6 @@ class GenreSerializer(serializers.ModelSerializer):
 
 class ActorSerializer(serializers.ModelSerializer):
     starred_movies = serializers.PrimaryKeyRelatedField(many = True, read_only = True)
-
     class Meta:
         model = Actor
         fields = '__all__'
