@@ -21,8 +21,8 @@
     <div v-if="isLogin">
       <router-link :to="{ name: 'profile', params:{ username: myUserName } }">
         <div class="profile-circle">
-          <img v-show="!myUserData.profile_image" class="profile-icon" src="@/assets/Profile.png" alt="">
-          <img v-show="myUserData.profile_image" class="profile-icon" :src="`http://127.0.0.1:8000${myUserData.profile_image}`" alt="">
+          <img v-show="!myUserData?.profile_image" class="profile-icon" src="@/assets/Profile.png" alt="">
+          <img v-show="myUserData?.profile_image" class="profile-icon" :src="`http://127.0.0.1:8000${myUserData?.profile_image}`" alt="">
         </div>
       </router-link>
     </div>

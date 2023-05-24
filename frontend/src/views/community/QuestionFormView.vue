@@ -24,9 +24,9 @@
               </td>
             </tr>
             <tr>
-              <th>상금 ( 현재 {{ myPoints }}점 보유 )</th>
+              <th>상금 ( 현재 {{ myUserData.points  }}점 보유 )</th>
               <td>
-                <input type="number" v-model="points"/>
+                <input type="number" v-model="points" min="0" />
               </td>
             </tr>
           </table>
@@ -51,13 +51,13 @@ export default {
     return {
       title : null,
       content : null,
-      points : null,
+      points : 0,
       file : null
     }
   },
   computed:{
-    myPoints(){
-      return this.$store.getters.myPoints
+    myUserData(){
+      return this.$store.getters.myUserData
     }
   },
   methods: {
@@ -72,20 +72,36 @@ export default {
       const title = this.title
       const content = this.content
       const points = this.points
+      if(points<0){
+        alert('상금은 0 이상이어야 합니다!')
+        return
+      }
+      else if(points> this.myUserData.points ){
+        alert('보유포인트 만큼만 사용할 수 있습니다.')
+        return
+      }
       var formdata = new FormData()
       formdata.append('title', title)
       formdata.append('content', content)
       formdata.append('points', points)
-      formdata.append('question_image', this.file)
-
+      let headers = ''
+      if(this.file){
+        formdata.append('question_image', this.file)
+        headers =  {
+          'Authorization' : `Token ${this.$store.state.token}`,
+          'Content-Type' : 'multipart/form-data'
+        }
+      }
+      else{
+        headers = {
+          'Authorization': `Token ${this.$store.state.token}`,
+        }
+      }
       console.log(formdata)
       axios({
         method: 'post',
         url: `${API_URL}/community/questions/create/`,
-        headers : {
-          'Authorization' : `Token ${this.$store.state.token}`,
-          'Content-Type' : 'multipart/form-data'
-        },
+        headers,
         data : formdata,
       })
         .then((res) => {
