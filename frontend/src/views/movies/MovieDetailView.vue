@@ -26,14 +26,20 @@
             </div>
           </div>
         </div>
-        <div class="d-flex">
+        <div class="d-flex w-25 justify-content-around">
           <div @click="toggleWant">
-            <button v-if="!isWanted" class="btn btn-secondary"> 보고 싶어요 </button>
-            <button v-if="isWanted" class="btn btn-primary"> 보고 싶어요 </button>
+            <i :class="{'fa-bookmark':isWanted, 'fa-plus':!isWanted}" class="fa-solid fa-2xl"></i>
+            <!-- <button  class="btn btn-secondary">보고 싶어요 </button>
+            <button v-if="isWanted" class="btn btn-primary"> 보고 싶어요 </button> -->
           </div>
+          <div class="flex-shrink-1"></div>
+          <!-- <div class="flex-grow-1"></div> -->
           <div @click="toggleWatch">
-            <button v-if="!isWatched" class="btn btn-secondary"> 봤어요 </button>
-              <button v-if="isWatched" class="btn btn-primary"> 봤어요 </button>
+            <i v-if="!isWatched" class="fa-solid fa-eye fa-2xl"></i>
+            <i v-if="isWatched" class="fa-solid fa-eye fa-2xl" style="color: #ff0000;"></i>
+            <!-- <i class="fa-solid fa-eye fa-2xl"></i> -->
+            <!-- <button  class="btn btn-secondary"> 봤어요 </button>
+              <button  class="btn btn-primary"> 봤어요 </button> -->
           </div>
         </div>
         <div class="mt-5">
