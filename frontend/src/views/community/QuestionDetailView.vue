@@ -5,6 +5,7 @@
       <h1>Montage Interview</h1>
       <h1>제목{{ question?.title }}</h1>
       <h1 @click="goToProfile">목격자 {{ question?.user }}</h1>
+      <img :src="`${BASE_URL}${question.question_image}`">
       <p>증언 {{ question?.content }}</p>
       <p>만들어진 시각 :{{ createdAt }}</p>
       <p>수정된 시각 : {{ updatedAt }}</p>
@@ -62,6 +63,9 @@ export default {
     updatedAt(){
       const time = new Date(this.question?.updated_at)
       return time.toLocaleDateString() + time.toLocaleTimeString()
+    },
+    BASE_URL(){
+      return 'http://127.0.0.1:8000'
     }
   },
   methods :{

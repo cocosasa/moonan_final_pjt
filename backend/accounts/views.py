@@ -13,7 +13,7 @@ from movies.models import Movie
 
 # Create your views here.
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_profile(request): 
     serializer = ProfileSerializer(data = request.data)
@@ -34,7 +34,7 @@ def profile(request, username) :
 
     elif request.method == 'PUT':
         if request.user == profile.user:
-            serializer = ProfileSerializer(profile, data = request.data)
+            serializer = ProfileSerializer(profile, data=request.data)
             if serializer.is_valid(raise_exception = True):
                 serializer.save()
                 return Response(serializer.data)

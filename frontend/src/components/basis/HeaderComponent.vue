@@ -19,9 +19,10 @@
 
     <router-link v-if="isLogin" :to="{ name: 'LogOutView' }">LogOut</router-link>
     <div v-if="isLogin">
-      <router-link :to="{ name: 'profile', params:{ username,} }">
+      <router-link :to="{ name: 'profile', params:{ username: myUserName } }">
         <div class="profile-circle">
-          <img class="profile-icon" src="@/assets/Profile.png" alt="">
+          <img v-show="!myUserData.profile_image" class="profile-icon" src="@/assets/Profile.png" alt="">
+          <img v-show="myUserData.profile_image" class="profile-icon" :src="`http://127.0.0.1:8000${myUserData.profile_image}`" alt="">
         </div>
       </router-link>
     </div>
@@ -50,9 +51,13 @@ export default {
     isLogin(){
       return this.$store.state.token ? true : false
     },
-    username (){ 
-      return this.$store.state.username
+    myUserName (){ 
+      return this.$store.getters.myUserName
+    },
+    myUserData(){
+      return this.$store.getters.myUserData
     }
+
   },
   methods: {
 
@@ -67,16 +72,18 @@ export default {
   }
   .header{
     height: 100px;
-    background-color: #ffffff;
+    background-color: #282828;
     padding: 50px 30px;
   }
   .profile-circle{
     width: 50px;
+    height: 50px;
     border: 2px solid black;
-    border-radius: 25px;
+    border-radius: 50%;
     overflow: hidden;
   }
   .profile-icon{
-    width: 100%;                                             
+    width: 120%; 
+    height: 120%; 
   }
 </style>

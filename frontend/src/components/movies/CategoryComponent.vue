@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-wrap justify-content-start">
+  <div class="d-flex flex-wrap justify-content-start mt-4">
     <!-- <div v-for="genre in genreList" :key="genre.id" class="btn p-2 px-3 rounded-5 border me-1 mb-2" :class="{'btn-primary':selectedGenre.includes(genre.name)}"> -->
       <input v-for="genre in genreList" :key="genre.id" class="btn p-2 px-3 me-2 mb-2 checkbox" type="checkbox" :value="genre.name" :id="genre.id" v-model="selectedGenre" @click="check">
     <!-- </div> -->
@@ -43,11 +43,12 @@ export default {
   height: 30px;
   width: 140px;
   border-radius: 15px;
-  background-image: radial-gradient(
+  /* background-image: radial-gradient(
     circle farthest-corner at 10% 20%,
     rgba(37, 145, 251, 0.98) 0.1%,
     rgba(0, 7, 128, 1) 99.8%
-  );
+  ); */
+  background-color: red;
   background-size: 360% 100%;
   /* border-radius: 50px; */
   position: relative;
@@ -74,12 +75,12 @@ export default {
   position: absolute;
   top: 0%;
   left: 0px;
-  height: 200%;
+  height: 300%;
   width: 200%;
   background: #ffffff;
   z-index: 0;
   transition: all 0.2s linear;
-  transform: scale(0.6) translate(-50%, -50%);
+  transform: scale(0.5) translate(-50%, -85%);
 }
 .checkbox:hover:before,
 .checkbox:focus-visible:before {

@@ -4,9 +4,10 @@
       <div class="d-flex flex-column">
         <div class="profile-img-circle border-1 border shadow mt-3">
           <img v-if="!userData?.profile_image" class="profile-img" src="@/assets/Profile.png">
+          <img v-if="userData?.profile_image" class="profile-img" :src="`${BASE_URL}${userData?.profile_image}`">
         </div>
         
-        <input type="file" id="profile-image">
+        <input type="file" id="profile-image" @change="inputImage" ref="profile_image">
         <button class="btn btn-outline-dark mt-3"  @click="profileUpdate">프로필 변경</button>
 
       </div>
@@ -73,6 +74,7 @@ export default {
     return {
       userData:null,
       user:null,
+      file:null,
     }
   },
   computed: {
@@ -83,6 +85,9 @@ export default {
     wantMovieList(){
       return this.userData?.want_to_see_movies
     },
+    BASE_URL(){
+      return 'http://127.0.0.1:8000'
+    }
   },
   methods: {
     getUserInfomation(){
@@ -92,6 +97,9 @@ export default {
       })
       .then(res=>{
         console.dir(res.data)
+        if(this.$route.params.username==this.myUserName){
+          this.$store.dispatch('changeUserData', res.data)
+        }
         this.userData = res.data
       })
       .catch(err=>{
@@ -113,17 +121,20 @@ export default {
           console.log(err)
         })
     },
+    inputImage() {
+      this.file = this.$refs.profile_image.files[0]
+      console.log(this.file)
+    },
     profileUpdate(){
       const formdata = new FormData()
-      const image = document.querySelector('#profile-image').file
-      console.log(image)
-      formdata.append('profile_image', image)
-      formdata.append('username', this.myUserName)
+      // formdata.append('points', this.userData.points)
+      formdata.append('profile_image', this.file)
       axios({
         method: 'put',
-        url: `${API_URL}/accounts/profile/`,
+        url: `${API_URL}/accounts/profile/${this.$route.params.username}/`,
         headers: {
-          Authorization: `Token ${this.myToken}`
+          Authorization: `Token ${this.myToken}`,
+          'Content-Type': 'multipart/form-data'
         },
         data: formdata
       })
@@ -142,11 +153,11 @@ export default {
   width: 150px;
   height: 150px;
   overflow: hidden;
-  border-radius: 100px;
+  border-radius: 50%;
 }
 .profile-img{
-  width: 100%;
-  height: 100%;
+  width: 120%;
+  height: 120%;
 }
 .profile-info{
   margin-top: 80px;

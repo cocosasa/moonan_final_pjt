@@ -24,9 +24,9 @@ export default new Vuex.Store({
     ],
     genreList : [
     ],
+    userData : null,
     token : null,
     username : null,
-    points : null
   },
   getters: {
     isLogin(state){
@@ -35,14 +35,11 @@ export default new Vuex.Store({
     myUserName(state){
       return state.username
     },
-    // myNickName(state){
-    //   return state.nickname
-    // },
     myToken(state){
       return state.token
     },
-    myPoints(state){
-      return state.points
+    myUserData(state){
+      return state.userData
     }
   },
   mutations: {
@@ -62,20 +59,19 @@ export default new Vuex.Store({
       state.questionList = list
     },
     SAVE_TOKEN(state, data){
-      const {token, username, points} = data
+      const {token, username} = data
       state.token = token
       state.username = username
-      state.points = points
       router.push({ name:'movies' })
     },
     DELETE_TOKEN(state){
       state.token = null
       state.username = null
-      state.points = null
+      state.userData = null
       router.push({name : 'LogInView'})
     },
-    ADD_MY_POINTS(state, points){
-      state.points += points
+    CHANGE_USERDATA(state, userdata){
+      state.userData = userdata
     }
   },
   actions: {
@@ -157,7 +153,9 @@ export default new Vuex.Store({
       .then(res=>{
         console.log(res.data)
         token = res.data.key
-
+        context.commit('SAVE_TOKEN', {
+          token, username
+        })
       })
       .then(()=>{
         axios({
@@ -167,13 +165,13 @@ export default new Vuex.Store({
             Authorization : `Token ${token}`
           },
         })
-        .then(res=>{
-          console.log(res.data)
-          context.commit('SAVE_TOKEN', {
-            token, username, points:res.data.points
-          })
+        .then(response=>{
+          console.log(response.data)
+          context.commit('CHANGE_USERDATA', response.data)
         })
-        .catch(err=>{console.log(err)})
+        .catch(err=>{
+          console.log(err)
+        })
       })
       .catch(err=>{
         console.log(err)
@@ -195,17 +193,17 @@ export default new Vuex.Store({
             token:res.data.key,
             username,
         })
-        // axios({
-        //   method : 'get',
-        //   url : `${API_URL}/accounts/profile/${username}/`,
-        // })
-        // .then(response=>{
-        //   console.dir(response.data)
-          
-        // })
-        // .catch(err=>{
-        //   console.log(err)
-        // })
+        axios({
+          method : 'get',
+          url : `${API_URL}/accounts/profile/${username}/`,
+        })
+        .then(response=>{
+          console.log(response.data)
+          context.commit('CHANGE_USERDATA', response.data)
+        })
+        .catch(err=>{
+          console.log(err)
+        })
       })
       .catch(err=>{
         console.log(err)
@@ -229,6 +227,9 @@ export default new Vuex.Store({
     },
     setMyPoints(context, points){
       context.dispatch('SET_MY_POINTS', points)
+    },
+    changeUserData(context, userdata){
+      context.commit('CHANGE_USERDATA', userdata)
     }
   },
   modules: {

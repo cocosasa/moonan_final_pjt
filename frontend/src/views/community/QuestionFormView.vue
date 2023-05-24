@@ -20,7 +20,7 @@
             <tr>
               <th>이미지</th>
               <td>
-                <input type="file" id="file">
+                <input @change="inputImage" ref="questionImage" type="file" id="file">
               </td>
             </tr>
             <tr>
@@ -64,8 +64,11 @@ export default {
     goToList(){
       this.$router.back()
     },
+    inputImage(){
+      console.log(this.file)
+      this.file = this.$refs.questionImage.files[0]
+    },
     addQuestion(){
-      // var imagefile = document.getElementById('#file')
       const title = this.title
       const content = this.content
       const points = this.points
@@ -73,17 +76,15 @@ export default {
       formdata.append('title', title)
       formdata.append('content', content)
       formdata.append('points', points)
-      // const file = document.getElementById('#file').files[0]
-      // formdata.append('image', file)
-      // const data = {
-      //   title, content, points
-      // }
+      formdata.append('question_image', this.file)
+
       console.log(formdata)
       axios({
         method: 'post',
         url: `${API_URL}/community/questions/create/`,
         headers : {
           'Authorization' : `Token ${this.$store.state.token}`,
+          'Content-Type' : 'multipart/form-data'
         },
         data : formdata,
       })

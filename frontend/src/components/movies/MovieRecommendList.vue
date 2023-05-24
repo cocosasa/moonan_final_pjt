@@ -100,4 +100,11 @@ export default {
   z-index: 2;
 }
 
+.slick-next:before{
+  color: red;
+}
+.slick-prev:before{
+  color: red;
+}
+
 </style>
