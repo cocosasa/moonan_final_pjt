@@ -26,6 +26,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 
   color: white;
+  font-weight: 2000;
   min-width: 1200px;
   /* background-color: #070707; */
 }

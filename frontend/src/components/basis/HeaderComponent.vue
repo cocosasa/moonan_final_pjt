@@ -21,15 +21,15 @@
     <div v-if="isLogin">
       <router-link :to="{ name: 'profile', params:{ username: myUserName } }">
         <div class="profile-circle">
-          <img v-show="!myUserData.profile_image" class="profile-icon" src="@/assets/Profile.png" alt="">
-          <img v-show="myUserData.profile_image" class="profile-icon" :src="`http://127.0.0.1:8000${myUserData.profile_image}`" alt="">
+          <img v-show="!myUserData?.profile_image" class="profile-icon" src="@/assets/Profile.png" alt="">
+          <img v-show="myUserData?.profile_image" class="profile-icon" :src="`http://127.0.0.1:8000${myUserData?.profile_image}`" alt="">
         </div>
       </router-link>
     </div>
 
     <div v-if="!isLogin"> | 
-      <router-link :to="{ name: 'LogInView' }">LogInPage</router-link> | 
-      <router-link :to="{ name: 'SignUpView' }">SignUpPage</router-link>
+      <router-link :to="{ name: 'LogInView' }">로그인</router-link> | 
+      <!-- <router-link :to="{ name: 'SignUpView' }">SignUpPage</router-link> -->
     </div>
   </div>
 </template>
@@ -74,6 +74,7 @@ export default {
     height: 100px;
     background-color: #282828;
     padding: 50px 30px;
+    border: none;
   }
   .profile-circle{
     width: 50px;
