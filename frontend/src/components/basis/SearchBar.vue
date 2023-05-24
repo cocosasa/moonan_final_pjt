@@ -1,7 +1,7 @@
 <template>
-  <div class="border rounded-5 overflow-hidden ps-3 pe-1 py-1" :class="{'border-danger':isSearching}">
+  <div class="border rounded-5 overflow-hidden ps-3 pe-1 py-1" style="background-color: white" :class="{'border-danger':isSearching}">
     <input class="border-0 search-bar-inputbox" @keyup.enter="searchMovie" type="text" v-model.trim="keyword">
-    <button class="search-bar-btn" @click="searchMovie"><i class="fa-solid fa-magnifying-glass fa-lg" style="color: white;"></i></button>
+    <button class="search-bar-btn" @click="searchMovie"><i class="fa-solid fa-magnifying-glass fa-lg" style="color: black;"></i></button>
   </div>
 </template>
 
