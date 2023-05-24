@@ -1,10 +1,13 @@
 
 <template>
   <div>
+
+    <h1>Montage Interview</h1>
     <div>
-      <h1>Montage Interview</h1>
-      <h1>제목{{ question?.title }}</h1>
+      <h1>{{ question?.title }}</h1>
       <h1 @click="goToProfile">목격자 {{ question?.user }}</h1>
+    </div>
+    <div>
       <img v-if="question.question_image" :src="`${BASE_URL}${question.question_image}`">
       <p>증언 {{ question?.content }}</p>
       <p>만들어진 시각 :{{ createdAt }}</p>
@@ -25,9 +28,12 @@
         <button @click.prevent="addComment" class="btn btn-danger">등록</button>
       </form>
     </div>
-    <div class="my-3" v-if="question">
+    <div class="my-3">
       <h3>알려진 정보</h3>
       <CommentItem v-for="comment in question?.question_comments" :key="comment.id" :comment="comment" :question-user="question?.user"/>
+      <div v-if="question?.question_comments">
+        <span>추가 내용이 없습니다..</span>
+      </div>
     </div>
   </div>
 </template>
@@ -67,6 +73,9 @@ export default {
     },
     BASE_URL(){
       return 'http://127.0.0.1:8000'
+    },
+    myToken(){
+      return this.$store.state.token
     }
   },
   methods :{
@@ -75,7 +84,7 @@ export default {
         method: 'get',
         url: `${API_URL}/community/questions/${this.$route.params.id}/`,
         headers: {
-          Authorization: `Token ${this.$store.state.token}`
+          Authorization: `Token ${this.myToken}`
         }
       })
       .then((res) => {
@@ -90,6 +99,10 @@ export default {
       this.$router.push({name:'profile', params:{username: this.question?.user }})
     },
     addComment(){
+      if(!this.myToken){
+        this.$store.dispatch('AlertLogin')
+        return
+      }
       const data = {
         content : this.commentContent
       }
@@ -97,7 +110,7 @@ export default {
         method: 'post',
         url: `${API_URL}/community/questions/${this.$route.params.id}/comments/`,
         headers: {
-          'Authorization': `Token ${this.$store.state.token}`,
+          'Authorization': `Token ${this.myToken}`,
         },
         data: data,
       })
@@ -115,7 +128,7 @@ export default {
         method: 'delete',
         url: `${API_URL}/community/questions/${this.$route.params.id}/`,
         headers: {
-          'Authorization': `Token ${this.$store.state.token}`,
+          'Authorization': `Token ${this.myToken}`,
         },
       })
       .then((res) => {

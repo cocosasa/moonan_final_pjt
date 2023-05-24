@@ -241,6 +241,12 @@ export default new Vuex.Store({
     changeQuestionData(context, question){
       context.commit('CHANGE_QUESTION', question)
     },
+    AlertLogin(context){
+      context
+      if(alert(confirm('로그인이 필요합니다. 로그인 창으로 이동하시겠습니까?'))){
+        this.router.push({name:'LogInView'})
+      }
+    }
   },
   modules: {
   }
