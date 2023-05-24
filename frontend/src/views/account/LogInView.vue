@@ -117,7 +117,7 @@ export default {
   }
 }
 </script>
-<style scoped> 
+<style scoped>
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 
 /* BASIC */
