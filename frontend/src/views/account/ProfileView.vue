@@ -2,16 +2,16 @@
   <div>
     <div class="d-flex justify-content-between">
       <div class="d-flex flex-column">
-        <div class="profile-img-circle border-1 border shadow mt-3">
+        <div class="profile-img-circle border-1 border shadow mt-3" @click="changeFile">
           <img v-if="!userData?.profile_image" class="profile-img" src="@/assets/Profile.png">
           <img v-if="userData?.profile_image" class="profile-img" :src="`${BASE_URL}${userData?.profile_image}`">
         </div>
         <div v-if="isMyProfile">
-          <input type="file" id="profile-image" @change="inputImage" ref="profile_image">
-          <button class="btn btn-outline-dark mt-3"  @click="profileUpdate">프로필 변경</button>
+          <input type="file" id="profile-image" @change="inputImage" ref="profile_image" class="btn">
+          <button class="btn btn-outline-light mt-3"  @click="profileUpdate">프로필 변경</button>
         </div>
       </div>
-      <div class="my-5">
+      <div class="my-auto">
         <p>아이디 {{ userData?.user.username }}</p>
         <!-- <p>닉네임 {{ userData?.nickname }}</p> -->
         <p>포인트 {{ userData?.points }}</p>
@@ -20,7 +20,7 @@
         <button @click="toggleFollow" v-if="!isFollowing">팔로우</button>
         <button @click="toggleFollow" v-if="isFollowing">언팔로우</button>
       </div>
-      <div class="d-flex">
+      <div class="d-flex my-auto">
         <div class="profile-info">
           <p>24</p>
           <p>SOLVE</p>
@@ -135,7 +135,13 @@ export default {
       this.file = this.$refs.profile_image.files[0]
       console.log(this.file)
     },
+    changeFile() {
+      document.querySelector('#profile-image').click()
+    },
     profileUpdate(){
+      if(!this.file){
+        return
+      }
       const formdata = new FormData()
       // formdata.append('points', this.userData.points)
       formdata.append('profile_image', this.file)
@@ -150,6 +156,7 @@ export default {
       })
         .then(res => {
           console.log(res.data)
+          this.getUserInfomation()
         })
         .catch(err => { console.log(err) })
     }
@@ -165,9 +172,17 @@ export default {
   overflow: hidden;
   border-radius: 50%;
 }
+.profile-img-circle:hover{
+  opacity: 0.5;
+  content : '이미지 수정';
+}
 .profile-img{
-  width: 120%;
-  height: 120%;
+  position: relative;
+  -webkit-user-drag: none;
+  width: 110%;
+  height: 110%;
+  top: -5%;
+  left: -5%;
 }
 .profile-info{
   margin-top: 80px;
@@ -188,5 +203,10 @@ export default {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   color: white;
+}
+#profile-image{
+  width: 0px;
+  visibility: hidden;
+  margin: 0px;
 }
 </style>

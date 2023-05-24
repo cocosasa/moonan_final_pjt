@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1>" {{keyword}} " 검색결과</h1>
+    <div class="my-5">
+      <h1>" {{keyword}} " 검색결과</h1>
+    </div>
     <div v-if="!results?.length">검색결과가 없습니다..</div>
     <MovieList :movie-list="results"/>
   </div>

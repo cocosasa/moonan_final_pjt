@@ -1,16 +1,16 @@
 <template>
-  <div class="header border shadow d-flex justify-content-between align-items-center">
+  <div class="header shadow d-flex justify-content-between align-items-center">
     <div>
       <router-link :to="{ name: 'main' }">
         <img class="logo" src="@/assets/logo2.png" alt="">
       </router-link>
     </div>
 
-    <div class="d-flex gap-5">
-      <router-link :to="{ name: 'movies' }"><h5><strong>영화</strong></h5></router-link>
-      <router-link :to="{ name: 'challenge' }"><h5><strong>추리</strong></h5></router-link>
-      <router-link :to="{ name: 'recommend' }"><h5><strong>추천</strong></h5></router-link>
-      <router-link :to="{ name: 'community' }"><h5><strong>커뮤</strong></h5></router-link>
+    <div class="d-flex gap-4">
+      <router-link :to="{ name: 'movies' }"><h5><strong>Movie</strong></h5></router-link>
+      <router-link :to="{ name: 'challenge' }"><h5><strong>Clue</strong></h5></router-link>
+      <router-link :to="{ name: 'recommend' }"><h5><strong>Recommend</strong></h5></router-link>
+      <router-link :to="{ name: 'community' }"><h5><strong>Community</strong></h5></router-link>
     </div>
 
     <div>
@@ -79,12 +79,16 @@ export default {
   .profile-circle{
     width: 50px;
     height: 50px;
-    border: 2px solid black;
+    border: 1px solid snow;
     border-radius: 50%;
     overflow: hidden;
   }
   .profile-icon{
-    width: 120%; 
-    height: 120%; 
+    position: relative;
+    -webkit-user-drag: none;
+    width: 110%;
+    height: 110%;
+    top: -5%;
+    left: -5%;
   }
 </style>
