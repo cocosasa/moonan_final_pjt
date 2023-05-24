@@ -18,17 +18,18 @@
       <input type="text" v-model="formContent">
       <button >대댓글 달기</button>
     </form>
-    <CommentItem v-for="(child,idx) in comment.child_comments" :key="idx" :comment="child" :question-user="questionUser" class="ms-5">
+    <CommentItem v-for="(child,idx) in comment.child_comments" :key="idx" :comment="child" :question-user="questionUser">
     </CommentItem>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import CommentItem from './CommentItem.vue';
 
 const API_URL = 'http://127.0.0.1:8000'
 export default {
-  name:'CommentItem',
+  name:'CCommentItem',
   data(){
     return{
       user : null,
@@ -36,6 +37,9 @@ export default {
       isCcommenting : false,
       formContent : ''
     }
+  },
+  components :{
+    CommentItem,
   },
   props:{
     comment : Object,

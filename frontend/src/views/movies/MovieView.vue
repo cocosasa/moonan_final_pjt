@@ -32,7 +32,7 @@ export default {
     MovieList,
   },
   created() {
-    if(!this.$store.popularMovieList.length){
+    if(!this.$store.state.popularMovieList.length){
       this.getMovies()
     }
   },

@@ -116,9 +116,20 @@ def entire_questions(request):
 def create_question(request):
     serializer = QuestionSerializer(data = request.data)
     
+    me = get_object_or_404(Profile, user = request.user)
+
+    if me.points < int(serializer.initial_data['points']):
+        return Response(status = status.HTTP_400_BAD_REQUEST)
+
+    serializer2 = ProfileSerializer(me, data=request.data)
+    
     if serializer.is_valid(raise_exception = True):
         serializer.save(user = request.user)
-        return Response(serializer.data, status = status.HTTP_201_CREATED)
+
+        if serializer2.is_valid(raise_exception = True):
+            serializer2.save(points = me.points - serializer.data['points'])
+
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -193,7 +204,26 @@ def question_ccomment_create(request, comment_pk):
 @permission_classes([IsAuthenticated])
 def choose_answer(request, points_get):
     me = get_object_or_404(Profile, user = request.user)
-    serializer = ProfileSerializer(me ,data=request.data)
-    if serializer.is_valid(raise_exception=True):
+    serializer = ProfileSerializer(me, data = request.data)
+    if serializer.is_valid(raise_exception = True):
         serializer.save(points = me.points + points_get)
         return Response(status = status.HTTP_200_OK)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def select_comment(request, question_pk, comment_pk):
+    question = get_object_or_404(Question, pk = question_pk)
+    if question.is_completed == False:
+        if request.user == question.user:
+            comment = get_object_or_404(QuestionComment, pk = comment_pk)
+            answerer = get_object_or_404(Profile, user = comment.user)
+            serializer = ProfileSerializer(answerer, data = request.data)
+            if serializer.is_valid(raise_exception = True):
+                serializer.save(points = answerer.points + question.points)
+                
+                serializer2 = QuestionSerializer(question, data = request.data, partial = True)
+                if serializer2.is_valid(raise_exception = True):
+                    serializer2.save(is_completed = True)
+                return Response(status = status.HTTP_200_OK)
+    return Response(status = status.HTTP_401_UNAUTHORIZED)

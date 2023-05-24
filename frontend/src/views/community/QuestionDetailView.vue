@@ -2,25 +2,29 @@
 <template>
   <div>
     <div>
-      <h1>QuestionDetailView</h1>
-      <h1>{{ question?.title }}</h1>
-      <h1 @click="goToProfile">{{ username }}</h1>
-      <p>{{ question?.content }}</p>
-      <p>{{ question?.created_at }}</p>
-      <p>{{ question?.updated_at }}</p>
+      <h1>Montage Interview</h1>
+      <h1>제목{{ question?.title }}</h1>
+      <h1 @click="goToProfile">목격자 {{ question?.user }}</h1>
+      <p>증언 {{ question?.content }}</p>
+      <p>만들어진 시각 :{{ createdAt }}</p>
+      <p>수정된 시각 : {{ updatedAt }}</p>
       <p>{{ question?.points }}</p>
     </div>
-    <div>
-      <h3 v-if="myUsername != username">조사하기</h3>
-      <h3 v-if="myUsername === username">답변하기</h3>
-      <form>
-        <input type="text" v-model="commentContent">
-        <button @click.prevent="addComment">등록</button>
-      </form>
+    <div v-if="myUserName === question?.user">
+      <button>수정</button>
+      <button>삭제</button>
     </div>
     <div>
+      <h3 v-if="myUserName != question?.user">조사하기</h3>
+      <h3 v-if="myUserName === question?.user">추가 증언하기</h3>
+      <form>
+        <input type="text" v-model="commentContent" class="form-text p-2 rounded-1">
+        <button @click.prevent="addComment" class="btn btn-danger">등록</button>
+      </form>
+    </div>
+    <div class="my-3" v-if="question">
       <h3>알려진 정보</h3>
-      <CommentItem v-for="comment in question.question_comments" :key="comment" :comment-id="comment" :question-user="username"/>
+      <CommentItem v-for="comment in question?.question_comments" :key="comment.id" :comment="comment" :question-user="question?.user"/>
     </div>
   </div>
 </template>
@@ -45,11 +49,19 @@ export default {
     }
   },
   computed:{
-    username(){
-      return this.question?.user
-    },
-    myUsername(){
+    // username(){
+    //   return this.question?.user
+    // },
+    myUserName(){
       return this.$store.state.username
+    },
+    createdAt(){
+      const time = new Date(this.question?.created_at)
+      return time.toLocaleDateString() + time.toLocaleTimeString()
+    },
+    updatedAt(){
+      const time = new Date(this.question?.updated_at)
+      return time.toLocaleDateString() + time.toLocaleTimeString()
     }
   },
   methods :{
@@ -70,7 +82,7 @@ export default {
       })
     },
     goToProfile(){
-      this.$router.push({name:'profile', params:{username: this.username}})
+      this.$router.push({name:'profile', params:{username: this.question?.user }})
     },
     addComment(){
       const data = {

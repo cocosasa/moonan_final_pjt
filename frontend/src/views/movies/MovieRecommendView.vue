@@ -6,6 +6,7 @@
 
 <script>
 import MovieRecommendList from '@/components/movies/MovieRecommendList.vue';
+import _ from 'lodash'
 
 
 export default {
@@ -15,7 +16,7 @@ export default {
   },
   computed: {
     recommendLists() {
-      return this.$store.state.recommendLists
+      return _.sampleSize(this.$store.state.recommendLists, 3)
     }
   },
   methods:{

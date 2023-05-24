@@ -3,7 +3,7 @@
     <div class="mb-3">
       <span class="recommend-list-title">{{ recommendList.creteria }}</span>
     </div>
-    <VueSlickCarousel v-bind="settings" class="d-flex justify-content-between recommend-list">
+    <VueSlickCarousel v-bind="settings" >
         <MovieSmallCard v-for="movie in recommendList.movielist" :key="movie.id" :movie="movie" @click="goToDetail(movie)"/>
     </VueSlickCarousel>
     
@@ -29,13 +29,13 @@ export default {
   data() {
     return {
       settings: {
-        "arrows": false,
+        "arrows": true,
         "dots": true,
         "infinite": true,
         "slidesToShow": 5,
         "slidesToScroll": 1,
-        "autoplay": true,
-        "speed": 8000,
+        // "autoplay": true,
+        "speed": 300,
         "autoplaySpeed": 2000,
         "cssEase": "linear"
       }
@@ -56,7 +56,7 @@ export default {
 <style>
 .recommend-list {
   width: 100%;
-  height: 3500px;
+  height: 350px;
   margin-top : 0px;
   margin-bottom : 50px;
   border-radius: 5px;

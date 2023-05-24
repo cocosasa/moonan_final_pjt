@@ -26,7 +26,7 @@ export default new Vuex.Store({
     ],
     token : null,
     username : null,
-    nickname : null,
+    points : null
   },
   getters: {
     isLogin(state){
@@ -35,11 +35,14 @@ export default new Vuex.Store({
     myUserName(state){
       return state.username
     },
-    myNickName(state){
-      return state.nickname
-    },
+    // myNickName(state){
+    //   return state.nickname
+    // },
     myToken(state){
-      return state.myToken
+      return state.token
+    },
+    myPoints(state){
+      return state.points
     }
   },
   mutations: {
@@ -59,18 +62,21 @@ export default new Vuex.Store({
       state.questionList = list
     },
     SAVE_TOKEN(state, data){
-      const {token, username, nickname} = data
+      const {token, username, points} = data
       state.token = token
       state.username = username
-      state.nickname = nickname
+      state.points = points
       router.push({ name:'movies' })
     },
     DELETE_TOKEN(state){
       state.token = null
       state.username = null
-      state.nickname = null
+      state.points = null
       router.push({name : 'LogInView'})
     },
+    ADD_MY_POINTS(state, points){
+      state.points += points
+    }
   },
   actions: {
     getMovies(context){
@@ -139,7 +145,7 @@ export default new Vuex.Store({
       })
     },
     signUp(context, payload){
-      const { username, nickname, password1, password2 } = payload
+      const { username, password1, password2 } = payload
       var token = ''
       axios({
         method : 'post', 
@@ -160,15 +166,11 @@ export default new Vuex.Store({
           headers : {
             Authorization : `Token ${token}`
           },
-          data:{
-            nickname,
-          }
         })
         .then(res=>{
           console.log(res.data)
-
           context.commit('SAVE_TOKEN', {
-            token, username, nickname
+            token, username, points:res.data.points
           })
         })
         .catch(err=>{console.log(err)})
@@ -189,21 +191,21 @@ export default new Vuex.Store({
       })
       .then(res=>{
         console.log(res.data)
-        axios({
-          method : 'get',
-          url : `${API_URL}/accounts/profile/${username}/`,
-        })
-        .then(response=>{
-          console.dir(response.data)
-          context.commit('SAVE_TOKEN', {
+        context.commit('SAVE_TOKEN', {
             token:res.data.key,
-            nickname : response.data.nickname,
             username,
-          })
         })
-        .catch(err=>{
-          console.log(err)
-        })
+        // axios({
+        //   method : 'get',
+        //   url : `${API_URL}/accounts/profile/${username}/`,
+        // })
+        // .then(response=>{
+        //   console.dir(response.data)
+          
+        // })
+        // .catch(err=>{
+        //   console.log(err)
+        // })
       })
       .catch(err=>{
         console.log(err)
@@ -224,6 +226,9 @@ export default new Vuex.Store({
       .catch(err=>{
         console.log(err)
       })
+    },
+    setMyPoints(context, points){
+      context.dispatch('SET_MY_POINTS', points)
     }
   },
   modules: {

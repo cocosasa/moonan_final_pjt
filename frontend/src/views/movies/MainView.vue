@@ -18,6 +18,7 @@ import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 // optional style for arrows & dots
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+import _ from 'lodash'
 
 
 export default {
@@ -42,7 +43,7 @@ export default {
       return this.$store.state.movieList
     },
     recommendLists() {
-      return this.$store.state.recommendLists
+      return _.sampleSize(this.$store.state.recommendLists, 2)
     }
   },
   methods:{

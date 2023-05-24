@@ -42,6 +42,7 @@ export default {
 
 <style>
 .large-card-img{
+  -webkit-user-drag: none;
   padding: 0;
 }
 .large-card{

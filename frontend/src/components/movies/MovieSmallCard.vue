@@ -33,6 +33,7 @@ export default {
   overflow: hidden;
 }
 .small-card-img{
+  -webkit-user-drag: none;
   width: 220px;
 }
 </style>

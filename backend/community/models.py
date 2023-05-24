@@ -32,6 +32,7 @@ class Question(models.Model):
     points = models.IntegerField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
     question_image = models.ImageField(blank = True)
+    is_completed = models.BooleanField(default = False)
     
 
 class QuestionComment(models.Model):

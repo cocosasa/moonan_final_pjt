@@ -12,7 +12,7 @@
       </div>
       <div class="my-5">
         <p>아이디 {{ userData?.user }}</p>
-        <p>닉네임 {{ userData?.nickname }}</p>
+        <!-- <p>닉네임 {{ userData?.nickname }}</p> -->
         <p>포인트 {{ userData?.points }}</p>
       </div>
       <div v-if="!myUserName === userData?.user" class="my-auto">

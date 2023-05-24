@@ -18,5 +18,6 @@ urlpatterns = [
     path('questions/<int:question_pk>/comments/', views.create_question_comment),
     path('questioncomments/<int:comment_pk>/', views.question_comment_detail),
     path('questioncomments/<int:comment_pk>/comments/', views.question_ccomment_create),
-    path('questions/correct/<int:points_get>/', views.choose_answer),
+    path('quiz/correct/<int:points_get>/', views.choose_answer),
+    path('questions/correct/<int:question_pk>/<int:comment_pk>/', views.select_comment),
 ]

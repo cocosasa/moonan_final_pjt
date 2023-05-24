@@ -7,9 +7,9 @@
         </div>
     </div>
     <div class="d-flex justify-content-center gap-5 my-5">
-      <button class="btn btn-outline-dark">{{ randomMovie[selectionOrder[0]].title }}</button>
-      <button class="btn btn-outline-dark">{{ randomMovie[selectionOrder[1]].title }}</button>
-      <button class="btn btn-outline-dark">{{ randomMovie[selectionOrder[2]].title }}</button>
+      <button class="btn btn-outline-dark" @click="checkAnswer(0)">{{ randomMovie[selectionOrder[0]].title }}</button>
+      <button class="btn btn-outline-dark" @click="checkAnswer(1)">{{ randomMovie[selectionOrder[1]].title }}</button>
+      <button class="btn btn-outline-dark" @click="checkAnswer(2)">{{ randomMovie[selectionOrder[2]].title }}</button>
     </div>
     <div class="d-flex justify-content-end">
       <button @click="moreHint" v-if="nowHint < 25" class="btn btn-secondary">더 보기 -10점</button>
@@ -20,7 +20,9 @@
 
 <script>
 import _ from 'lodash'
+import axios from 'axios'
 
+const API_URL = 'http://127.0.0.1:8000'
 export default {
   name :'ChallengeView',
   data(){
@@ -167,6 +169,28 @@ export default {
       }
       else{
         alert('아.. 누르지 마세요')
+      }
+    },
+    checkAnswer(num){
+      if(this.selectionOrder[num] == 0 ){
+        axios({
+          method: 'put',
+          url: `${API_URL}/community/quiz/correct/${this.currentScore}/`,
+          headers: {
+            'Authorization': `Token ${this.$store.state.token}`,
+          },
+        })
+          .then((res) => {
+            console.log(res.data)
+            alert(`정답을 맞추셨습니다! ${this.currentScore} 포인트를 획득하셨습니다!`)
+            this.$router.push({ name: 'main' })
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+      else{
+        alert(`오답입니다. 정답은 ${this.randomMovie[0].title}입니다`)
       }
     }
   }

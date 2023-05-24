@@ -5,8 +5,8 @@
       <label for="username">username : </label>
       <input type="text" id="username" v-model="username"><br>
 
-      <label for="nickname">nickname : </label>
-      <input type="text" id="nickname" v-model="nickname"><br>
+      <!-- <label for="nickname">nickname : </label>
+      <input type="text" id="nickname" v-model="nickname"><br> -->
 
       <label for="password1"> password : </label>
       <input type="password" id="password1" v-model="password1"><br>
@@ -30,7 +30,7 @@ export default {
   data() {
     return{
       username : null,
-      nickname : null,
+      // nickname : null,
       password1: null,
       password2: null,
     }
@@ -41,17 +41,17 @@ export default {
   methods: {
     signUp(){
       const username = this.username
-      const nickname = this.nickname
+      // const nickname = this.nickname
       const password1 = this.password1
       const password2 = this.password2
       if(!username.trim()){
         alert('아이디를 확인해주세요')
         return
       }
-      else if(!nickname.trim()) {
-        alert('닉네임을 확인해주세요')
-        return
-      }
+      // else if(!nickname.trim()) {
+      //   alert('닉네임을 확인해주세요')
+      //   return
+      // }
       else if(!password1.trim() || !password2.trim() || password1 != password2) {
         alert('비밀번호를 확인해주세요')
         return
@@ -59,7 +59,7 @@ export default {
 
       const payload = {
         username,
-        nickname,
+        // nickname,
         password1,
         password2,
       }

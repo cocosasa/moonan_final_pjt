@@ -24,7 +24,7 @@
               </td>
             </tr>
             <tr>
-              <th>상금</th>
+              <th>상금 ( 현재 {{ myPoints }}점 보유 )</th>
               <td>
                 <input type="number" v-model="points"/>
               </td>
@@ -53,6 +53,11 @@ export default {
       content : null,
       points : null,
       file : null
+    }
+  },
+  computed:{
+    myPoints(){
+      return this.$store.getters.myPoints
     }
   },
   methods: {
