@@ -17,7 +17,7 @@
       <SearchBar/>
     </div>
 
-    <router-link v-if="isLogin" :to="{ name: 'LogOutView' }">LogOut</router-link>
+    <router-link v-if="isLogin" :to="{ name: 'LogOutView' }">로그아웃</router-link>
     <div v-if="isLogin">
       <router-link :to="{ name: 'profile', params:{ username: myUserName } }">
         <div class="profile-circle">
@@ -51,7 +51,7 @@ export default {
     isLogin(){
       return this.$store.state.token ? true : false
     },
-    myUserName (){ 
+    myUserName(){ 
       return this.$store.getters.myUserName
     },
     myUserData(){

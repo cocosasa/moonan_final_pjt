@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-center my-5">Challenge</h1>
+    <h1 class="text-center my-5"><span class = "bold">Challenge</span></h1>
     <h3 class="text-center my-sm-5" v-if="currentScore != 0">{{currentScore}} 점</h3>
     <h3 class="text-center my-sm-5" v-if="currentScore == 0">{{ randomMovie[0].title }}</h3>
     <div class="quiz_img" v-if="randomMovie[0]"> 
@@ -219,5 +219,8 @@ export default {
   position: absolute;
   width: 100px;
   height: 150px;
+}
+.bold{
+  font-weight: bold;
 }
 </style>
