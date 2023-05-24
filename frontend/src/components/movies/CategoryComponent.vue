@@ -73,20 +73,20 @@ export default {
 .checkbox:before {
   content: "";
   position: absolute;
-  top: 0%;
-  left: 0px;
+  top: 50%;
+  left: -50%;
   height: 300%;
-  width: 200%;
+  width: 300%;
   background: #ffffff;
   z-index: 0;
-  transition: all 0.2s linear;
-  transform: scale(0.5) translate(-50%, -85%);
+  transition: all 0.2s ease-out;
+  transform: scale(0.5) translate(-50%, -100%);
 }
 .checkbox:hover:before,
 .checkbox:focus-visible:before {
   background: #ffffffec;
-  top: -4%;
-  left: 20%;
+  top: 50%;
+  left: -50%;
 }
 .checkbox:checked:before {
   top: -100%;

@@ -27,7 +27,7 @@ export default {
 
   color: white;
   font-weight: 2000;
-  color: black;
+  /* color: black; */
   min-width: 1200px;
   /* background-color: #070707; */
 }
