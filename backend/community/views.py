@@ -226,5 +226,9 @@ def select_comment(request, question_pk, comment_pk):
                 serializer2 = QuestionSerializer(question, data = request.data, partial = True)
                 if serializer2.is_valid(raise_exception = True):
                     serializer2.save(is_completed = True)
+
+                    serializer3 = QuestionCommentSerializer(comment, data = request.data, partial = True)
+                    if serializer3.is_valid(raise_exception = True):
+                        serializer3.save(is_chosen = True)
                 return Response(status = status.HTTP_200_OK)
     return Response(status = status.HTTP_401_UNAUTHORIZED)

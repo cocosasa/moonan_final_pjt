@@ -3,7 +3,7 @@ from .models import Review, ReviewComment, Question, QuestionComment
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source = 'user.nickname', read_only = True)
+    user = serializers.CharField(source = 'user.username', read_only = True)
     comments = serializers.PrimaryKeyRelatedField(many = True, read_only = True, allow_null = True)
 
     class Meta:
@@ -35,7 +35,7 @@ class QuestionCommentSerializer(serializers.ModelSerializer):
     child_comments = RecursiveSerializer(many=True, read_only=True)
     class Meta:
         model = QuestionComment
-        fields = ('id', 'question', 'content', 'user', 'created_at', 'updated_at', 'parent_comment', 'child_comments')
+        fields = ('id', 'question', 'content', 'user', 'created_at', 'updated_at', 'parent_comment', 'child_comments', 'is_chosen',)
         read_only_fields = ('user', 'question', 'parent_comment')
     
     def get_reply(self, instance):
