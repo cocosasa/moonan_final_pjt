@@ -10,7 +10,7 @@
       <router-link :to="{ name: 'movies' }"><h5><strong>Movie</strong></h5></router-link>
       <router-link :to="{ name: 'challenge' }"><h5><strong>Clue</strong></h5></router-link>
       <router-link :to="{ name: 'recommend' }"><h5><strong>Recommend</strong></h5></router-link>
-      <router-link :to="{ name: 'community' }"><h5><strong>Community</strong></h5></router-link>
+      <router-link :to="{ name: 'community' }"><h5><strong>Montage</strong></h5></router-link>
     </div>
 
     <div>
