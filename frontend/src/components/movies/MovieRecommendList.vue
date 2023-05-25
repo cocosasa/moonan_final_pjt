@@ -4,7 +4,7 @@
       <span class="recommend-list-title">{{ recommendList.creteria }}</span>
     </div>
     <VueSlickCarousel v-bind="settings" >
-        <MovieSmallCard v-for="movie in recommendList.movielist" :key="movie.id" :movie="movie" @click="goToDetail(movie)"/>
+        <MovieSmallCard v-for="movie in recommendList.movielist" :key="movie.id" :movie="movie" @click="goToDetail(movie)" @drag.native.stop.prevent="stopClick(event)"/>
     </VueSlickCarousel>
     
   </div>
@@ -33,7 +33,7 @@ export default {
         "dots": true,
         "infinite": true,
         "slidesToShow": 5,
-        "slidesToScroll": 1,
+        "slidesToScroll": 2,
         // "autoplay": true,
         "speed": 300,
         "autoplaySpeed": 2000,
@@ -48,6 +48,9 @@ export default {
     goToDetail(movieId) {
       this.$router.push({ name: 'detail', params: { id: movieId } })
     },
+    stopClick(e){
+      console.log('dd', e)
+    }
   },
 
 }

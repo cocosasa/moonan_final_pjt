@@ -1,8 +1,7 @@
 <template>
-  <div>
-    <iframe v-if="video" :src="videoURL" width="1120" height="630" frameborder="0" allowfullscreen allow="autoplay;" ></iframe>
-    <h2>{{video?.name}}</h2>
-    <p>{{video?.description}}</p>
+  <div class="my-3">
+    <!-- <h2>{{video?.name}}</h2> -->
+    <iframe v-if="video" :src="videoURL" width="1200" height="700" frameborder="0" autohide=1 allowfullscreen autoplay=1 showinfo=0 allow="autoplay;" ></iframe>
   </div>
 </template>
 

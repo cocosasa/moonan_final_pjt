@@ -26,6 +26,9 @@ export default {
   computed:{
     questionList(){
       return this.$store.state.questionList
+    },
+    isLogin(){
+      return this.$store.getters.isLogin
     }
   },
   methods:{
@@ -33,6 +36,10 @@ export default {
       this.$store.dispatch('getQuestions')
     },
     goToPostQuestion(){
+      if(!this.isLogin){
+        this.$store.dispatch('alertLogin')
+        return
+      }
       this.$router.push({name: 'postquestion' })
     }
   }

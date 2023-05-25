@@ -22,8 +22,8 @@ export default {
 
 <style>
 .actor-card{
-  width: 200px;
-  height: 300px;
+  width: 180px;
+  height: 260px;
   border-radius: 10px;
   overflow: hidden;
 }

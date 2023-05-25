@@ -76,6 +76,9 @@ export default {
     },
     myToken(){
       return this.$store.state.token
+    },
+    isLogin(){
+      return this.$store.getters.isLogin
     }
   },
   methods :{
@@ -100,7 +103,7 @@ export default {
     },
     addComment(){
       if(!this.myToken){
-        this.$store.dispatch('AlertLogin')
+        this.$store.dispatch('alertLogin')
         return
       }
       const data = {
@@ -139,6 +142,13 @@ export default {
       .catch((err) => {
         console.log(err)
       })
+    },
+    checkLogin(){
+      if(!this.isLogin){
+        this.$store.dispatch('alertLogin')
+        return
+      }
+
     }
   }
 }

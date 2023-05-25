@@ -7,12 +7,11 @@ import MovieView from '@/views/movies/MovieView'
 import MovieDetailView from '@/views/movies/MovieDetailView'
 import MovieRecommendView from '@/views/movies/MovieRecommendView'
 import ProfileView from '@/views/account/ProfileView'
-import SignUpView from '@/views/account/SignUpView'
 import LogInView from '@/views/account/LogInView'
-import LogOutView from '@/views/account/LogOutView'
 import CommunityView from '@/views/community/CommunityView'
 import QuestionFormView from '@/views/community/QuestionFormView'
 import QuestionDetailView from '@/views/community/QuestionDetailView'
+import NotFound404 from '@/views/account/NotFound404'
 Vue.use(VueRouter)
 
 const routes = [
@@ -35,21 +34,9 @@ const routes = [
   },
 
   {
-    path: '/signup',
-    name: 'SignUpView',
-    component: SignUpView
-  },
-
-  {
     path: '/login',
     name: 'LogInView',
     component: LogInView
-  },
-
-  {
-    path: '/logout',
-    name: 'LogOutView',
-    component: LogOutView
   },
 
   {
@@ -93,6 +80,16 @@ const routes = [
     name: 'profile',
     component: ProfileView
   },
+  {
+    path: '/404',
+    name: 'NotFound404',
+    component: NotFound404
+  },
+  {
+    path: '*',
+    redirect:'/404',
+    component: NotFound404
+  }
   
 ]
 

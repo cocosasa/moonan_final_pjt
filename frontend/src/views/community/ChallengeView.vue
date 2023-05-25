@@ -146,8 +146,17 @@ export default {
     }
   },
   created(){
+    if(!this.isLogin){
+      if(confirm('Clue는 로그인이 필요한 서비스입니다. 로그인하시겠습니까?')){
+        this.$router.push({name:'LogInView'})
+      }
+      else{
+        this.$router.back()
+      }
+    }
     this.randomHints()
     this.nextMovie()
+
   },
   components : {
   },
@@ -155,6 +164,9 @@ export default {
     showHintList (){
       return this.randomHintList.slice(0,this.nowHint)
     },
+    isLogin(){
+      return this.$store.getters.isLogin
+    }
   },
   methods:{
     imageURL(movie) {
@@ -204,7 +216,8 @@ export default {
       this.randomMovie =  _.sampleSize(this.$store.state.popularMovieList, 3)
       this.selectionOrder = _.sampleSize([0, 1, 2], 3)
       this.randomHints()
-    }
+    },
+    
   }
 }
 

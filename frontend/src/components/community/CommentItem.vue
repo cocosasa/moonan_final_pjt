@@ -3,7 +3,7 @@
     <div class="comment-item" :class="{ 'writer-comment': questionUser === commentUser, 'detective-comment': questionUser != commentUser }">
       <span>{{ commentUser }}</span>
       <p>{{ comment.content }}</p>
-      <div v-if="myUserName=== commentUser && !isUpdating">
+      <div v-if="myUserName=== commentUser && !isUpdating && isLogin">
         <button @click="initUpdate">수정</button>
         <button @click="deleteComment">삭제</button>
       </div>
@@ -55,6 +55,9 @@ export default {
     },
     question(){
       return this.$store.getters.question
+    },
+    isLogin(){
+      return this.$store.getters.isLogin
     }
   },
   methods:{

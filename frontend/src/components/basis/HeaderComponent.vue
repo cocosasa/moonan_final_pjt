@@ -17,7 +17,7 @@
       <SearchBar/>
     </div>
 
-    <router-link v-if="isLogin" :to="{ name: 'LogOutView' }">로그아웃</router-link>
+    <span v-if="isLogin" @click="logOut">로그아웃</span>
     <div v-if="isLogin">
       <router-link :to="{ name: 'profile', params:{ username: myUserName } }">
         <div class="profile-circle">
@@ -60,7 +60,10 @@ export default {
 
   },
   methods: {
-
+    logOut() {
+      if(confirm("로그아웃 하시겠습니까?"))
+        this.$store.dispatch('logOut')
+    }
   },
 
 }
