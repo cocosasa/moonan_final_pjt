@@ -1,0 +1,1 @@
+py manage.py loaddata movie_data.json actor_data.json genre_data.json recommend_data.json

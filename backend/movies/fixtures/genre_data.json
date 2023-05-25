@@ -105,13 +105,6 @@
         }
     },
     {
-        "pk": 10770,
-        "model": "movies.genre",
-        "fields": {
-            "name": "TV 영화"
-        }
-    },
-    {
         "pk": 53,
         "model": "movies.genre",
         "fields": {
