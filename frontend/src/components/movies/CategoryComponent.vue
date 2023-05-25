@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex flex-wrap justify-content-start mt-4" id="to-top">
+  <div class="d-flex flex-wrap justify-content-start my-4" id="to-top">
     <!-- <div v-for="genre in genreList" :key="genre.id" class="btn p-2 px-3 rounded-5 border me-1 mb-2" :class="{'btn-primary':selectedGenre.includes(genre.name)}"> -->
-      <input v-for="genre in genreList" :key="genre.id" class="btn p-2 px-3 me-2 mb-2 checkbox" type="checkbox" :value="genre.name" :id="genre.id" v-model="selectedGenre" @click="check">
+      <input v-for="genre in genreList" :key="genre.id" class="btn p-2 px-3 mb-2 checkbox" type="checkbox" :value="genre.name" :id="genre.id" v-model="selectedGenre" @click="check">
     <!-- </div> -->
     <!-- <button class="ms-5 btn-dark btn rounded-5 py-1">검색</button> -->
   </div>
@@ -41,7 +41,8 @@ export default {
 .checkbox {
   appearance: none;
   height: 30px;
-  width: 140px;
+  width: 124px;
+  margin-right: 9px;
   border-radius: 15px;
   /* background-image: radial-gradient(
     circle farthest-corner at 10% 20%,
@@ -54,6 +55,9 @@ export default {
   position: relative;
   overflow: hidden;
   cursor: pointer;
+}
+.checkbox:last-child{
+  margin-right: 0px;
 }
 
 .checkbox:after {

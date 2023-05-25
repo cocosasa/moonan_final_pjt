@@ -38,7 +38,7 @@ def movies_with_genre(request, selected_genres, sortby):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'PUT'])
 def movie_detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk = movie_pk)
     serializers = MovieSerializer(movie)

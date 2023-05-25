@@ -10,6 +10,7 @@ import ProfileView from '@/views/account/ProfileView'
 import LogInView from '@/views/account/LogInView'
 import CommunityView from '@/views/community/CommunityView'
 import QuestionFormView from '@/views/community/QuestionFormView'
+import QuestionUpdateFormView from '@/views/community/QuestionUpdateFormView'
 import QuestionDetailView from '@/views/community/QuestionDetailView'
 import NotFound404 from '@/views/account/NotFound404'
 Vue.use(VueRouter)
@@ -61,6 +62,12 @@ const routes = [
     path: '/community/post',
     name: 'postquestion',
     component: QuestionFormView
+  },
+
+  {
+    path: '/community/update/:id',
+    name: 'updatequestion',
+    component: QuestionUpdateFormView
   },
 
   {

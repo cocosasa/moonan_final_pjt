@@ -66,7 +66,7 @@ export default new Vuex.Store({
       const {token, username} = data
       state.token = token
       state.username = username
-      router.push({ name:'movies' })
+      router.back()
     },
     DELETE_TOKEN(state){
       state.token = null

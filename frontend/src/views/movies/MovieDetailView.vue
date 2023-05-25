@@ -30,7 +30,7 @@
         </div>
         <div class="d-flex w-25 justify-content-around mt-5">
           <div @click="toggleWant">
-            <i :class="{'fa-bookmark':isWanted, 'fa-plus':!isWanted}" class="fa-solid fa-2xl"></i>
+            <i :class="{'fa-bookmark':isWanted, 'fa-plus':!isWanted}" class="fa-solid fa-2xl" :style="{'color:#ff0000;': this.isWanted }"></i>
             <!-- <button  class="btn btn-secondary">보고 싶어요 </button>
             <button v-if="isWanted" class="btn btn-primary"> 보고 싶어요 </button> -->
           </div>
@@ -51,7 +51,7 @@
       </div>
     </div>
     <hr style = "background-color: white; height: 5px;">
-    <MovieVideo class = "mt-3 ms-5 justify-content: center;" style = "border: solid 3px white overline" v-if="movie" :movie="movie"/>
+    <MovieVideo class = "mt-3 justify-content: center;" style = "border: solid 3px white overline" v-if="movie" :movie="movie"/>
     <hr style = "background-color: white; height: 5px;">
     <div>
       <br>
@@ -86,11 +86,11 @@
           <button @click="e=>this.isUpdating = !this.isUpdating" class="btn btn-warning">수정하기</button>
         </div>
         <div v-else>
-          <form action="">
+          <form @submit.prevent="updateReview">
             <input type="text" style = "width:500px; height: 50px;" v-model="reviewContent" >
             <StarScore @set-score="setScore"/>
+            <button class="btn btn-warning">수정하기</button>
           </form>
-          <button class="btn btn-warning">수정하기</button>
         </div>
       </div>
       <hr>
@@ -142,7 +142,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['myUserName']),
+    ...mapGetters(['myUserName', 'isLogin']),
     shorten() {
       let overview = this.movie.overview
 
@@ -164,7 +164,7 @@ export default {
           this.myReview = el
           this.reviewContent = el.content
           this.reviewScore = el.score
-          this.movie.movie_reviews.splice( index,1 )
+          this.movie?.movie_reviews.splice( index,1 )
           flag = true
         }
       }) 
@@ -217,36 +217,11 @@ export default {
         console.log(err)
       })
     },
-    // getMovieActors(){
-    //   axios({
-    //     method: 'get',
-    //     url: `${API_URL}/api/v1/${this.$route.params.id}/`,
-    //     // headers: {
-    //     //   Authorization: `Token ${this.$store.state.token}`
-    //     // }
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data)
-    //     this.movie = res.data
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })
-    // },
-    getMovieReviews(){
-      axios({
-        method: 'get',
-        url: `${API_URL}/community/reviews/`,
-      })
-      .then((res) => {
-        console.log(res.data)
-        this.movie.movie_reviews = res.data
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    },
     addReview(){
+      if (!this.isLogin) {
+        this.$store.dispatch('alertLogin')
+        return
+      }
       const content = this.reviewContent
       const score = this.reviewScore
       var formdata = new FormData()
@@ -266,23 +241,27 @@ export default {
           console.log(res.data)
           this.reviewContent = null
           this.reviewScore = null
-          // this.getMovieReviews()
+          this.getMovieDetail()
         })
         .catch((err) => {
           console.log(err)
         })
     },
     updateReview(){
+      // if (!this.isLogin) {
+      //   this.$store.dispatch('alertLogin')
+      //   return
+      // }
       const content = this.reviewContent
       const score = this.reviewScore
       var formdata = new FormData()
       formdata.append('content', content)
       formdata.append('score', score)
 
-      console.log(formdata)
+      console.log(this.myReview)
       axios({
-        method: 'post',
-        url: `${API_URL}/community/movie/${this.$route.params.id}/review/`,
+        method: 'put',
+        url: `${API_URL}/community/reviews/${this.myReview.id}/`,
         headers: {
           'Authorization': `Token ${this.$store.state.token}`,
         },
@@ -292,7 +271,8 @@ export default {
           console.log(res.data)
           this.reviewContent = null
           this.reviewScore = null
-          // this.getMovieReviews()
+          this.isUpdating = false
+          this.getMovieDetail()
         })
         .catch((err) => {
           console.log(err)
@@ -302,6 +282,10 @@ export default {
       this.reviewScore = score
     },
     toggleWant(){
+      if(!this.isLogin){
+        this.$store.dispatch('alertLogin')
+        return
+      }
       console.log('toggle')
       axios({
         method: 'post',
@@ -319,6 +303,10 @@ export default {
       })
     },
     toggleWatch(){
+      if (!this.isLogin) {
+        this.$store.dispatch('alertLogin')
+        return
+      }
       console.log('toggle')
       axios({
         method: 'post',

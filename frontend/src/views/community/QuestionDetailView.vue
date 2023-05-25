@@ -29,8 +29,8 @@
 
     </div>
     <div v-if="myUserName === question?.user">
-      <button class = "edit-delete bold"><span class="material-symbols-outlined">edit</span> 수정하기</button>
-      <button class = "edit-delete bold" @click="deleteQuestion"><span class="material-symbols-outlined">delete</span> 삭제하기</button>
+      <button class = "edit-delete bold rounded" @click="goToUpdateQuestion"><span class="material-symbols-outlined">edit</span><span>수정하기</span></button>
+      <button class = "edit-delete bold rounded" @click="deleteQuestion"><span class="material-symbols-outlined">delete</span><span>삭제하기</span></button>
     </div>
     <hr>
     <div>
@@ -139,6 +139,9 @@ export default {
       .catch((err) => {
         console.log(err)
       })
+    },
+    goToUpdateQuestion(){
+      this.$router.push({name:'updatequestion', params:{'id': this.question.id}})
     },
     deleteQuestion(){
       axios({

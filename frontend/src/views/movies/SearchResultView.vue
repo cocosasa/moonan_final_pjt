@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="search-view">
     <div class="my-5">
       <h1>" {{keyword}} " 검색결과</h1>
     </div>
-    <div v-if="!results?.length">검색결과가 없습니다..</div>
+    <div  class="ms-5" v-if="!results?.length">검색된 결과가 없습니다..</div>
     <MovieList :movie-list="results"/>
   </div>
 </template>
@@ -55,4 +55,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.search-view{
+  min-height: 1000px;
+}
+</style>

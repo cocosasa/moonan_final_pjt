@@ -5,23 +5,23 @@
       <hr style = "width: 99%">
       <p class = "m-3">{{ comment.content }}</p>
       <div v-if="myUserName=== commentUser && !isUpdating &&isLogin">
-        <button class = "m-3" @click="initUpdate">수정</button>
-        <button @click="deleteComment">삭제</button>
+        <button class = "m-3 rounded" @click="initUpdate">수정</button>
+        <button class="rounded" @click="deleteComment">삭제</button>
       </div>
       <div class = 'd-flex justify-content-end me-2'>
-      <button @click="initCcomment" v-if="!isCcommenting">대댓글 작성</button>
-      <button v-if="questionUser != commentUser && myUserName!= commentUser && questionUser === myUserName && !question?.is_completed " @click="selectComment">채택하기</button>
+        <button class="rounded" v-if="questionUser != commentUser && myUserName!= commentUser && questionUser === myUserName && !question?.is_completed " @click="selectComment">채택하기</button>
+        <!-- 수정폼 -->
+        <form v-if="isUpdating" @submit.prevent="updateComment">
+          <input type="text" v-model="formContent">
+          <button class="rounded">수정 완료</button>
+        </form>
+        <button class="rounded" @click="initCcomment" v-if="!isCcommenting">대댓글 작성</button>
+        <!-- 대댓글 폼 -->
+        <form class="" @submit.prevent="addCcomment" v-if="isCcommenting">
+          <input class="rounded" type="text" v-model="formContent">
+          <button class="rounded">대댓글 달기</button>
+        </form>
       </div>
-      <!-- 수정폼 -->
-      <form v-if="isUpdating" @submit.prevent="updateComment">
-        <input type="text" v-model="formContent">
-        <button>수정 완료</button>
-      </form>
-      <!-- 대댓글 폼 -->
-      <form @submit.prevent="addCcomment" v-if="isCcommenting">
-        <input type="text" v-model="formContent">
-        <button >대댓글 달기</button>
-      </form>
     </div>
     <CommentItem v-for="(child,idx) in comment.child_comments" :key="idx" :comment="child" :question-user="questionUser" class="ms-5 mt-3">
     </CommentItem>
@@ -65,10 +65,18 @@ export default {
   },
   methods:{
     initUpdate() {
+      if (!this.isLogin) {
+        this.$store.dispatch('alertLogin')
+        return
+      }
       this.isUpdating = true
       this.isCcommenting = false
     },
     initCcomment() {
+      if(!this.isLogin){
+        this.$store.dispatch('alertLogin')
+        return
+      }
       this.isUpdating = false
       this.isCcommenting = true
     },

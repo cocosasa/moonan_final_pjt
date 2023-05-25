@@ -97,10 +97,6 @@ export default {
         alert('아이디를 확인해주세요')
         return
       }
-      // else if(!nickname.trim()) {
-      //   alert('닉네임을 확인해주세요')
-      //   return
-      // }
       else if(!password1.trim() || !password2.trim() || password1 != password2) {
         alert('비밀번호를 확인해주세요')
         return
