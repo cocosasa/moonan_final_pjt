@@ -109,5 +109,10 @@ export default {
 .slick-prev:before{
   color: white;
 }
-
+.slick-initialized > ul > li.slick-active > button::before{
+  color: red;
+}
+.slick-initialized > ul > li > button::before{
+  color: white;
+}
 </style>

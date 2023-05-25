@@ -22,14 +22,14 @@
         <button @click="toggleFollow" v-if="isFollowing">언팔로우</button>
       </div>
       <div class="d-flex my-auto">
-        <div class="profile-info">
+        <!-- <div class="profile-info">
           <p>24</p>
           <p>SOLVE</p>
         </div>
         <div class="profile-info">
           <p>2</p>
           <p>Reviews</p>
-        </div>
+        </div> -->
         <div class="profile-info">
           <p>{{userData?.user.followings_count}}</p>
           <p>Followings</p>
@@ -78,6 +78,7 @@ export default {
     return {
       userData:null,
       user:null,
+      comments:null,
       file:null,
     }
   },
@@ -96,7 +97,7 @@ export default {
       return this.myUserName == this.$route.params.username
     },
     isFollowing(){
-      return this.userData?.user.followers.includes(this.$store.state.userData.id) ? true : false
+      return this.userData?.user.followers.includes(this.$store.state.userData?.id) ? true : false
     }
   },
   methods: {
@@ -107,11 +108,24 @@ export default {
       })
       .then(res=>{
         console.dir(res.data)
-        if(this.$route.params.username==this.myUserName){
+        if(this.$route.params.username == this.myUserName){
           this.$store.dispatch('changeUserData', res.data)
         }
         this.userData = res.data
       })
+      // .then(()=>{
+      //   axios({
+      //     method: 'get',
+      //     url: `${API_URL}/community/${this.$route.params.username}/`,
+      //   })
+      //   .then(res => {
+      //     console.dir(res.data)
+      //     this.comments = res.data
+      //   })
+      //   .catch((e)=>{
+      //     console.log(e)
+      //   })
+      // })
       .catch(err=>{
         console.log(err)
         alert('존재하지 않는 사용자입니다.')

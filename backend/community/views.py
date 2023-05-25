@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework.decorators import api_view, permission_classes
 from .serializers import ReviewSerializer, ReviewCommentSerializer, QuestionSerializer, QuestionCommentSerializer
 from accounts.serializers import ProfileSerializer
+from django.contrib.auth import get_user_model
 from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
@@ -14,6 +15,13 @@ from rest_framework.permissions import IsAuthenticated
 @api_view(['GET'])
 def entire_review(request):
     reviews = get_list_or_404(Review)
+    serializers = ReviewSerializer(reviews, many=True)
+    return Response(serializers.data)
+
+@api_view(['GET'])
+def user_review(request, username):
+    user = get_object_or_404(get_user_model(), username=username)
+    reviews = Review.objects.filter(user=user.pk)
     serializers = ReviewSerializer(reviews, many=True)
     return Response(serializers.data)
 
