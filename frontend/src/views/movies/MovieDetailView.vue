@@ -336,7 +336,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .movie-detail-img {
   width: 400px;
 }
@@ -347,4 +347,7 @@ export default {
   border-radius: 8px;
 }
 
+/* body {
+  background-image: url(`https://image.tmdb.org/t/p/w500${movie?.backdrop_path}`);
+} */
 </style>
