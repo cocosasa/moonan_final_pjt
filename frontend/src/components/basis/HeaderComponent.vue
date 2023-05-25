@@ -1,6 +1,6 @@
 <template>
   <div class="header shadow d-flex justify-content-between align-items-center">
-    <div>
+    <div id="to-nav">
       <router-link :to="{ name: 'main' }">
         <img class="logo" src="@/assets/logo2.png" alt="">
       </router-link>

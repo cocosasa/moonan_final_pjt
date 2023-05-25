@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="my-4">
-      <span class="fs-1">무비 몽타주</span>
-      <div class="btn ms-5 btn-warning" @click="goToPostQuestion">질문하기</div>
+      <span class="fs-1 bold">무비 몽타주</span>
+      <div class="btn ms-5 btn-warning bold" @click="goToPostQuestion">질문하기</div>
     </div>
     <div class="question-list">
       <QuestionItem v-for="q in questionList" :key="q.id" :question="q" />

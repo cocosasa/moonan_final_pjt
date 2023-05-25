@@ -1,8 +1,9 @@
 <template>
   <div>
     <iframe v-if="video" :src="videoURL" width="1120" height="630" frameborder="0" allowfullscreen allow="autoplay;" ></iframe>
+
     <h2>{{video?.name}}</h2>
-    <p>{{video?.description}}</p>
+    <p style = "align-items: center;">{{video?.description}}</p>
   </div>
 </template>
 

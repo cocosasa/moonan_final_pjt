@@ -1,14 +1,17 @@
 <template>
-  <div class="comment">
-    <div class="comment-item" :class="{ 'writer-comment': questionUser === commentUser, 'detective-comment': questionUser != commentUser }">
-      <span>{{ commentUser }}</span>
-      <p>{{ comment.content }}</p>
+  <div class = "comment" style = "color: black">
+    <div :class = "[{'selected' :comment?.is_chosen, 'comment' :!comment?.is_chosen,}, { 'writer-comment': questionUser === commentUser, 'detective-comment': questionUser != commentUser }]">
+      <span class = "m-3" style = "font-size: 20px">{{ commentUser }}</span>
+      <hr style = "width: 99%">
+      <p class = "m-3">{{ comment.content }}</p>
       <div v-if="myUserName=== commentUser && !isUpdating">
-        <button @click="initUpdate">수정</button>
+        <button class = "m-3" @click="initUpdate">수정</button>
         <button @click="deleteComment">삭제</button>
       </div>
+      <div class = 'd-flex justify-content-end me-2'>
       <button @click="initCcomment" v-if="!isCcommenting">대댓글 작성</button>
       <button v-if="questionUser != commentUser && myUserName!= commentUser && questionUser === myUserName && !question?.is_completed " @click="selectComment">채택하기</button>
+      </div>
       <!-- 수정폼 -->
       <form v-if="isUpdating" @submit.prevent="updateComment">
         <input type="text" v-model="formContent">
@@ -180,5 +183,9 @@ export default {
   margin-top: 10px;
   /* padding: 10px;
   padding-right: 0; */
+}
+.selected{
+  margin-top: 10px;
+  border: 11px solid #FFAF0A;
 }
 </style>

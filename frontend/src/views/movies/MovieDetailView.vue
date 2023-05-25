@@ -1,12 +1,14 @@
 <template>
   <div>
-    <div class="d-flex">
+    <div class="d-flex mt-3">
       <img :src="`https://image.tmdb.org/t/p/w500${movie?.poster_path}`" class="movie-detail-img">
       <div class="ms-5">
         <div>
-          <span>{{ releasedDate }} </span>
+          <br>
+          <span>{{ releasedDate }} 개봉</span>
           <h1 class="">{{ movie?.title }}</h1>
         </div>
+        <hr>
         <div>
           <span>
             <i v-if="movie?.vote_avg >= 2" class="fa-solid fa-star" style="color: #ff0000;"></i>
@@ -20,13 +22,13 @@
             <i v-if="movie?.vote_avg < 8" class="fa-regular fa-star" style="color: #ff0000;"></i> 
             <i v-if="movie?.vote_avg < 10" class="fa-regular fa-star" style="color: #ff0000;"></i> 
             {{ movie?.vote_avg }}</span>
-          <div class="d-flex">
+          <div class="d-flex mt-3">
             <div v-for="genre in movie?.genres" :key="genre.id" class="rounded-5 py-1 px-2 border me-1">
               <span>{{ genre.name }}</span>
             </div>
           </div>
         </div>
-        <div class="d-flex w-25 justify-content-around">
+        <div class="d-flex w-25 justify-content-around mt-5">
           <div @click="toggleWant">
             <i :class="{'fa-bookmark':isWanted, 'fa-plus':!isWanted}" class="fa-solid fa-2xl"></i>
             <!-- <button  class="btn btn-secondary">보고 싶어요 </button>
@@ -43,26 +45,32 @@
           </div>
         </div>
         <div class="mt-5">
-          <p>줄거리</p>
-          <p>{{ movie?.overview }}</p>
+          <p style = "font-size: 32px;">줄거리</p>
+          <p class = "ms-3" id = "overview">{{ movie?.overview }}</p>
       </div>
       </div>
     </div>
-    <MovieVideo v-if="movie" :movie="movie"/>
-    
+    <hr style = "background-color: white; height: 5px;">
+    <MovieVideo class = "mt-3 ms-5 justify-content: center;" style = "border: solid 3px white overline" v-if="movie" :movie="movie"/>
+    <hr style = "background-color: white; height: 5px;">
     <div>
-      <h3>출연 배우</h3>
+      <br>
+      <h2>출연 배우</h2>
+      <br>
       <div class="d-flex row">
         <ActorItem v-for="actor in actorFor20" :key="actor.id" :actor="actor"/>
 
       </div>
     </div>
+    <hr style = "background-color: white; height: 5px;">
     <div>
       <div v-if="!isWritten">
         <h3>한 줄평 쓰기</h3>
         <div>
           <form name="reviewform" id="reviewform">
-            <input type="text" v-model="reviewContent">
+            <input type="text" style = "width:500px; height: 50px;" v-model="reviewContent">
+            <br>
+            <br>
             <StarScore @set-score="setScore"/>
             {{ reviewScore }} 점
             
@@ -79,12 +87,13 @@
         </div>
         <div v-else>
           <form action="">
-            <input type="text" v-model="reviewContent" >
+            <input type="text" style = "width:500px; height: 50px;" v-model="reviewContent" >
             <StarScore @set-score="setScore"/>
           </form>
           <button class="btn btn-warning">수정하기</button>
         </div>
       </div>
+      <hr>
       <div class="my-5">
         <h3>한 줄평</h3>
         <div v-if="reviews.length">
@@ -342,6 +351,12 @@ export default {
 <style>
 .movie-detail-img {
   width: 400px;
+}
+
+#overview {
+  border: solid 1px white;
+  padding: 5%;
+  border-radius: 8px;
 }
 
 </style>

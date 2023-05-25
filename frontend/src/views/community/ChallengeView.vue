@@ -2,7 +2,7 @@
   <div>
     <h1 class="text-center my-5"><span class = "bold color-change" style = "font-size: 60px">Poster Challenge</span></h1>
     <h5 class = "text-center" style = "font-size: 20px">포스터 일부를 보고 영화를 맞혀보세요!</h5>
-    <h3 class="text-center my-sm-5 bold over-underline" v-if="currentScore != 0">{{currentScore}} 점</h3>
+    <h3 class="text-center my-sm-5 bold over-underline" v-if="currentScore != 0">정답 맞힐 시 {{currentScore}}점 획득</h3>
     <h3 class="text-center my-sm-5" v-if="currentScore == 0">{{ randomMovie[0].title }}</h3>
     <div class="quiz_img" v-if="randomMovie[0]"> 
         <div v-for="(hint, idx) in showHintList" :key="idx" class="quiz_hint" :style="`top: ${(img_size_y) * hint.offset_y}px; left: ${(img_size_x) * hint.offset_x}px; background-position : ${hint.offset_x * 100}% ${hint.offset_y * 100}%;background-image: url('${imageURL(randomMovie[0])}');`">
