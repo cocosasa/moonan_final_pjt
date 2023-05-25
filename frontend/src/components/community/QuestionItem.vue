@@ -1,14 +1,19 @@
 <template>
-  <div class="question-item d-flex justify-content-between">
-    <div>
-      <h3 class="mb-4" @click="goToQuestionDetail(question)">{{ question.title }}</h3>
-      <p>{{ question.user }}</p>
-      <p>{{ shortenContent }}</p>
+    <div class="question-item d-flex justify-content-between bold" style = "color: black">
+      <div>
+        <br>
+        <h3 class="mb-4" @click="goToQuestionDetail(question)">{{ question.title }}</h3>
+        <hr>
+        <p>{{ question.user }}의 질문</p>
+        <!-- <p>{{ shortenContent }}</p> -->
+      </div>
+      <div class="my-auto">
+        <div class="point-box" v-if="!question?.is_completed"> {{ question.points }} Point</div>
+        <span style = "text-align: right">
+          <h3 style = "color: green" v-if="question?.is_completed">해결됨&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+        </span>
+      </div>
     </div>
-    <div class="my-auto">
-      <div class="point-box"> {{ question.points }} Point</div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -45,6 +50,17 @@ export default {
   margin-bottom: 20px;
   border-radius: 5px;
   padding: 10px;
+  border: solid 2px;
+}
+.completed-item{
+  height: 150px;
+  width: 100%;
+  background-color: lightgrey;
+  overflow: hidden;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  padding: 10px;
+  border: solid 2px;
 }
 .point-box{
   width: 150px;
@@ -52,7 +68,8 @@ export default {
   text-align: center;
   line-height: 50px;
   word-wrap: break-word;
-  background-color: white;
+  background-color: #FAFAD2;
   border-radius: 10px;
+  border: solid 3px
 }
 </style>

@@ -1,18 +1,23 @@
 <template>
   <div>
     <CategoryComponent @search-genre="searchGenre"/>
-    <div class="">
+    <div style = "z-index: -99">
       <div class="d-flex">
         <div class="ms-auto me-2" :class="{'text-danger': sortBy === 1 }" @click="sortByPopular">인기 순</div> | 
         <div class="ms-2" :class="{ 'text-danger': sortBy === 2 }" @click="sortByVoteAvg">평점 순</div>
       </div>
-      <MovieList v-if="!isGenreSearch && sortBy===1" :movie-list="loadedPopularMovieList"/>
-      <MovieList v-if="!isGenreSearch &&  sortBy===2" :movie-list="loadedVoteAvgMovieList"/>
-      <MovieList v-if="isGenreSearch" :movie-list="genreSearchMovieList"/>
+      <MovieList style = "z-index: -1" v-if="!isGenreSearch && sortBy===1" :movie-list="loadedPopularMovieList"/>
+      <MovieList style = "z-index: -1" v-if="!isGenreSearch && sortBy===2" :movie-list="loadedVoteAvgMovieList"/>
+      <MovieList style = "z-index: -1" v-if="isGenreSearch" :movie-list="genreSearchMovieList"/>
       <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
         <div slot="no-more" style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;">더 이상 영화가 없습니다 :D</div>
       </infinite-loading>
+      
     </div>
+    <div style = "position: fixed; bottom: 7px; right: 7px; z-index: 99">
+      <a href = "#to-nav"><img src = "@/assets/Up-Arrow-0s8m3s.png"></a>
+    </div>
+    
     <!-- {{ movieList }} -->
   </div>
 </template>

@@ -3,7 +3,7 @@
     "pk": 1,
     "model": "movies.recommended",
     "fields": {
-      "creteria": "애니메이션",
+      "creteria": "당신의 동심을 자극해줄 애니메이션",
       "movielist": [
         585511,
         502356,
@@ -23,7 +23,7 @@
     "pk": 2,
     "model": "movies.recommended",
     "fields": {
-      "creteria": "액션",
+      "creteria": "콰쾅 쓔웅 타타타탕 액션",
       "movielist": [
         868759,
         594767,
@@ -43,7 +43,7 @@
     "pk": 3,
     "model": "movies.recommended",
     "fields": {
-      "creteria": "SF",
+      "creteria": "코딩을 위한 상상력을 채워줄 SF",
       "movielist": [
         76600,
         842675,
@@ -63,7 +63,7 @@
     "pk": 4,
     "model": "movies.recommended",
     "fields": {
-      "creteria": "공포",
+      "creteria": "아 너무 무섭다",
       "movielist": [
         758323,
         934433,
@@ -83,7 +83,7 @@
     "pk": 5,
     "model": "movies.recommended",
     "fields": {
-      "creteria": "마블",
+      "creteria": "방학 기간을 보내기 좋은 마블 시리즈",
       "movielist": [
         447365,
         774752,

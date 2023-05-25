@@ -42,3 +42,4 @@ class QuestionComment(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
     parent_comment = models.ForeignKey('self', on_delete = models.CASCADE, null = True, related_name = 'child_comments')
     question = models.ForeignKey(Question, on_delete = models.CASCADE, null = True, related_name = 'question_comments')
+    is_chosen = models.BooleanField(default = False)

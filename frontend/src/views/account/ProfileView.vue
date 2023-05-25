@@ -3,6 +3,7 @@
     <div class="d-flex justify-content-between">
       <div class="d-flex flex-column">
         <div class="profile-img-circle border-1 border shadow mt-3" @click="changeFile">
+          <p id = "change-img">사진 변경</p>
           <img v-if="!userData?.profile_image" class="profile-img" src="@/assets/Profile.png">
           <img v-if="userData?.profile_image" class="profile-img" :src="`${BASE_URL}${userData?.profile_image}`">
         </div>
@@ -12,9 +13,9 @@
         </div>
       </div>
       <div class="my-auto">
-        <p>아이디 {{ userData?.user.username }}</p>
+        <p>아이디&nbsp;&nbsp;&nbsp;&nbsp;{{ userData?.user.username }}</p>
         <!-- <p>닉네임 {{ userData?.nickname }}</p> -->
-        <p>포인트 {{ userData?.points }}</p>
+        <p>포인트&nbsp;&nbsp;&nbsp;&nbsp;{{ userData?.points }}</p>
       </div>
       <div v-if="!isMyProfile" class="my-auto">
         <button @click="toggleFollow" v-if="!isFollowing">팔로우</button>
@@ -174,8 +175,12 @@ export default {
   overflow: hidden;
   border-radius: 50%;
 }
-.profile-img-circle:hover{
+.profile-img-circle:hover {
   opacity: 0.5;
+  content : '이미지 수정';
+}
+.profile-img-circle:hover #change-img {
+  opacity: 1.0;
   content : '이미지 수정';
 }
 .profile-img{
@@ -210,5 +215,10 @@ export default {
   width: 0px;
   visibility: hidden;
   margin: 0px;
+}
+#change-img {
+  position: absolute; opacity: 0;
+  margin-top: 100px;
+  margin-left: 40px;
 }
 </style>

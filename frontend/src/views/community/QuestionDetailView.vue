@@ -1,37 +1,51 @@
 
 <template>
   <div>
-
-    <h1>Montage Interview</h1>
+    <hr>
     <div>
-      <h1>{{ question?.title }}</h1>
-      <h1 @click="goToProfile">목격자 {{ question?.user }}</h1>
+    <h1 class = 'bold'>&nbsp;&nbsp;Montage Interview</h1>
+    <h5 @click="goToProfile" style = "text-align: right">의뢰자 {{ question?.user }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h5>
     </div>
+    <hr>
+    <div>
+      <h1 style = "font-size: 50px">{{ question?.title }}</h1>
+    </div>
+    <br>
     <div>
       <img v-if="question.question_image" :src="`${BASE_URL}${question.question_image}`">
-      <p>증언 {{ question?.content }}</p>
-      <p>만들어진 시각 :{{ createdAt }}</p>
-      <p>수정된 시각 : {{ updatedAt }}</p>
-      <p>{{ question?.points }}</p>
-      <h3 v-if="question?.is_completed">해결됨</h3>
-      <h3 v-if="!question?.is_completed">미해결</h3>
+    <div>
+      <h2>{{ question?.content }}</h2>
+      <span style = "text-align: right">
+        <h3 id = "hae" style = "color: green" v-if="question?.is_completed">해결됨&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+        <div>
+        <h3 style = "color: red" v-if="!question?.is_completed">미해결&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+        <p v-if="!question?.is_completed"><span class="material-symbols-outlined">toll</span> 채택 시 {{ question?.points }} 포인트 획득&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        </div>
+      </span>
+    </div>
+      <hr>
+      <p>작성 시각 : {{ createdAt }}</p>
+      <p>최종 수정 시각 : {{ updatedAt }}</p>
+
     </div>
     <div v-if="myUserName === question?.user">
-      <button>수정</button>
-      <button @click="deleteQuestion">삭제</button>
+      <button class = "edit-delete bold"><span class="material-symbols-outlined">edit</span> 수정하기</button>
+      <button class = "edit-delete bold" @click="deleteQuestion"><span class="material-symbols-outlined">delete</span> 삭제하기</button>
     </div>
+    <hr>
     <div>
-      <h3 v-if="myUserName != question?.user">조사하기</h3>
-      <h3 v-if="myUserName === question?.user">추가 증언하기</h3>
+      <h3 class = "bold" v-if="myUserName != question?.user">도움 주기</h3>
+      <h3 class = "bold" v-if="myUserName === question?.user">정보 추가</h3>
       <form>
-        <input type="text" v-model="commentContent" class="form-text p-2 rounded-1">
-        <button @click.prevent="addComment" class="btn btn-danger">등록</button>
+        <input type="text" v-model="commentContent" class="form-text p-2 rounded-1">&nbsp;&nbsp;
+        <button @click.prevent="addComment" class="btn btn-light bold">등록</button>
       </form>
     </div>
     <div class="my-3">
-      <h3>알려진 정보</h3>
+      <h3 class = "bold">알려진 정보</h3>
       <CommentItem v-for="comment in question?.question_comments" :key="comment.id" :comment="comment" :question-user="question?.user"/>
-      <div v-if="question?.question_comments">
+      <br>
+      <div style = "text-align: center" v-if="question?.question_comments">
         <span>추가 내용이 없습니다..</span>
       </div>
     </div>
@@ -155,5 +169,16 @@ export default {
 </script>
 
 <style>
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+.edit-delete {
+  border: solid 1px black;
+}
 
 </style>

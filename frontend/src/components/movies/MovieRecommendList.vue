@@ -3,8 +3,8 @@
     <div class="mb-3">
       <span class="recommend-list-title">{{ recommendList.creteria }}</span>
     </div>
-    <VueSlickCarousel v-bind="settings" >
-        <MovieSmallCard v-for="movie in recommendList.movielist" :key="movie.id" :movie="movie" @click="goToDetail(movie)" @drag.native.stop.prevent="stopClick(event)"/>
+    <VueSlickCarousel class = "ms-2" v-bind="settings" >
+        <MovieSmallCard v-for="movie in recommendList.movielist" :key="movie.id" :movie="movie" @click="goToDetail(movie)"/>
     </VueSlickCarousel>
     
   </div>
@@ -104,10 +104,10 @@ export default {
 }
 
 .slick-next:before{
-  color: red;
+  color: white;
 }
 .slick-prev:before{
-  color: red;
+  color: white;
 }
 
 </style>
