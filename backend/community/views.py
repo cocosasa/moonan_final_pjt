@@ -18,14 +18,6 @@ def entire_review(request):
     serializers = ReviewSerializer(reviews, many=True)
     return Response(serializers.data)
 
-@api_view(['GET'])
-def user_review(request, username):
-    user = get_object_or_404(get_user_model(), username=username)
-    reviews = Review.objects.filter(user=user.pk)
-    serializers = ReviewSerializer(reviews, many=True)
-    return Response(serializers.data)
-
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_review(request, movie_pk):
@@ -38,6 +30,7 @@ def create_review(request, movie_pk):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def review_detail(request, review_pk):
     review = get_object_or_404(Review, pk = review_pk)
 
@@ -46,18 +39,14 @@ def review_detail(request, review_pk):
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        if review.user == request.user:
-            serializer = ReviewSerializer(review, data = request.data)
-            if serializer.is_valid(raise_exception = True):
-                serializer.save()
-                return Response(serializer.data)
-        return Response(status = status.HTTP_401_UNAUTHORIZED)
-
+        print(review.user)
+        serializer = ReviewSerializer(review, data = request.data)
+        if serializer.is_valid(raise_exception = True):
+            serializer.save()
+            return Response(serializer.data)
     elif request.method == 'DELETE':
-        if review.user == request.user:
-            review.delete()
-            return Response(status = status.HTTP_204_NO_CONTENT)
-        return Response(status = status.HTTP_401_UNAUTHORIZED)
+        review.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
 
     
 @api_view(['POST'])

@@ -1,6 +1,7 @@
 <template>
   <div>
     <MovieRecommendList v-for="(recommendList, idx) in recommendLists" :key="idx" :recommendList="recommendList"/>
+    <!-- <MovieRecommendList :recommendList="userRecommendList"/> -->
   </div>
 </template>
 
@@ -11,6 +12,11 @@ import _ from 'lodash'
 
 export default {
   name:'MovieRecommendView',
+  data(){
+    return{
+      recommendedMovieList : null,
+    }
+  },
   components : {
     MovieRecommendList,
   },
@@ -20,7 +26,18 @@ export default {
     }
   },
   methods:{
-    
+    // getUserRecommend(){
+    //   axios({
+    //     method: 'get',
+    //     url: `${API_URL}/api/v1/movies/recommend/user/`,
+    //   })
+    //   .then((res) => {
+    //     this.recommendedMovieList =res.data
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+    // }
   }
 }
 </script>

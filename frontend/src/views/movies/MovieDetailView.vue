@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-visible back-drop" :style="{ background: `linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.3)), url(https://image.tmdb.org/t/p/w1280${this.movie?.backdrop_path}) no-repeat center` }">
+  <div class="overflow-visible back-drop" :style="{ background: `linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2)), url(https://image.tmdb.org/t/p/w1280${this.movie?.backdrop_path}) no-repeat center` }">
     <div></div>
     <div class="d-flex mt-3 z-1">
       <img :src="`https://image.tmdb.org/t/p/w500${movie?.poster_path}`" class="movie-detail-img">
@@ -39,7 +39,7 @@
             <i v-if="isWatched" class="fa-solid fa-eye fa-2xl" style="color: #ff0000;"></i>
           </div>
         </div>
-        <div class="mt-5 ps-3">
+        <div class="mt-5 ps-3" v-if="movie?.overview">
           <p style = "font-size: 20px;"> Overview </p>
           <p id = "overview">{{ movie?.overview }}</p>
       </div>
@@ -109,8 +109,8 @@ import ActorItem from '@/components/movies/ActorItem.vue';
 import MovieVideo from '@/components/movies/MovieVideo.vue';
 import ReviewItem from '@/components/community/ReviewItem.vue';
 import StarScore from '@/components/community/StarScore.vue';
-import axios from 'axios';
 import { mapGetters } from 'vuex';
+import axios from 'axios';
 
 const API_URL = 'http://127.0.0.1:8000'
 

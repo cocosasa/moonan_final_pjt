@@ -13,5 +13,6 @@ urlpatterns = [
     path('actors/', views.entire_actors),
     path('actors/<int:actor_pk>/', views.actor_detail),
     path('recommend/', views.recommend_movie),
+    # path('recommend/user/', views.recommend_user_movie),
 
 ]

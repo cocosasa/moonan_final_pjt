@@ -1,12 +1,13 @@
 <template>
   <div class="mt-5">
-    <div class="mb-3">
-      <span class="recommend-list-title">{{ recommendList.creteria }}</span>
-    </div>
-    <VueSlickCarousel class = "ms-2" v-bind="settings" >
+    <div>
+      <div class="mb-3" >
+        <span class="recommend-list-title">{{ recommendList.creteria }}</span>
+      </div>
+      <VueSlickCarousel class = "ms-2" v-bind="settings" >
         <MovieSmallCard v-for="movie in recommendList.movielist" :key="movie.id" :movie="movie" @click="goToDetail(movie)"/>
-    </VueSlickCarousel>
-    
+      </VueSlickCarousel>
+    </div>
   </div>
 </template>
 
@@ -42,7 +43,9 @@ export default {
     }
   },
   computed: {
-    
+    isLogin(){
+      return this.$store.getters.isLogin
+    }
   },
   methods: {
     goToDetail(movieId) {

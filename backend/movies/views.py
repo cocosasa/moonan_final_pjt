@@ -1,10 +1,15 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from .models import Movie, Genre, Actor, Recommended
+from accounts.models import Profile
 from .serializers import MovieSerializer, MovieListSerializer, GenreSerializer, ActorSerializer, RecommendedSerializer
 from django.shortcuts import get_list_or_404, get_object_or_404
+from django.contrib.auth import get_user_model
 # filter 메서드에 or, and, not 등 다양한 조건을 줄 수 있게 하는 모듈
 from django.db.models import Q
+from rest_framework.permissions import IsAuthenticated
+import random
+
 
 
 @api_view(['GET'])
@@ -93,4 +98,19 @@ def recommend_movie(request):
     serializer = RecommendedSerializer(movielists, many=True)
     return Response(serializer.data)
 
-    
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+# def recommend_user_movie(request):
+#     user = request.user
+#     profile = get_object_or_404(Profile, pk=user.id)
+#     user_movies = []
+#     user_movies.extend(profile.want_to_see_movies)
+#     user_movies.extend(profile.watched_movies)
+#     movies = get_list_or_404(Movie)
+#     recommended_movies = movies.sort(key=lambda x: x.popularity, reverse=True)
+#     print(recommend_movie)
+#     recommended_movies = recommended_movies[:30]
+#     recommended_movies = random.sample(recommended_movies, 12)
+#     serializer = MovieListSerializer(recommended_movies, many=True)
+#     return Response(serializer.data)
+
