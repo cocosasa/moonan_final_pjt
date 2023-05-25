@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <div class="d-flex mt-3">
+  <div class="overflow-visible back-drop" :style="{ background: `linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.3)), url(https://image.tmdb.org/t/p/w1280${this.movie?.backdrop_path}) no-repeat center` }">
+    <div></div>
+    <div class="d-flex mt-3 z-1">
       <img :src="`https://image.tmdb.org/t/p/w500${movie?.poster_path}`" class="movie-detail-img">
       <div class="ms-5">
         <div>
@@ -31,27 +32,23 @@
         <div class="d-flex w-25 justify-content-around mt-5">
           <div @click="toggleWant">
             <i :class="{'fa-bookmark':isWanted, 'fa-plus':!isWanted}" class="fa-solid fa-2xl" :style="{'color:#ff0000;': this.isWanted }"></i>
-            <!-- <button  class="btn btn-secondary">보고 싶어요 </button>
-            <button v-if="isWanted" class="btn btn-primary"> 보고 싶어요 </button> -->
           </div>
           <div class="flex-shrink-1"></div>
-          <!-- <div class="flex-grow-1"></div> -->
           <div @click="toggleWatch">
             <i v-if="!isWatched" class="fa-solid fa-eye fa-2xl"></i>
             <i v-if="isWatched" class="fa-solid fa-eye fa-2xl" style="color: #ff0000;"></i>
-            <!-- <i class="fa-solid fa-eye fa-2xl"></i> -->
-            <!-- <button  class="btn btn-secondary"> 봤어요 </button>
-              <button  class="btn btn-primary"> 봤어요 </button> -->
           </div>
         </div>
-        <div class="mt-5">
-          <p style = "font-size: 32px;">줄거리</p>
-          <p class = "ms-3" id = "overview">{{ movie?.overview }}</p>
+        <div class="mt-5 ps-3">
+          <p style = "font-size: 20px;"> Overview </p>
+          <p id = "overview">{{ movie?.overview }}</p>
       </div>
       </div>
     </div>
     <hr style = "background-color: white; height: 5px;">
-    <MovieVideo class = "mt-3 justify-content: center;" style = "border: solid 3px white overline" v-if="movie" :movie="movie"/>
+    <br>
+    <br>
+    <MovieVideo class = "mt-5 justify-content: center;" style = "border: solid 3px white overline" v-if="movie" :movie="movie"/>
     <hr style = "background-color: white; height: 5px;">
     <div>
       <br>
@@ -59,47 +56,47 @@
       <br>
       <div class="d-flex row">
         <ActorItem v-for="actor in actorFor20" :key="actor.id" :actor="actor"/>
-
       </div>
     </div>
     <hr style = "background-color: white; height: 5px;">
     <div>
-      <div v-if="!isWritten">
+      <div v-if="!myReview">
         <h3>한 줄평 쓰기</h3>
         <div>
-          <form name="reviewform" id="reviewform">
-            <input type="text" style = "width:500px; height: 50px;" v-model="reviewContent">
-            <br>
-            <br>
+          <form @submit.prevent="addReview" name="reviewform" id="reviewform">
+            <input type="text" class="rounded" style = "width:500px; height: 50px;" v-model="reviewContent">
             <StarScore @set-score="setScore"/>
-            {{ reviewScore }} 점
-            
-            <button @click.prevent="addReview"> 등록하기 </button>
-          </form>
+            <span class="fs-5">{{ reviewScore }} 점</span>
+            <button class="ms-3 btn btn-danger"> 등록하기 </button>
+            <br>
+            </form>
         </div>
       </div>
       <div v-else>
         <h3>내 한줄평</h3>
-        <div v-if="!isUpdating">
-          {{ myReview.content }}
-          {{ myReview.score }}점
-          <button @click="e=>this.isUpdating = !this.isUpdating" class="btn btn-warning">수정하기</button>
+        <div v-if="!isUpdating" class="m-3">
+          <span>{{ myReview?.content }}</span><br>
+          <span>{{ myReview?.score }}점</span>
+          <button @click="e=>this.isUpdating = !this.isUpdating" class="btn btn-warning ms-5 mt-2">수정하기</button>
+          <button @click="deleteComment" class="btn btn-danger ms-3 mt-2">삭제</button>
         </div>
         <div v-else>
           <form @submit.prevent="updateReview">
-            <input type="text" style = "width:500px; height: 50px;" v-model="reviewContent" >
+            <input type="text" class="rounded" style = "width:500px; height: 50px;" v-model="reviewContent" >
             <StarScore @set-score="setScore"/>
-            <button class="btn btn-warning">수정하기</button>
+            <span class="fs-5">{{ reviewScore }} 점</span>
+            <button class="btn btn-warning ms-3">수정완료</button>
+            <button @click="e => this.isUpdating = !this.isUpdating" class="btn btn-danger ms-3">취소</button>
           </form>
         </div>
       </div>
       <hr>
       <div class="my-5">
         <h3>한 줄평</h3>
-        <div v-if="reviews.length">
+        <div v-if="reviews?.length" class="review rounded">
           <ReviewItem v-for="(review,idx) in reviews" :key="idx" :review="review"/>
         </div>
-        <div v-else>
+        <div v-else class="review rounded p-4">
           작성된 한 줄평이 없습니다..
         </div>
       </div>
@@ -127,7 +124,6 @@ export default {
   },
   created(){
     this.getMovieDetail()
-    // this.getMovieReviews()
     this.getProfile()
   },
   data() {
@@ -145,7 +141,6 @@ export default {
     ...mapGetters(['myUserName', 'isLogin']),
     shorten() {
       let overview = this.movie.overview
-
       if (overview.length > 40) {
         return overview.substring(0, 40) + '...'
       } else {
@@ -154,21 +149,6 @@ export default {
     },
     reviews(){
       return this.movie?.movie_reviews
-    },
-    isWritten(){
-      let flag = false
-      this.movie.movie_reviews.forEach( (el,index)=>{
-        if (el.user == this.myUserName){
-          console.log(el.user, this.myUserName)
-
-          this.myReview = el
-          this.reviewContent = el.content
-          this.reviewScore = el.score
-          this.movie?.movie_reviews.splice( index,1 )
-          flag = true
-        }
-      }) 
-      return flag
     },
     releasedDate(){
       let datedata = new Date(this.movie?.released_date)
@@ -191,6 +171,7 @@ export default {
         .then((res) => {
           console.log(res.data)
           this.movie = res.data
+          this.isWritten()
         })
         .catch((err) => {
           console.log(err)
@@ -217,6 +198,20 @@ export default {
         console.log(err)
       })
     },
+    isWritten() {
+      let flag = false
+      this.movie?.movie_reviews.forEach((el) => {
+        if (el.user == this.myUserName) {
+          console.log(el.user, this.myUserName)
+
+          this.myReview = el
+          this.reviewContent = el.content
+          this.reviewScore = el.score
+          flag = true
+        }
+      })
+      return flag
+    },
     addReview(){
       if (!this.isLogin) {
         this.$store.dispatch('alertLogin')
@@ -239,8 +234,8 @@ export default {
       })
         .then((res) => {
           console.log(res.data)
-          this.reviewContent = null
-          this.reviewScore = null
+          // this.reviewContent = null
+          // this.reviewScore = null
           this.getMovieDetail()
         })
         .catch((err) => {
@@ -254,13 +249,16 @@ export default {
       // }
       const content = this.reviewContent
       const score = this.reviewScore
+      // if(!this.content){
+      //   return
+      // }
       var formdata = new FormData()
       formdata.append('content', content)
       formdata.append('score', score)
 
       console.log(this.myReview)
       axios({
-        method: 'put',
+        method: 'PUT',
         url: `${API_URL}/community/reviews/${this.myReview.id}/`,
         headers: {
           'Authorization': `Token ${this.$store.state.token}`,
@@ -272,6 +270,30 @@ export default {
           this.reviewContent = null
           this.reviewScore = null
           this.isUpdating = false
+          this.getMovieDetail()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    deleteComment(){
+      if (!this.isLogin) {
+        this.$store.dispatch('alertLogin')
+        return
+      }
+      axios({
+        method: 'delete',
+        url: `${API_URL}/community/reviews/${this.myReview.id}/`,
+        headers: {
+          'Authorization': `Token ${this.$store.state.token}`,
+        }
+      })
+        .then((res) => {
+          console.log(res.data)
+          this.reviewContent = null
+          this.reviewScore = null
+          this.isUpdating = false
+          this.myReview = null
           this.getMovieDetail()
         })
         .catch((err) => {
@@ -343,11 +365,22 @@ export default {
 
 #overview {
   border: solid 1px white;
-  padding: 5%;
+  padding: 3%;
   border-radius: 8px;
 }
-
-/* body {
-  background-image: url(`https://image.tmdb.org/t/p/w500${movie?.backdrop_path}`);
-} */
+.review{
+  padding: 10px;
+  min-height: 100px;
+  background-color: #ffffff2f;
+}
+.back-drop {
+  width: 1200x;
+  height: 600px;
+  /* left: -1000px; */
+  background-size: cover;
+  /* background-repeat: no-repeat;
+  background-position: center; */
+  /* background-attachment: fixed; */
+  /* background: linear-gradient(to bottom, rgb(0, 0, 0), rgba(0, 0, 0, 0)); */
+}
 </style>

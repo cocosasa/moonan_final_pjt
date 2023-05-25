@@ -1,8 +1,8 @@
 <template>
-    <div class="question-item d-flex justify-content-between bold" style = "color: black">
-      <div>
+    <div class="question-item d-flex justify-content-between bold" style = "color: black" @click="goToQuestionDetail(question)">
+      <div class="w-75">
         <br>
-        <h3 class="mb-4" @click="goToQuestionDetail(question)">{{ question.title }}</h3>
+        <h3 class="mb-4">{{ question.title }}</h3>
         <hr>
         <p>{{ question.user }}의 질문</p>
         <!-- <p>{{ shortenContent }}</p> -->
@@ -25,7 +25,6 @@ export default {
   computed : {
     shortenContent(){
       let content = this.question.content
-
       if (content.length > 30) {
         return content.substring(0, 30) + '...'
       } else {
@@ -55,7 +54,7 @@ export default {
 .completed-item{
   height: 150px;
   width: 100%;
-  background-color: lightgrey;
+  background-color: whitesmoke;
   overflow: hidden;
   margin-bottom: 20px;
   border-radius: 5px;
@@ -68,7 +67,7 @@ export default {
   text-align: center;
   line-height: 50px;
   word-wrap: break-word;
-  background-color: #FAFAD2;
+  background-color: #ffd35a;
   border-radius: 10px;
   border: solid 3px
 }

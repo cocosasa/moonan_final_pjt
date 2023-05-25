@@ -1,10 +1,7 @@
 <template>
   <div class="d-flex flex-wrap justify-content-start my-4" id="to-top">
-    <!-- <div v-for="genre in genreList" :key="genre.id" class="btn p-2 px-3 rounded-5 border me-1 mb-2" :class="{'btn-primary':selectedGenre.includes(genre.name)}"> -->
-      <input v-for="genre in genreList" :key="genre.id" class="btn p-2 px-3 mb-2 checkbox" type="checkbox" :value="genre.name" :id="genre.id" v-model="selectedGenre" @click="check">
-    <!-- </div> -->
-    <!-- <button class="ms-5 btn-dark btn rounded-5 py-1">검색</button> -->
-  </div>
+      <input v-for="genre in genreList" :key="genre.id" class="btn p-2 px-3 mb-2 checkbox fw-bold" type="checkbox" :value="genre.name" :id="genre.id" v-model="selectedGenre" @click="check">
+    </div>
 </template>
 
 <script>

@@ -38,7 +38,11 @@ export default {
 </script>
 
 <style>
-.starpoint_wrap{display:inline-block;}
+.starpoint_wrap{display:inline-block; 
+  position: relative;
+  top: 15px;
+  margin: 0 20px;
+}
 .starpoint_box{position:relative;background:url(https://ido-archive.github.io/svc/etc/element/img/sp_star.png) 0 0 no-repeat;font-size:0;
 background-size: 200px;}
 .starpoint_box .starpoint_bg{display:block;position:absolute;top:0;left:0;height:40px;background:url(https://ido-archive.github.io/svc/etc/element/img/sp_star.png) 0 -40px no-repeat;pointer-events:none;

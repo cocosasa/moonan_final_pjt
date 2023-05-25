@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="my-4">
-      <span class="fs-1 bold">무비 몽타주</span>
+      <span class="fs-1 bold">Movie Montage</span>
       <div class="btn ms-5 btn-warning bold" @click="goToPostQuestion">질문하기</div>
     </div>
     <div class="question-list">
@@ -49,9 +49,9 @@ export default {
 <style>
 .question-list{
   min-width: 100%;
-  min-height: 800px;
+  min-height: 600px;
   padding: 10px;
-  background-color: lightgray;
+  background-color: rgba(97, 97, 97, 0.411);
   border-radius: 5px;
   margin-bottom: 100px;
 }

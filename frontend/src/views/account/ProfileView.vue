@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex justify-content-between">
       <div class="d-flex flex-column">
-        <div class="profile-img-circle border-1 border shadow mt-3" @click="changeFile">
+        <div class="profile-img-circle border-1 border shadow mt-3 ms-2" @click="changeFile">
           <p id = "change-img">사진 변경</p>
           <img v-if="!userData?.profile_image" class="profile-img" src="@/assets/Profile.png">
           <img v-if="userData?.profile_image" class="profile-img" :src="`${BASE_URL}${userData?.profile_image}`">
@@ -43,17 +43,20 @@
     <hr>
     <div class="d-flex justify-content-between gap-3">
       <div class="w-50 p-4 profile-movielist-box">
-        <h3>WANT TO WATCH</h3>
-        <span>{{ wantMovieList.length }}</span>
+        <span class="fs-3">WANT TO WATCH</span>
+        <span class="ms-4"> {{ wantMovieList.length }}</span>
         <div class="mt-4">
           <MovieList :movie-list="wantMovieList"/>
+          <div v-if=" !wantMovieList?.length ">등록된 영화가 없습니다..</div>
         </div>
       </div>  
       <div class="w-50 p-4 profile-movielist-box">
-        <h3>HAVE WATCHED</h3>
-        <span>{{ watchedMovieList.length }}</span>
+        <span class="fs-3">HAVE WATCHED</span>
+        <span class="ms-4"> {{ watchedMovieList.length }}</span>
         <div class="mt-4">
           <MovieList :movie-list="watchedMovieList"/>
+          <div v-if="!watchedMovieList?.length">등록된 영화가 없습니다..</div>
+
         </div>
       </div>
     </div>

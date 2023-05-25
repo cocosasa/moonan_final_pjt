@@ -33,11 +33,11 @@
       <button class = "edit-delete bold rounded" @click="deleteQuestion"><span class="material-symbols-outlined">delete</span><span>삭제하기</span></button>
     </div>
     <hr>
-    <div>
+    <div class="my-5">
       <h3 class = "bold" v-if="myUserName != question?.user">도움 주기</h3>
       <h3 class = "bold" v-if="myUserName === question?.user">정보 추가</h3>
       <form>
-        <input type="text" v-model="commentContent" class="form-text p-2 rounded-1">&nbsp;&nbsp;
+        <input type="text" v-model="commentContent" class="form-text p-2 rounded-1 w-50">&nbsp;&nbsp;
         <button @click.prevent="addComment" class="btn btn-light bold">등록</button>
       </form>
     </div>
@@ -46,7 +46,7 @@
       <CommentItem v-for="comment in question?.question_comments" :key="comment.id" :comment="comment" :question-user="question?.user"/>
       <br>
       <div style = "text-align: center" v-if="question?.question_comments">
-        <span>추가 내용이 없습니다..</span>
+        <span>더 이상 공개된 정보가 없습니다</span>
       </div>
     </div>
   </div>
