@@ -31,7 +31,7 @@
         </div>
         <div class="d-flex w-25 justify-content-around mt-5">
           <div @click="toggleWant">
-            <i :class="{'fa-bookmark':isWanted, 'fa-plus':!isWanted}" class="fa-solid fa-2xl" :style="{'color:#ff0000;': this.isWanted }"></i>
+            <i :class="{'fa-bookmark':isWanted, 'fa-plus':!isWanted}" class="fa-solid fa-2xl" :style="{'color:#ff0000;': this.isWanted  }"></i>
           </div>
           <div class="flex-shrink-1"></div>
           <div @click="toggleWatch">
@@ -319,6 +319,8 @@ export default {
       .then((res) => {
         console.log(res.data)
         this.isWanted = !this.isWanted
+        if (this.isWatched && this.isWanted)
+          this.isWatched = false
       })
       .catch((err) => {
         console.log(err)
@@ -340,6 +342,8 @@ export default {
       .then((res) => {
         console.log(res.data)
         this.isWatched = !this.isWatched
+        if (this.isWatched && this.isWanted)
+          this.isWanted = false
       })
       .catch((err) => {
         console.log(err)

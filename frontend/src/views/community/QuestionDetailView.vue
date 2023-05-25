@@ -29,7 +29,7 @@
 
     </div>
     <div v-if="myUserName === question?.user">
-      <button class = "edit-delete bold rounded" @click="goToUpdateQuestion"><span class="material-symbols-outlined">edit</span><span>수정하기</span></button>
+      <button class = "edit-delete bold rounded" @click="goToUpdateQuestion" v-if="!question?.is_completed"><span class="material-symbols-outlined">edit</span><span>수정하기</span></button>
       <button class = "edit-delete bold rounded" @click="deleteQuestion"><span class="material-symbols-outlined">delete</span><span>삭제하기</span></button>
     </div>
     <hr>
