@@ -7,6 +7,7 @@
     </div>
 
     <div class="d-flex gap-4">
+      <router-link :to="{ name: 'main' }"><h5><strong>Home</strong></h5></router-link>
       <router-link :to="{ name: 'movies' }"><h5><strong>Movie</strong></h5></router-link>
       <router-link :to="{ name: 'challenge' }"><h5><strong>Clue</strong></h5></router-link>
       <router-link :to="{ name: 'recommend' }"><h5><strong>Recommend</strong></h5></router-link>
